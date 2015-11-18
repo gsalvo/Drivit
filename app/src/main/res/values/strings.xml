@@ -3,4 +3,9 @@
     <string name="textPresentation">Hola, para comenzar selecciona el tipo de ensayo que quieres practicar.</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!--Texto botones-->
+    <string name="btnCondition">TÉRMINOS Y CONDICIONES</string>
+    <string name="btnGratitude">AGRADECIMIENTOS</string>
+
 </resources>
