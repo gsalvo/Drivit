@@ -1,11 +1,23 @@
 <resources>
     <string name="app_name">Drivit</string>
-    <string name="textPresentation">Hola, para comenzar selecciona el tipo de ensayo que quieres practicar.</string>
+    <string name="textPresentation">Bienvenidos a Drivit, a través de esta herramienta podrás practicar el ensayo teórico de conducción para obtener tu licencia de conducir. Al seleccionar cualquiera de las opciones se considera que has aceptado los términos y condiciones por lo que te recomendamos leerlos ;).</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!--Label -->
+    <string name="labelPresentationClassB">Clase B</string>
+    <string name="labelPresentationClassC">Clase C</string>
+    <string name="labelConditions">Términos y condiciones</string>
+    <string name="labelGratitude">Agradecimientos</string>
 
     <!--Texto botones-->
     <string name="btnCondition">TÉRMINOS Y CONDICIONES</string>
     <string name="btnGratitude">AGRADECIMIENTOS</string>
+
+    <!-- TitleActivity-->
+    <string name="title_activity_presentation_class_b">presentationClassB</string>
+    <string name="title_activity_presentation_class_c">presentationClassC</string>
+    <string name="title_activity_conditions">conditions</string>
+    <string name="title_activity_gratitude">gratitude</string>
 
 </resources>

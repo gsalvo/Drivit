@@ -3,6 +3,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
+        <!-- Action Bar-->
+        <item name="colorPrimary">@color/actionBarColor</item>
+        <!-- Backgorund -->
+        <item name="android:windowBackground">@color/defaultBackground</item>
+        <!--Button-->
+        <item name="colorButtonNormal">@color/defaultButton</item>
     </style>
 
     <!--MainActivity style-->
@@ -16,8 +22,10 @@
         <item name="colorButtonNormal">@color/defaultButton</item>
     </style>
 
+
     <!--ButtonStyle -->
     <style name="buttonStyle">
+        <item name="android:layout_marginTop">15dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_width">280dp</item>
         <item name="android:layout_gravity">center_horizontal</item>

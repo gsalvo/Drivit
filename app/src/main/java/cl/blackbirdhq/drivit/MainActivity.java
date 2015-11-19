@@ -1,10 +1,12 @@
 package cl.blackbirdhq.drivit;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,5 +41,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void goPresentationClassB(View view){
+        Intent i = new Intent(this, presentationClassB.class);
+        startActivity(i);
+    }
+
+    public void goPresentationClassC(View view){
+        Intent i = new Intent(this, presentationClassC.class);
+        startActivity(i);
+    }
+
+    public void goConditions(View view){
+        Intent i = new Intent(this, conditions.class);
+        startActivity(i);
+    }
+
+    public void goGratitude(View view){
+        Intent i = new Intent(this, gratitude.class);
+        startActivity(i);
     }
 }
