@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cl.blackbirdhq.drivit.Question">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/viewTimer">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:id="@+id/text"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/contentFragment"
+        android:layout_below="@+id/viewTimer"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/contentButtonNav"></RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/actionBarColor"
+        android:weightSum="2"
+        android:id="@+id/contentButtonNav">
+
+        <ImageButton
+            style="@style/navButton"
+            android:id="@+id/btnPrev"
+            android:src="@drawable/ic_keyboard_arrow_left_white_48dp"/>
+        <ImageButton
+            style="@style/navButton"
+            android:id="@+id/btnNext"
+            android:src="@drawable/ic_keyboard_arrow_right_white_48dp"/>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

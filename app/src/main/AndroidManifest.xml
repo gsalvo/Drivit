@@ -18,24 +18,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationClassB"
+            android:name=".PresentationClassB"
             android:label="@string/labelPresentationClassB"
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-            android:name=".presentationClassC"
+            android:name=".PresentationClassC"
             android:label="@string/labelPresentationClassC"
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-            android:name=".conditions"
+            android:name=".Conditions"
             android:label="@string/labelConditions"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-            android:name=".gratitude"
+            android:name=".Gratitude"
             android:label="@string/labelGratitude"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity
+            android:name=".Question"
+            android:label="@string/labelQuestion">
         </activity>
     </application>
 

@@ -43,4 +43,12 @@
         <item name="android:textColor">@color/whiteText</item>
         <item name="android:padding">11dp</item>
     </style>
+    <!-- -->
+    <style name="navButton">
+        <item name="android:background">@drawable/nav_button</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+    </style>
 </resources>

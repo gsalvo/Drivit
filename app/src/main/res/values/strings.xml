@@ -9,6 +9,7 @@
     <string name="labelPresentationClassC">Clase C</string>
     <string name="labelConditions">Términos y condiciones</string>
     <string name="labelGratitude">Agradecimientos</string>
+    <string name="labelQuestion">Examen de conducir</string>
 
     <!--Texto botones-->
     <string name="btnCondition">TÉRMINOS Y CONDICIONES</string>
@@ -25,5 +26,9 @@
     <string name="title_activity_presentation_class_c">presentationClassC</string>
     <string name="title_activity_conditions">conditions</string>
     <string name="title_activity_gratitude">gratitude</string>
+    <string name="title_activity_question">Question</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

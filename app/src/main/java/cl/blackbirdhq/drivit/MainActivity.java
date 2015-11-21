@@ -44,22 +44,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goPresentationClassB(View view){
-        Intent i = new Intent(this, presentationClassB.class);
+        Intent i = new Intent(this, PresentationClassB.class);
         startActivity(i);
     }
 
     public void goPresentationClassC(View view){
-        Intent i = new Intent(this, presentationClassC.class);
+        Intent i = new Intent(this, PresentationClassC.class);
         startActivity(i);
     }
 
     public void goConditions(View view){
-        Intent i = new Intent(this, conditions.class);
+        Intent i = new Intent(this, Conditions.class);
         startActivity(i);
     }
 
     public void goGratitude(View view){
-        Intent i = new Intent(this, gratitude.class);
+        Intent i = new Intent(this, Gratitude.class);
         startActivity(i);
     }
 }
