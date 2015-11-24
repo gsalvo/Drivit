@@ -36,7 +36,8 @@
         <ImageButton
             style="@style/navButton"
             android:id="@+id/btnPrev"
-            android:src="@drawable/ic_keyboard_arrow_left_white_48dp"/>
+            android:src="@drawable/ic_keyboard_arrow_left_white_48dp"
+            />
         <ImageButton
             style="@style/navButton"
             android:id="@+id/btnNext"

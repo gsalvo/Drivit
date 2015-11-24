@@ -37,5 +37,6 @@
     <Button
         style="@style/buttonStyle"
         android:id="@+id/btnReady"
-        android:text="@string/btnReady"/>
+        android:text="@string/btnReady"
+        android:onClick="goTest"/>
 </LinearLayout>

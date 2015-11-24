@@ -1,8 +1,9 @@
 package cl.blackbirdhq.drivit;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,20 +12,36 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
+
 public class Question extends AppCompatActivity {
+    SQLiteDatabase bd;
+    Cursor cursor;
+    AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        initializeComoponent();
+        //Bundle bundle = getIntent().getExtras();
+        //TextView test = (TextView) findViewById(R.id.test);
+        //test.setText(bundle.getString("type"));
+        //System.out.println("el tipo de ensayo es "+ bundle.getString("type"));
 
+        /*initializeComoponent();
+        bd = admin.getReadableDatabase();
+        cursor = bd.rawQuery("SELECT question FROM questions", null);
+        System.out.println("la cantidad es "+cursor.getCount());
+        TextView test = (TextView) findViewById(R.id.test);
+        cursor.moveToFirst();
+        test.setText(cursor.getString(0));*/
     }
 
     public void initializeComoponent(){
         ImageButton btnPrev, btnNext;
         btnPrev = (ImageButton) findViewById(R.id.btnPrev);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
+
 
         StructureQuestion fragmentTest = new StructureQuestion();
         FragmentManager manager = getFragmentManager();

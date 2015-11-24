@@ -1,23 +1,81 @@
 package cl.blackbirdhq.drivit;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-public class PresentationClassB extends AppCompatActivity {
+import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
+public class PresentationClassB extends AppCompatActivity {
+    private AdminSQLiteAPP data = new AdminSQLiteAPP(this);
+    private SQLiteDatabase db;
+    private ProgressDialog mDialog;
+    private LoadQuestion loadQuestion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presentation_class_b);
+        mDialog = new ProgressDialog(this);
+        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                loadQuestion.cancel(true);
+            }
+        });
     }
 
     public void goTest(View view){
-        Intent i = new Intent(this, Question.class);
-        startActivity(i);
+        loadQuestion = new LoadQuestion();
+        loadQuestion.execute();
     }
 
+    class LoadQuestion extends AsyncTask<String, String, String>{
+        @Override
+        protected void onPreExecute(){
+            mDialog.setMessage("Cargando las preguntas.");
+            mDialog.setIndeterminate(false);
+            mDialog.setCancelable(true);
+            mDialog.show();
+        }
+        @Override
+        protected String doInBackground(String... params){
+            db = data.getWritableDatabase();
+            data.reloadDBTest(db);
+
+            db.execSQL("INSERT INTO questions (_id, question, image) values (1, 'Frente a una situación normal, ¿Cuál es la forma más segura de frenar?','')");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (1, 'Frenando fuerte, poniendo la palanca de cambio en neutro y tirando el freno de mano justo antes de detenerse', 0, 1)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (2, 'Frenando suavemente, presionando el pedal de embrague y tirando el freno de mano justo antes de detenerse.', 0, 1)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (3, 'Frenando suavemente, luego un poco más fuerte cuando comienza a detenerse y después aflojando de a poco el freno antes de detenerse', 1, 1)");
+            db.execSQL("INSERT INTO questions (_id, question, image) values (2, '¿Cuándo puede usted hacer sonar la bocina de su auto?','')");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (4, 'Para que le cedan el paso.', 0, 2)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (5, 'Para prevenir la ocurrencia de un accidente', 1, 2)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (6, 'Para llamar la atención de un amigo', 0, 2)");
+            db.execSQL("INSERT INTO questions (_id, question, image) values (3, '¿Cómo puede usted evitar que su vehículo patine cuando la calzada está cubierta con una capa de hielo?','')");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (7, 'Usando el freno de mano si las ruedas comienzan a resbalar.', 0, 3)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (8, 'Conduciendo a una velocidad baja en el cambio más alto posible.', 1, 3)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (9, 'Conduciendo en un cambio bajo todo el tiempo.', 0, 3)");
+            db.execSQL("INSERT INTO questions (_id, question, image) values (4, '¿Cuándo usaría usted las luces de advertencia de peligro de su vehículo','')");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (10, 'Cuando esté retrocediendo en una calle de poco tránsito.', 0, 4)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (11, 'Cuando esté en pana y obstaculizando el tránsito.', 1, 4)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (12, 'Cuando esté en pana moviéndose lentamente', 0, 4)");
+            db.execSQL("INSERT INTO questions (_id, question, image) values (5, 'El grupo etario de mayor accidentabilidad son los jóvenes, entre:','')");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (13, '18 Y 29 AÑOS.', 1, 5)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (14, '30 Y 40 AÑOS.', 0, 5)");
+            db.execSQL("INSERT INTO alternatives (_id, alternative, rigth, questions_id) values (15, '40 Y 49 AÑOS.', 0, 5)");
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            Intent i = new Intent(PresentationClassB.this, Question.class);
+            startActivity(i);
+            mDialog.dismiss();
+        }
+    }
 }
+
