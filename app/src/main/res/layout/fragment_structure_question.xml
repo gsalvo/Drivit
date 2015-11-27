@@ -1,10 +1,56 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="cl.blackbirdhq.drivit.StructureQuestion">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cl.blackbirdhq.drivit.StructureQuestion"
+    android:orientation="vertical"
+    android:padding="15dp">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_car"/>
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/imageQuestion"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Pregunta del ensayo teórico de conducción"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/GreenText"
+        android:id="@+id/question"/>
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginTop="15dp"
+        android:id="@+id/groupAlternatives">
+
+        <RadioButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Alternativa a"
+            android:textColor="@color/GreenText"
+            android:layout_marginTop="5dp"
+            android:id="@+id/alternative1"/>
+
+        <RadioButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Alternativa b"
+            android:textColor="@color/GreenText"
+            android:layout_marginTop="5dp"
+            android:id="@+id/alternative2"/>
+
+        <RadioButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Alternativa c"
+            android:textColor="@color/GreenText"
+            android:layout_marginTop="5dp"
+            android:id="@+id/alternative3"/>
+    </RadioGroup>
+
+</LinearLayout>

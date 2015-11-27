@@ -39,7 +39,8 @@
         </activity>
         <activity
             android:name=".Question"
-            android:label="@string/labelQuestion">
+            android:label="@string/labelQuestion"
+            android:parentActivityName=".MainActivity" >
         </activity>
     </application>
 

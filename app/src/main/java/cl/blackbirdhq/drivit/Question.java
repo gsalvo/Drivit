@@ -15,69 +15,96 @@ import android.widget.TextView;
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
 public class Question extends AppCompatActivity {
-    SQLiteDatabase bd;
-    Cursor cursor;
-    AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
+    //Variables de la base de datos
+    private SQLiteDatabase bd;
+    private Cursor question;
+    private AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
+
+    //Variables de la transición de preguntas
+    ImageButton btnPrev, btnNext;
+    TextView numberQuestion;
+    private int number = 1;
+    private static int FINAL_QUESTION;
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
+    private Bundle message = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        //Bundle bundle = getIntent().getExtras();
-        //TextView test = (TextView) findViewById(R.id.test);
-        //test.setText(bundle.getString("type"));
-        //System.out.println("el tipo de ensayo es "+ bundle.getString("type"));
-
-        /*initializeComoponent();
-        bd = admin.getReadableDatabase();
-        cursor = bd.rawQuery("SELECT question FROM questions", null);
-        System.out.println("la cantidad es "+cursor.getCount());
-        TextView test = (TextView) findViewById(R.id.test);
-        cursor.moveToFirst();
-        test.setText(cursor.getString(0));*/
+        initializeComponents();
     }
 
-    public void initializeComoponent(){
-        ImageButton btnPrev, btnNext;
+    public void initializeComponents(){
         btnPrev = (ImageButton) findViewById(R.id.btnPrev);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
+        numberQuestion = (TextView) findViewById(R.id.numberQuestion);
+        bd = admin.getWritableDatabase();
+        question = bd.rawQuery("Select * from questions", null);
+        FINAL_QUESTION = question.getCount();
+        question.moveToFirst();
+        addQuestion(question);
 
-
-        StructureQuestion fragmentTest = new StructureQuestion();
-        FragmentManager manager = getFragmentManager();
-        final FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.contentFragment, fragmentTest);
-        transaction.commit();
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StructureQuestion Ft = new StructureQuestion();
-                TextView text = (TextView) findViewById(R.id.text);
-                text.setText("paso");
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.contentFragment, Ft, "A");
-                transaction.addToBackStack(null);
-                transaction.commit();
+                if (number < FINAL_QUESTION) {
+                    number++;
+                    question.moveToNext();
+                    addQuestion(question);
+                }
             }
         });
 
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView text = (TextView) findViewById(R.id.text);
-                text.setText("volvio");
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                if(manager.getBackStackEntryCount() > 0) {
-                    manager.popBackStack();
-                    fragmentTransaction.commit();
-                }else{
-                    text.setText("esta en el ultimo");
+                if (number > 1) {
+                    number--;
+                    question.moveToPrevious();
+                    popQuestion();
                 }
             }
         });
+    }
+    private void addQuestion(Cursor question){
+        StructureQuestion sq = new StructureQuestion();
+        message.putString("id_question",question.getString(0));
+        message.putString("question", question.getString(1));
+        message.putString("image", question.getString(2));
+        sq.setArguments(message);
+        manager = getFragmentManager();
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.contentFragment, sq);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        numberQuestion.setText(number + "");
+        btnState();
+    }
+    private void popQuestion(){
+        message.putString("id_question",question.getString(0));
+        message.putString("question", question.getString(1));
+        message.putString("image", question.getString(2));
+        manager = getFragmentManager();
+        transaction = manager.beginTransaction();
+        manager.popBackStack();
+        transaction.commit();
+        numberQuestion.setText(number + "");
+        btnState();
+    }
+
+    private void btnState(){
+        if(number == FINAL_QUESTION){
+            btnNext.setEnabled(false);
+        }
+        else if(number == 1){
+            btnPrev.setEnabled(false);
+        }else{
+            btnNext.setEnabled(true);
+            btnPrev.setEnabled(true);
+        }
     }
 
     @Override
