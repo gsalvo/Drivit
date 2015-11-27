@@ -13,9 +13,9 @@ public class AdminSQLiteAPP extends SQLiteOpenHelper {
     private static final String DB_CREATE_QUESTION = "create table questions (_id integer primary key autoincrement," +
             "question text not null, image text)";
     private static final String DB_CREATE_ALTERNATIVE = "create table alternatives (_id integer primary key autoincrement," +
-            "alternative text not null, rigth integer, questions_id integer )";
-    private static final String DB_CREATE_TEST = "create table tests (_id integer primary key autoincrement," +
-            "questions_id integer, alternative_id integer)";
+            "alternative text not null, right integer, questions_id integer )";
+    private static final String DB_CREATE_TEST = "create table test (_id integer primary key autoincrement," +
+            "questions_id integer, alternatives_id integer, right integer)";
 
 
     public AdminSQLiteAPP(Context context){
@@ -32,7 +32,7 @@ public class AdminSQLiteAPP extends SQLiteOpenHelper {
     public void reloadDBTest(SQLiteDatabase db){
         db.execSQL("DROP TABLE IF EXISTS questions");
         db.execSQL("DROP TABLE IF EXISTS alternatives");
-        db.execSQL("DROP TABLE IF EXISTS tests");
+        db.execSQL("DROP TABLE IF EXISTS test");
         onCreate(db);
     }
 
