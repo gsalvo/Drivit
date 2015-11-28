@@ -15,11 +15,15 @@
     <string name="btnCondition">TÉRMINOS Y CONDICIONES</string>
     <string name="btnGratitude">AGRADECIMIENTOS</string>
     <string name="btnReady">ESTOY PREPARADO</string>
+    <string name="btnReview">REVISAR</string>
+    <string name="btnReDoTest">HACER OTRO EXAMEN</string>
 
     <!--texto general-->
     <string name="text1">¿Quieres practicar para preparar tu examen de conducir clase B?</string>
     <string name="text2">¿Quieres practicar para preparar tu examen de conducir clase C?</string>
     <string name="text3">Tienes 45 minutos para responder las 35 preguntas</string>
+    <string name="text4">Has obtenido 32 punto en 25 minutos</string>
+    <string name="text5">Lo siento, con esa puntuación no aprobarías el examen teórico de conducción. Sigue practicando para alcanzar tu meta</string>
 
     <!-- TitleActivity-->
     <string name="title_activity_presentation_class_b">presentationClassB</string>
@@ -27,6 +31,7 @@
     <string name="title_activity_conditions">conditions</string>
     <string name="title_activity_gratitude">gratitude</string>
     <string name="title_activity_question">Question</string>
+    <string name="title_activity_results">Resultados</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
