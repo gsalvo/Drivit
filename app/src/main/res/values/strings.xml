@@ -10,6 +10,7 @@
     <string name="labelConditions">Términos y condiciones</string>
     <string name="labelGratitude">Agradecimientos</string>
     <string name="labelQuestion">Examen</string>
+    <string name="labelNavQuestion">Navegación</string>
 
     <!--Texto botones-->
     <string name="btnCondition">TÉRMINOS Y CONDICIONES</string>
@@ -42,6 +43,8 @@
     <string name="dialogTitleCloseTest">Finalizar examen</string>
     <string name="dialogCloseTest">Aun te queda tiempo para revisar el ensayo ¿Quieres terminar?</string>
     <string name="dialogLoadTest">Creando el ensayo</string>
+
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_nav_question_content">NavQuestionContent</string>

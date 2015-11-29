@@ -114,4 +114,5 @@ public class StructureQuestion extends Fragment {
         public void selectedAlternative(int alternative);
     }
 
+
 }

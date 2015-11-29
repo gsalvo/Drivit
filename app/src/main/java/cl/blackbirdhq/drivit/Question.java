@@ -1,9 +1,11 @@
 package cl.blackbirdhq.drivit;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,17 +34,21 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     ImageButton btnPrev, btnNext;
     TextView numberQuestion;
     private int number = 1;
+    public int currentQuestion = 1;
     private int alternativeSelected = 0;
     private static int FINAL_QUESTION;
     private FragmentManager manager;
     private FragmentTransaction transaction;
     private Bundle message = new Bundle();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         initializeComponents();
+
+
     }
 
     public void initializeComponents(){
@@ -50,12 +56,11 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         numberQuestion = (TextView) findViewById(R.id.numberQuestion);
         bd = admin.getWritableDatabase();
-        question = bd.rawQuery("Select * from questions", null);
+        question = bd.rawQuery("Select * from questions order by _id", null);
 
         FINAL_QUESTION = question.getCount();
         question.moveToFirst();
         addQuestion();
-
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +125,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         numberQuestion.setText(number + "");
         btnState();
     }
+
     private void popQuestion(){
         manager = getFragmentManager();
         transaction = manager.beginTransaction();
@@ -143,7 +149,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_question, menu);
         return true;
     }
@@ -151,9 +156,11 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.btnNav:
+                saveQuestion();
                 goNavTest();
                 return true;
             case R.id.btnClose:
+                saveQuestion();
                 goResult();
                 return true;
         }
@@ -161,9 +168,10 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     }
 
     public void goNavTest(){
-        saveQuestion();
+        currentQuestion = number;
         Intent i = new Intent(Question.this, NavQuestionContent.class);
-        startActivity(i);
+        i.putExtra("currentQuestion", currentQuestion);
+        startActivityForResult(i, 1);
     }
 
     public void goResult(){
@@ -174,7 +182,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(Question.this, Results.class);
+                        Intent i = new Intent(Question.this , Results.class);
                         i.putExtra("score", calcRegularResult());
                         startActivity(i);
                         finish();
@@ -183,8 +191,8 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 .setNegativeButton("NO",null)
                 .show();
     }
+
     public int calcRegularResult(){
-        saveQuestion();
         Cursor specialScore;
         test = bd.rawQuery("Select * from test", null);
         int score = 0;
@@ -202,6 +210,15 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         return score;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                System.out.println("el dato es: "+data.getIntExtra("selectedQuestion",currentQuestion));
+            }
+        }
+    }
 
     @Override
     public void selectedAlternative(int alternative) {

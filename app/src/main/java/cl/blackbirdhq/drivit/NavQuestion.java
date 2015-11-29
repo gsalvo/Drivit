@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -22,15 +23,21 @@ public class NavQuestion extends Fragment {
     private SQLiteDatabase bd;
     private AdminSQLiteAPP admin;
     private LinearLayout contentButtonNav;
+    private int messageCurrentQuestion;
+    OnSelectedQuestionListener onSelectedQuestion;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        messageCurrentQuestion = getArguments().getInt("currentQuestion");
+        System.out.println("el fragment recibe el currentQuestion :"+ messageCurrentQuestion);
+        onSelectedQuestion.selectedQuestionListener(messageCurrentQuestion);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nav_question, container, false);
         initializeComponents(view);
+
         return view;
     }
 
@@ -44,8 +51,6 @@ public class NavQuestion extends Fragment {
         int cantButtonLY = 5;
         double cantRow =Math.ceil((float)cantQuestion/(float)cantButtonLY);
         int numberQuestion = 1;
-        float density = getActivity().getResources().getDisplayMetrics().density;
-        float widthHeightBtn = 50 * density;
         for(int i = 0; i <cantRow; i++){
             LinearLayout linearLayout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.content_button_nav,contentButtonNav,false);
             contentButtonNav.addView(linearLayout);
@@ -55,25 +60,31 @@ public class NavQuestion extends Fragment {
                     test.moveToFirst();
                     Button btnQuestion;
                     if (test.getCount() == 0){
-                        btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered,linearLayout,false);
-                        btnQuestion.setText(numberQuestion + "");
-                        linearLayout.addView(btnQuestion);
+                        if(messageCurrentQuestion == numberQuestion){
+                            btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered_actual, linearLayout, false);
+                        }else {
+                            btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered, linearLayout, false);
+                        }
                     }else if (test.getInt(0) == 0) {
-                        btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered, linearLayout, false);
-                        btnQuestion.setText(numberQuestion + "");
-                        linearLayout.addView(btnQuestion);
+                        if(messageCurrentQuestion == numberQuestion){
+                            btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered_actual, linearLayout, false);
+                        }else {
+                            btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered, linearLayout, false);
+                        }
                     }else{
-                        btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_answered,linearLayout,false);
-                        btnQuestion.setText(numberQuestion + "");
-                        linearLayout.addView(btnQuestion);
+                        if(messageCurrentQuestion == numberQuestion){
+                            btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_answered_actual,linearLayout,false);
+                        }else{
+                            btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_answered,linearLayout,false);
+                        }
                     }
-
-
-
+                    btnQuestion.setText(numberQuestion + "");
+                    linearLayout.addView(btnQuestion);
                     btnQuestion.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            System.out.println("hola");
+                            System.out.println("Se modifica la interfaz a16");
+                            onSelectedQuestion.selectedQuestionListener(16);
                         }
                     });
                     questions.moveToNext();
@@ -83,8 +94,15 @@ public class NavQuestion extends Fragment {
                 }
             }
         }
-
     }
 
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        onSelectedQuestion =(OnSelectedQuestionListener) activity;
+    }
 
+    public interface OnSelectedQuestionListener{
+        public void selectedQuestionListener(int question);
+    }
 }

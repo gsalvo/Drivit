@@ -47,7 +47,8 @@
         </activity>
         <activity
             android:name=".NavQuestionContent"
-            android:label="@string/title_activity_nav_question_content" >
+            android:label="@string/labelNavQuestion"
+            android:parentActivityName=".Question">
         </activity>
     </application>
 
