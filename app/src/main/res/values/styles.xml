@@ -23,6 +23,7 @@
     </style>
 
 
+
     <!--ButtonStyle -->
     <style name="buttonStyle">
         <item name="android:layout_marginTop">15dp</item>
@@ -43,12 +44,32 @@
         <item name="android:textColor">@color/whiteText</item>
         <item name="android:padding">11dp</item>
     </style>
-    <!-- -->
+    <!-- navButton-->
     <style name="navButton">
         <item name="android:background">@drawable/nav_button</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_weight">1</item>
+    </style>
+    <!-- Style button nav test -->
+    <style name="navButtonTestAnswered">
+        <item name="android:background">@drawable/nav_button_test_answered</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/whiteText</item>
+    </style>
+    <style name="navButtonTestNoAnswered">
+        <item name="android:background">@drawable/nav_button_test_no_answered</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/blackText</item>
     </style>
 </resources>

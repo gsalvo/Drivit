@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="whiteText" type="color">#FFFFFF</color>
+    <color name="blackText" type="color">#000000</color>
     <color name="PeaGreenText" type="color">#43A047</color>
     <color name="GreenText" type="color">#2E7D32</color>
+
     <color name="defaultBackground" type="color">#FFFFFF</color>
     <color name="defaultButton" type="color">#43A047</color>
     <color name="defaultPressButton" type="color">#388E3C</color>
     <color name="actionBarColor" type="color">#2E7D32</color>
+
+    <color name="btnColorAnswered" type="color">#78909C</color>
+    <color name="btnColorAnsweredPressed" type="color">#607D8B</color>
+    <color name="btnColorNoAnswered" type="color">#ECEFF1</color>
+    <color name="btnColorNoAnsweredPressed" type="color">#CFD8DC</color>
 </resources>

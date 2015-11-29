@@ -47,48 +47,36 @@ public class PresentationClassB extends AppCompatActivity {
         protected String doInBackground(String... params){
             db = data.getWritableDatabase();
             data.reloadDBTest(db);
+            db.execSQL("INSERT INTO categories(_id, name, special) values (1,'conocimientos legales y reglamentarias',0)");
+            db.execSQL("INSERT INTO categories(_id, name, special) values (2,'conducta vial',0)");
+            db.execSQL("INSERT INTO categories(_id, name, special) values (3,'conocimientos mecánica básica',0)");
+            db.execSQL("INSERT INTO categories(_id, name, special) values (4,'seguridad vial',1)");
 
-            db.execSQL("INSERT INTO questions (_id, question, image) values (1, 'Frente a una situación normal, ¿Cuál es la forma más segura de frenar?','')");
+            db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (1, 'Frente a una situación normal, ¿Cuál es la forma más segura de frenar?','','4')");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (1, 'Frenando fuerte, poniendo la palanca de cambio en neutro y tirando el freno de mano justo antes de detenerse', 0, 1)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (2, 'Frenando suavemente, presionando el pedal de embrague y tirando el freno de mano justo antes de detenerse.', 0, 1)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (3, 'Frenando suavemente, luego un poco más fuerte cuando comienza a detenerse y después aflojando de a poco el freno antes de detenerse', 1, 1)");
-            db.execSQL("INSERT INTO questions (_id, question, image) values (2, '¿Cuándo puede usted hacer sonar la bocina de su auto?','')");
+            db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (2, '¿Cuándo puede usted hacer sonar la bocina de su auto?','','1')");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (4, 'Para que le cedan el paso.', 0, 2)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (5, 'Para prevenir la ocurrencia de un accidente', 1, 2)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (6, 'Para llamar la atención de un amigo', 0, 2)");
-            db.execSQL("INSERT INTO questions (_id, question, image) values (3, '¿Cómo puede usted evitar que su vehículo patine cuando la calzada está cubierta con una capa de hielo?','')");
+            db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (3, '¿Cómo puede usted evitar que su vehículo patine cuando la calzada está cubierta con una capa de hielo?','','4')");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (7, 'Usando el freno de mano si las ruedas comienzan a resbalar.', 0, 3)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (8, 'Conduciendo a una velocidad baja en el cambio más alto posible.', 1, 3)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (9, 'Conduciendo en un cambio bajo todo el tiempo.', 0, 3)");
-            db.execSQL("INSERT INTO questions (_id, question, image) values (4, '¿Cuándo usaría usted las luces de advertencia de peligro de su vehículo','')");
+            db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (4, '¿Cuándo usaría usted las luces de advertencia de peligro de su vehículo','','4')");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (10, 'Cuando esté retrocediendo en una calle de poco tránsito.', 0, 4)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (11, 'Cuando esté en pana y obstaculizando el tránsito.', 1, 4)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (12, 'Cuando esté en pana moviéndose lentamente', 0, 4)");
-            db.execSQL("INSERT INTO questions (_id, question, image) values (5, 'El grupo etario de mayor accidentabilidad son los jóvenes, entre:','')");
+            db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (5, 'El grupo etario de mayor accidentabilidad son los jóvenes, entre:','','4')");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (13, '18 Y 29 AÑOS.', 1, 5)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (14, '30 Y 40 AÑOS.', 0, 5)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (15, '40 Y 49 AÑOS.', 0, 5)");
 
-            db.execSQL("INSERT INTO questions (_id, question, image) values (6, 'Frente a una situación normal, ¿Cuál es la forma más segura de frenar?','')");
+            db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (6, 'Frente a una situación normal, ¿Cuál es la forma más segura de frenar?','','4')");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (16, 'Frenando fuerte, poniendo la palanca de cambio en neutro y tirando el freno de mano justo antes de detenerse', 0, 6)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (17, 'Frenando suavemente, presionando el pedal de embrague y tirando el freno de mano justo antes de detenerse.', 0, 6)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (18, 'Frenando suavemente, luego un poco más fuerte cuando comienza a detenerse y después aflojando de a poco el freno antes de detenerse', 1, 6)");
-            db.execSQL("INSERT INTO questions (_id, question, image) values (7, '¿Cuándo puede usted hacer sonar la bocina de su auto?','')");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (19, 'Para que le cedan el paso.', 0, 7)");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (20, 'Para prevenir la ocurrencia de un accidente', 1, 7)");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (21, 'Para llamar la atención de un amigo', 0, 7)");
-            db.execSQL("INSERT INTO questions (_id, question, image) values (8, '¿Cómo puede usted evitar que su vehículo patine cuando la calzada está cubierta con una capa de hielo?','')");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (22, 'Usando el freno de mano si las ruedas comienzan a resbalar.', 0, 8)");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (23, 'Conduciendo a una velocidad baja en el cambio más alto posible.', 1, 8)");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (24, 'Conduciendo en un cambio bajo todo el tiempo.', 0, 8)");
-            db.execSQL("INSERT INTO questions (_id, question, image) values (9, '¿Cuándo usaría usted las luces de advertencia de peligro de su vehículo','')");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (25, 'Cuando esté retrocediendo en una calle de poco tránsito.', 0, 9)");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (26, 'Cuando esté en pana y obstaculizando el tránsito.', 1, 9)");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (27, 'Cuando esté en pana moviéndose lentamente', 0, 9)");
-            db.execSQL("INSERT INTO questions (_id, question, image) values (10, 'El grupo etario de mayor accidentabilidad son los jóvenes, entre:','')");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (28, '18 Y 29 AÑOS.', 1, 10)");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (29, '30 Y 40 AÑOS.', 0, 10)");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (30, '40 Y 49 AÑOS.', 0, 10)");
             return null;
         }
         @Override

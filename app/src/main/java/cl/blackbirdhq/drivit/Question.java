@@ -1,8 +1,11 @@
 package cl.blackbirdhq.drivit;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -79,34 +82,26 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         });
     }
     private void saveQuestion(){
-
         Cursor alternative;
         ContentValues register = new ContentValues();
         register.put("_id", number);
         register.put("questions_id", question.getInt(0));
         register.put("alternatives_id", alternativeSelected);
-        System.out.println("la alternativa seleccionada es: " + alternativeSelected);
         if(alternativeSelected != 0){
-            System.out.println("estoy en el lado bueno");
             alternative = bd.rawQuery("select right from alternatives where _id = " + alternativeSelected, null);
             alternative.moveToFirst();
-            System.out.println(alternative.getInt(0));
-            register.put("right", 1);
+            register.put("right", alternative.getInt(0));
             if(bd.rawQuery("Select _id from test where _id = " + number,null).getCount() > 0){
                 bd.update("test", register, "_id = " + number, null);
-                System.out.println(String.format("Se actualiza la id de la pregunta %d , la id de la alternativa %d y si es correcta: %d", question.getInt(0), alternativeSelected, alternative.getInt(0)));
             }else{
-                bd.insert("test",null,register);
-                System.out.println(String.format("Se guarda la id de la pregunta %d , la id de la alternativa %d y si es correcta: %d", question.getInt(0), alternativeSelected, alternative.getInt(0)));
+                bd.insert("test", null, register);
             }
         }else{
             register.put("right", 0);
             if(bd.rawQuery("Select _id from test where _id = " + number,null).getCount() > 0){
                 bd.update("test", register, "_id = " + number, null);
-                System.out.println(String.format("Se actualiza la id de la pregunta %d , la id de la alternativa %d y si es correcta: %d", question.getInt(0), alternativeSelected, 0));
             }else{
-                bd.insert("test",null,register);
-                System.out.println(String.format("Se guarda la id de la pregunta %d , la id de la alternativa %d y si es correcta: %d", question.getInt(0), alternativeSelected, 0));
+                bd.insert("test", null, register);
             }
         }
     }
@@ -154,18 +149,59 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()){
+            case R.id.btnNav:
+                goNavTest();
+                return true;
+            case R.id.btnClose:
+                goResult();
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+
+    public void goNavTest(){
+        saveQuestion();
+        Intent i = new Intent(Question.this, NavQuestionContent.class);
+        startActivity(i);
+    }
+
+    public void goResult(){
+        new AlertDialog.Builder(this)
+                .setTitle("")
+                .setTitle(R.string.dialogTitleCloseTest)
+                .setMessage(R.string.dialogCloseTest)
+                .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(Question.this, Results.class);
+                        i.putExtra("score", calcRegularResult());
+                        startActivity(i);
+                        finish();
+                    }
+                })
+                .setNegativeButton("NO",null)
+                .show();
+    }
+    public int calcRegularResult(){
+        saveQuestion();
+        Cursor specialScore;
+        test = bd.rawQuery("Select * from test", null);
+        int score = 0;
+        int specialQuestion = 0;
+        while(test.moveToNext()){
+            specialScore = bd.rawQuery("SELECT special, name FROM categories AS c JOIN questions AS q ON q.categories_id = c._id WHERE q._id =" + test.getInt(1), null);
+            specialScore.moveToFirst();
+            if(specialQuestion < 3 && specialScore.getInt(0)==1){
+                score += test.getInt(3) * 2;
+                specialQuestion ++;
+            }else{
+                score += test.getInt(3);
+            }
+        }
+        return score;
+    }
+
 
     @Override
     public void selectedAlternative(int alternative) {

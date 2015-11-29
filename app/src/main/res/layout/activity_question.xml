@@ -61,12 +61,12 @@
         <ImageButton
             style="@style/navButton"
             android:id="@+id/btnPrev"
-            android:src="@drawable/ic_keyboard_arrow_left_white_48dp"
+            android:src="@drawable/ic_navigate_before_white_36dp"
             />
         <ImageButton
             style="@style/navButton"
             android:id="@+id/btnNext"
-            android:src="@drawable/ic_keyboard_arrow_right_white_48dp"/>
+            android:src="@drawable/ic_navigate_next_white_36dp"/>
     </LinearLayout>
 
 
