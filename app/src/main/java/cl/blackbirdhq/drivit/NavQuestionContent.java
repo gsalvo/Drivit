@@ -15,30 +15,20 @@ import android.view.MenuItem;
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
 public class NavQuestionContent extends AppCompatActivity implements NavQuestion.OnSelectedQuestionListener{
-    private SQLiteDatabase bd;
-    private AdminSQLiteAPP admin;
-    private FragmentManager manager;
-    private FragmentTransaction transaction;
     private int selectedQuestion;
-    private Bundle message;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_question_content);
         initializeComponents();
-
-
-
     }
 
     private void initializeComponents() {
-        message = getIntent().getExtras();
+        FragmentManager manager;
+        FragmentTransaction transaction;
+        Bundle message = getIntent().getExtras();
         selectedQuestion = message.getInt("currentQuestion");
-        System.out.println("el activity recibe el currentQuestion" + selectedQuestion);
-        admin = new AdminSQLiteAPP(this);
-        bd = admin.getReadableDatabase();
         NavQuestion navQuestion = new NavQuestion();
         navQuestion.setArguments(message);
         manager = getFragmentManager();
@@ -58,6 +48,9 @@ public class NavQuestionContent extends AppCompatActivity implements NavQuestion
         switch (item.getItemId()){
             case R.id.btnClose:
                 goResult();
+                return true;
+            case android.R.id.home:
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -80,8 +73,13 @@ public class NavQuestionContent extends AppCompatActivity implements NavQuestion
                 .setNegativeButton("NO",null)
                 .show();
     }
+
     public int calcRegularResult(){
-        Cursor specialScore;
+        SQLiteDatabase bd;
+        AdminSQLiteAPP admin;
+        admin = new AdminSQLiteAPP(this);
+        bd = admin.getReadableDatabase();
+        Cursor specialScore = null ;
         Cursor test = bd.rawQuery("Select * from test", null);
         int score = 0;
         int specialQuestion = 0;
@@ -94,16 +92,21 @@ public class NavQuestionContent extends AppCompatActivity implements NavQuestion
             }else{
                 score += test.getInt(3);
             }
+            specialScore.close();
         }
+        test.close();
+        bd.close();
         return score;
     }
 
-
+    @Override
+    public void onBackPressed(){
+        finish();
+    }
 
     @Override
     public void selectedQuestionListener(int question) {
         selectedQuestion = question;
-        System.out.println("La pregunta seleccionada es " + question);
         Intent intent = new Intent();
         intent.putExtra("selectedQuestion", selectedQuestion);
         setResult(RESULT_OK, intent);

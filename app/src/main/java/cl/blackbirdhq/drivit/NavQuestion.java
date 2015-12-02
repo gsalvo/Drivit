@@ -19,17 +19,16 @@ import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
 
 public class NavQuestion extends Fragment {
-    private Cursor questions;
-    private SQLiteDatabase bd;
-    private AdminSQLiteAPP admin;
+    //private SQLiteDatabase bd;
+    //private AdminSQLiteAPP admin;
     private LinearLayout contentButtonNav;
     private int messageCurrentQuestion;
     OnSelectedQuestionListener onSelectedQuestion;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         messageCurrentQuestion = getArguments().getInt("currentQuestion");
-        System.out.println("el fragment recibe el currentQuestion :"+ messageCurrentQuestion);
         onSelectedQuestion.selectedQuestionListener(messageCurrentQuestion);
     }
 
@@ -43,9 +42,10 @@ public class NavQuestion extends Fragment {
 
     private void initializeComponents(View view) {
         contentButtonNav = (LinearLayout) view.findViewById(R.id.contentButtonNav);
-        admin = new AdminSQLiteAPP(this.getActivity());
-        bd = admin.getReadableDatabase();
-        questions = bd.rawQuery("select _id from questions order by _id", null);
+
+        AdminSQLiteAPP admin = new AdminSQLiteAPP(this.getActivity());
+        SQLiteDatabase bd = admin.getReadableDatabase();
+        Cursor questions = bd.rawQuery("select _id from questions order by _id", null);
         questions.moveToFirst();
         int cantQuestion = questions.getCount();
         int cantButtonLY = 5;
@@ -58,7 +58,7 @@ public class NavQuestion extends Fragment {
                 if(numberQuestion <= cantQuestion){
                     Cursor test = bd.rawQuery("select alternatives_id from test where questions_id="+questions.getInt(0),null);
                     test.moveToFirst();
-                    Button btnQuestion;
+                    final Button btnQuestion;
                     if (test.getCount() == 0){
                         if(messageCurrentQuestion == numberQuestion){
                             btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered_actual, linearLayout, false);
@@ -80,20 +80,24 @@ public class NavQuestion extends Fragment {
                     }
                     btnQuestion.setText(numberQuestion + "");
                     linearLayout.addView(btnQuestion);
+                    final int finalNumberQuestion = numberQuestion;
                     btnQuestion.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            System.out.println("Se modifica la interfaz a16");
-                            onSelectedQuestion.selectedQuestionListener(16);
+                            onSelectedQuestion.selectedQuestionListener(finalNumberQuestion);
+                            getActivity().finish();
                         }
                     });
                     questions.moveToNext();
                     numberQuestion++;
+                    test.close();
                 }else{
                     break;
                 }
             }
         }
+        questions.close();
+        bd.close();
     }
 
     @Override

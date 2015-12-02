@@ -23,18 +23,19 @@ import java.util.List;
 
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
-public class Question extends AppCompatActivity implements StructureQuestion.OnSelectedAlternativeListener {
+public class Question extends AppCompatActivity implements StructureQuestion.OnSelectedAlternativeListener, StructureQuestion.OnChangeQuestionListener{
     //Variables de la base de datos
     private SQLiteDatabase bd;
     private Cursor question;
-    private Cursor test;
+    //private Cursor test;
     private AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
 
     //Variables de la transición de preguntas
     ImageButton btnPrev, btnNext;
     TextView numberQuestion;
-    private int number = 1;
-    public int currentQuestion = 1;
+    private int number = 0;
+    private int goToPosition = 1;
+    private boolean flagForward = false;
     private int alternativeSelected = 0;
     private static int FINAL_QUESTION;
     private FragmentManager manager;
@@ -47,8 +48,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         initializeComponents();
-
-
     }
 
     public void initializeComponents(){
@@ -59,7 +58,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         question = bd.rawQuery("Select * from questions order by _id", null);
 
         FINAL_QUESTION = question.getCount();
-        question.moveToFirst();
         addQuestion();
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -67,25 +65,24 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             public void onClick(View v) {
                 if (number < FINAL_QUESTION) {
                     saveQuestion();
-                    number++;
-                    question.moveToNext();
-                    addQuestion();
+                    goToPosition = number + 1;
+                    flagForward = true;
+                    goToQuestion(goToPosition - number);
                 }
             }
         });
-
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (number > 1) {
                     saveQuestion();
-                    number--;
-                    question.moveToPrevious();
+                    goToPosition = number - 1;
                     popQuestion();
                 }
             }
         });
     }
+
     private void saveQuestion(){
         Cursor alternative;
         ContentValues register = new ContentValues();
@@ -101,6 +98,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             }else{
                 bd.insert("test", null, register);
             }
+            alternative.close();
         }else{
             register.put("right", 0);
             if(bd.rawQuery("Select _id from test where _id = " + number,null).getCount() > 0){
@@ -109,16 +107,21 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 bd.insert("test", null, register);
             }
         }
+
     }
 
     private void addQuestion(){
+        question.moveToNext();
+        number ++;
         StructureQuestion sq = new StructureQuestion();
+        manager = getFragmentManager();
+        transaction = manager.beginTransaction();
         message.putString("id_question",question.getString(0));
         message.putString("question", question.getString(1));
         message.putString("image", question.getString(2));
+        message.putInt("position", number);
+        message.putInt("goToPosition", goToPosition);
         sq.setArguments(message);
-        manager = getFragmentManager();
-        transaction = manager.beginTransaction();
         transaction.replace(R.id.contentFragment, sq);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -127,6 +130,8 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     }
 
     private void popQuestion(){
+        question.moveToPrevious();
+        number --;
         manager = getFragmentManager();
         transaction = manager.beginTransaction();
         manager.popBackStack();
@@ -168,9 +173,8 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     }
 
     public void goNavTest(){
-        currentQuestion = number;
         Intent i = new Intent(Question.this, NavQuestionContent.class);
-        i.putExtra("currentQuestion", currentQuestion);
+        i.putExtra("currentQuestion", number);
         startActivityForResult(i, 1);
     }
 
@@ -185,7 +189,10 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                         Intent i = new Intent(Question.this , Results.class);
                         i.putExtra("score", calcRegularResult());
                         startActivity(i);
+                        question.close();
+                        bd.close();
                         finish();
+
                     }
                 })
                 .setNegativeButton("NO",null)
@@ -194,7 +201,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
 
     public int calcRegularResult(){
         Cursor specialScore;
-        test = bd.rawQuery("Select * from test", null);
+        Cursor test = bd.rawQuery("Select * from test", null);
         int score = 0;
         int specialQuestion = 0;
         while(test.moveToNext()){
@@ -206,7 +213,9 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             }else{
                 score += test.getInt(3);
             }
+            specialScore.close();
         }
+        test.close();
         return score;
     }
 
@@ -215,13 +224,31 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                System.out.println("el dato es: "+data.getIntExtra("selectedQuestion",currentQuestion));
+                goToPosition = data.getIntExtra("selectedQuestion",number);
+                if (goToPosition > number){
+                    flagForward = true;
+                    goToQuestion(goToPosition - number);
+                }else if(goToPosition < number){
+                    while(goToPosition < number){
+                        popQuestion();
+                    }
+                }
             }
         }
     }
 
+
     @Override
     public void selectedAlternative(int alternative) {
         alternativeSelected = alternative;
+    }
+
+    @Override
+    public void goToQuestion(int position) {
+        if(flagForward == true && position > 0){
+            addQuestion();
+        }else{
+            flagForward = false;
+        }
     }
 }
