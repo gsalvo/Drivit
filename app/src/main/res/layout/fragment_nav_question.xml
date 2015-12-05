@@ -1,32 +1,68 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="15dp"
     android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
     tools:context="cl.blackbirdhq.drivit.NavQuestion">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
         android:id="@+id/contentButtonNav">
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="5dp"
         android:id="@+id/symbology">
-        <TextView
+
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Contestada"/>
-        <TextView
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:id="@+id/icAnswered"
+                android:background="@color/btnColorAnswered" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="12sp"
+                android:text="Contestada"
+                android:textColor="@color/btnColorAnswered"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="No contestada"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:id="@+id/icNoAnswered"
+                android:background="@color/btnColorNoAnswered" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="12sp"
+                android:text="Por contestar"
+                android:textColor="@color/btnColorAnswered"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

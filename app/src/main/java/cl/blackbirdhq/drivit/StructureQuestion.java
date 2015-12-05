@@ -19,7 +19,7 @@ import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
 public class StructureQuestion extends Fragment {
     private String messageQuestion, messageImage, messageQuestionId;
-    private int messageGoToPosition, messagePosition;
+    private int messageGoToPosition, messagePosition, messageNumberQuestion;
     private int answered = 0;
     //private SQLiteDatabase bd;
     private Cursor alternative;
@@ -36,6 +36,7 @@ public class StructureQuestion extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        messageNumberQuestion = getArguments().getInt("numberQuestion");
         messageQuestion = getArguments().getString("question");
         messageImage = getArguments().getString("image");
         messageQuestionId = getArguments().getString("id_question");
@@ -62,7 +63,7 @@ public class StructureQuestion extends Fragment {
         alternative2 = (RadioButton) view.findViewById(R.id.alternative2);
         alternative3 = (RadioButton) view.findViewById(R.id.alternative3);
 
-        question.setText(messageQuestion);
+        question.setText(messageNumberQuestion + ".- "+messageQuestion);
         if(messageImage.isEmpty()){
             //code  for image
         }

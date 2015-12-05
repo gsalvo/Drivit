@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
@@ -27,12 +29,11 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     //Variables de la base de datos
     private SQLiteDatabase bd;
     private Cursor question;
-    //private Cursor test;
     private AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
 
     //Variables de la transición de preguntas
     ImageButton btnPrev, btnNext;
-    TextView numberQuestion;
+    TextView time;
     private int number = 0;
     private int goToPosition = 1;
     private boolean flagForward = false;
@@ -41,7 +42,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     private FragmentManager manager;
     private FragmentTransaction transaction;
     private Bundle message = new Bundle();
-
+    private static final String FORMAT = "%02d:%02d";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     public void initializeComponents(){
         btnPrev = (ImageButton) findViewById(R.id.btnPrev);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
-        numberQuestion = (TextView) findViewById(R.id.numberQuestion);
+        time = (TextView) findViewById(R.id.time);
         bd = admin.getWritableDatabase();
         question = bd.rawQuery("Select * from questions order by _id", null);
 
@@ -81,6 +82,26 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 }
             }
         });
+
+        //2700000 = 45 minutes
+        new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                time.setText(""+String.format(FORMAT,
+                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                                TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+            }
+            public void onFinish() {
+                saveQuestion();
+                Intent i = new Intent(Question.this , Results.class);
+                i.putExtra("score", calcRegularResult());
+                question.close();
+                bd.close();
+                startActivity(i);
+                finish();
+            }
+        }.start();
     }
 
     private void saveQuestion(){
@@ -116,6 +137,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         StructureQuestion sq = new StructureQuestion();
         manager = getFragmentManager();
         transaction = manager.beginTransaction();
+        message.putInt("numberQuestion", number);
         message.putString("id_question",question.getString(0));
         message.putString("question", question.getString(1));
         message.putString("image", question.getString(2));
@@ -125,7 +147,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         transaction.replace(R.id.contentFragment, sq);
         transaction.addToBackStack(null);
         transaction.commit();
-        numberQuestion.setText(number + "");
         btnState();
     }
 
@@ -136,7 +157,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         transaction = manager.beginTransaction();
         manager.popBackStack();
         transaction.commit();
-        numberQuestion.setText(number + "");
         btnState();
     }
 
@@ -188,9 +208,9 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(Question.this , Results.class);
                         i.putExtra("score", calcRegularResult());
-                        startActivity(i);
                         question.close();
                         bd.close();
+                        startActivity(i);
                         finish();
 
                     }
@@ -218,6 +238,8 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         test.close();
         return score;
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
