@@ -1,5 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -7,8 +9,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    android:weightSum="7"
-    tools:context=".MainActivity">
+    android:weightSum="7" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -64,25 +65,36 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:id="@+id/textPresentation"
+        <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/textPresentation"
-            android:textColor="@color/PeaGreenText"
-            android:textSize="13sp" />
+            android:scrollbars="vertical">
 
-        <Button
-            android:id="@+id/btnConditions"
-            style="@style/buttonStyle"
-            android:onClick="goConditions"
-            android:text="@string/btnCondition" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textPresentation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/textPresentation"
+                    android:textColor="@color/PeaGreenText"
+                    android:textSize="13sp" />
 
-        <Button
-            android:id="@+id/btnGratitude"
-            style="@style/buttonStyle"
-            android:onClick="goGratitude"
-            android:text="@string/btnGratitude" />
+                <Button
+                    android:id="@+id/btnConditions"
+                    style="@style/buttonStyle"
+                    android:onClick="goConditions"
+                    android:text="@string/btnCondition" />
+
+                <Button
+                    android:id="@+id/btnGratitude"
+                    style="@style/buttonStyle"
+                    android:onClick="goGratitude"
+                    android:text="@string/btnGratitude" />
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </LinearLayout>

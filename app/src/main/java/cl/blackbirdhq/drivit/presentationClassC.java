@@ -95,7 +95,7 @@ public class PresentationClassC extends AppCompatActivity {
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (29, '30 Y 40 AÑOS.', 0, 10)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (30, '40 Y 49 AÑOS.', 0, 10)");
 
-            /*db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (11, 'Frente a una situación normal, ¿Cuál es la forma más segura de frenar?','','4')");
+            db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (11, 'Frente a una situación normal, ¿Cuál es la forma más segura de frenar?','','4')");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (31, 'Frenando fuerte, poniendo la palanca de cambio en neutro y tirando el freno de mano justo antes de detenerse', 0, 11)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (32, 'Frenando suavemente, presionando el pedal de embrague y tirando el freno de mano justo antes de detenerse.', 0, 11)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (33, 'Frenando suavemente, luego un poco más fuerte cuando comienza a detenerse y después aflojando de a poco el freno antes de detenerse', 1, 11)");
@@ -200,7 +200,7 @@ public class PresentationClassC extends AppCompatActivity {
             db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (35, 'El grupo etario de mayor accidentabilidad son los jóvenes, entre:','','4')");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (118, '18 Y 29 AÑOS.', 1, 35)");
             db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (119, '30 Y 40 AÑOS.', 0, 35)");
-            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (120, '40 Y 49 AÑOS.', 0, 35)");*/
+            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (120, '40 Y 49 AÑOS.', 0, 35)");
             return null;
         }
         @Override

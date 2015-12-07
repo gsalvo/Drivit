@@ -1,15 +1,20 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cl.blackbirdhq.drivit.PresentationClassB">
+<LinearLayout
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical"
     android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    tools:context="cl.blackbirdhq.drivit.PresentationClassB"
-    android:weightSum="1">
+    android:paddingBottom="16dp" >
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,3 +45,4 @@
         android:text="@string/btnReady"
         android:onClick="goTest"/>
 </LinearLayout>
+</ScrollView>
