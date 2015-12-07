@@ -41,7 +41,7 @@ public class Results extends AppCompatActivity {
                 (TimeUnit.MILLISECONDS.toMinutes(messageTime) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(messageTime))) +" minutos y "+
                 (TimeUnit.MILLISECONDS.toSeconds(messageTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(messageTime)))+
                 " segundos.";
-        if(score <7){
+        if(score <33){
             face.setImageResource(R.drawable.face_sad);
             viewScore.setText(viewScoreAux);
             text.setText(getResources().getString(R.string.text5));
