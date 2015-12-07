@@ -37,7 +37,10 @@ public class Results extends AppCompatActivity {
     }
 
     private void printResult(int score){
-        String viewScoreAux = getResources().getString(R.string.text4) + " " +score+ " puntos en un tiempo de "+ TimeUnit.MILLISECONDS.toMinutes(messageTime) +" minutos." ;
+        String viewScoreAux = getResources().getString(R.string.text4) + " " +score+ " puntos en un tiempo de "+
+                (TimeUnit.MILLISECONDS.toMinutes(messageTime) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(messageTime))) +" minutos y "+
+                (TimeUnit.MILLISECONDS.toSeconds(messageTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(messageTime)))+
+                " segundos.";
         if(score <7){
             face.setImageResource(R.drawable.face_sad);
             viewScore.setText(viewScoreAux);

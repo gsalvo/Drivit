@@ -92,7 +92,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         });
         if (!checkTest) {
 
-            timer = new CountDownTimer(120000, 1000) {
+            timer = new CountDownTimer(TOTAL_TIME, 1000) {
                 public void onTick(long millisUntilFinished) {
                     timeTest = millisUntilFinished;
                     time.setText("" + String.format(FORMAT,
