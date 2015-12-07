@@ -42,7 +42,7 @@
         style="@style/buttonStyle"
         android:id="@+id/btnReview"
         android:text="@string/btnReview"
-        android:onClick="goReview"/>
+        android:onClick="goCheckTest"/>
 
     <Button
         style="@style/buttonStyle"

@@ -89,4 +89,41 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/blackText</item>
     </style>
+
+    <style name="navButtonTestRight">
+        <item name="android:background">@drawable/nav_button_test_right</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/whiteText</item>
+    </style>
+    <style name="navButtonTestRightActual">
+        <item name="android:background">@drawable/nav_button_test_right_actual</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/whiteText</item>
+    </style>
+    <style name="navButtonTestWrong">
+        <item name="android:background">@drawable/nav_button_test_wrong</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/whiteText</item>
+    </style>
+    <style name="navButtonTestWrongActual">
+        <item name="android:background">@drawable/nav_button_test_wrong_actual</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/whiteText</item>
+    </style>
 </resources>

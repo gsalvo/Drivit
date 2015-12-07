@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
@@ -26,6 +27,7 @@ public class NavQuestionContent extends AppCompatActivity implements NavQuestion
     }
 
     private void initializeComponents() {
+
         FragmentManager manager;
         FragmentTransaction transaction;
         Bundle message = getIntent().getExtras();

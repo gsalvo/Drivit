@@ -32,8 +32,8 @@
     <string name="title_activity_presentation_class_c">presentationClassC</string>
     <string name="title_activity_conditions">conditions</string>
     <string name="title_activity_gratitude">gratitude</string>
-    <string name="title_activity_question">Question</string>
     <string name="title_activity_results">Resultados</string>
+    <string name="title_activity_question_check">Revisión</string>
 
     <!-- Btn ActionBar -->
     <string name="contextualBtnNav">Navegar</string>
@@ -46,10 +46,17 @@
     <string name="dialogTitleExitTest">Salir del examen</string>
     <string name="dialogExitTest">No se calculará el puntaje obtenido ¿Deseas salir del ensayo?</string>
 
+    <!-- Label Nav -->
+    <string name="nav_answered">Contestada</string>
+    <string name="nav_no_answered">Por contestar</string>
+    <string name="nav_answered_right">Respuesta correcta</string>
+    <string name="nav_answered_wrong">Respuesta incorrecta</string>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_nav_question_content">NavQuestionContent</string>
 
     <string name="hello_world">Hello world!</string>
+
 
 </resources>

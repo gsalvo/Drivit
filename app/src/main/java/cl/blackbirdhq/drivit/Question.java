@@ -31,6 +31,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     private SQLiteDatabase bd;
     private Cursor question;
     private AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
+    private boolean checkTest = false;
 
     //Variables de la transición de preguntas
     ImageButton btnPrev, btnNext;
@@ -56,20 +57,21 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     }
 
     public void initializeComponents() {
+        checkTest = getIntent().getBooleanExtra("checkTest", false);
         btnPrev = (ImageButton) findViewById(R.id.btnPrev);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         time = (TextView) findViewById(R.id.time);
         bd = admin.getWritableDatabase();
         question = bd.rawQuery("Select * from questions order by _id", null);
-
         FINAL_QUESTION = question.getCount();
         addQuestion();
-
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (number < FINAL_QUESTION) {
-                    saveQuestion();
+                    if (!checkTest) {
+                        saveQuestion();
+                    }
                     goToPosition = number + 1;
                     flagForward = true;
                     goToQuestion(goToPosition - number);
@@ -80,37 +82,41 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             @Override
             public void onClick(View v) {
                 if (number > 1) {
-                    saveQuestion();
+                    if (!checkTest) {
+                        saveQuestion();
+                    }
                     goToPosition = number - 1;
                     popQuestion();
                 }
             }
         });
+        if (!checkTest) {
 
+            timer = new CountDownTimer(120000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    timeTest = millisUntilFinished;
+                    time.setText("" + String.format(FORMAT,
+                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                                    TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                }
 
-        timer = new CountDownTimer(120000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                timeTest = millisUntilFinished;
-                System.out.println(timeTest);
-                time.setText("" + String.format(FORMAT,
-                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
-                                TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-            }
-
-            public void onFinish() {
-                saveQuestion();
-                Intent i = new Intent(Question.this, Results.class);
-                System.out.println(timeTest);
-                i.putExtra("score", calcRegularResult());
-                i.putExtra("timeTest", TOTAL_TIME - timeTest);
-                question.close();
-                bd.close();
-                startActivity(i);
-                finish();
-            }
-        }.start();
+                public void onFinish() {
+                    saveQuestion();
+                    Intent i = new Intent(Question.this, Results.class);
+                    System.out.println(timeTest);
+                    i.putExtra("score", calcRegularResult());
+                    i.putExtra("timeTest", TOTAL_TIME - timeTest);
+                    question.close();
+                    bd.close();
+                    startActivity(i);
+                    finish();
+                }
+            }.start();
+        }else{
+            time.setVisibility(View.GONE);
+        }
     }
 
     private void saveQuestion() {
@@ -150,6 +156,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         message.putString("id_question", question.getString(0));
         message.putString("question", question.getString(1));
         message.putString("image", question.getString(2));
+        message.putBoolean("checkTest", checkTest);
         message.putInt("position", number);
         message.putInt("goToPosition", goToPosition);
         sq.setArguments(message);
@@ -187,11 +194,16 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_question, menu);
+        if(checkTest){
+            MenuItem item = menu.findItem(R.id.btnClose);
+            item.setVisible(false);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.btnNav:
                 saveQuestion();
@@ -202,21 +214,27 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 goResult();
                 return true;
             case android.R.id.home:
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.dialogTitleExitTest)
-                        .setMessage(R.string.dialogExitTest)
-                        .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                question.close();
-                                bd.close();
-                                timer.cancel();
-                                finish();
+                if(!checkTest){
+                    new AlertDialog.Builder(this)
+                            .setTitle(R.string.dialogTitleExitTest)
+                            .setMessage(R.string.dialogExitTest)
+                            .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    question.close();
+                                    bd.close();
+                                    timer.cancel();
+                                    finish();
 
-                            }
-                        })
-                        .setNegativeButton("NO", null)
-                        .show();
+                                }
+                            })
+                            .setNegativeButton("NO", null)
+                            .show();
+                }else{
+                    question.close();
+                    bd.close();
+                    finish();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -225,6 +243,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     public void goNavTest() {
         Intent i = new Intent(Question.this, NavQuestionContent.class);
         i.putExtra("currentQuestion", number);
+        i.putExtra("checkTest", checkTest);
         startActivityForResult(i, 1);
     }
 
@@ -272,21 +291,27 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.dialogTitleExitTest)
-                .setMessage(R.string.dialogExitTest)
-                .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        question.close();
-                        bd.close();
-                        timer.cancel();
-                        finish();
+        if (!checkTest){
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.dialogTitleExitTest)
+                    .setMessage(R.string.dialogExitTest)
+                    .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            question.close();
+                            bd.close();
+                            timer.cancel();
+                            finish();
 
-                    }
-                })
-                .setNegativeButton("NO", null)
-                .show();
+                        }
+                    })
+                    .setNegativeButton("NO", null)
+                    .show();
+        }else{
+            question.close();
+            bd.close();
+            finish();
+        }
     }
 
 
@@ -307,7 +332,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             }
         }
     }
-
 
     @Override
     public void selectedAlternative(int alternative) {

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Results extends AppCompatActivity {
     private Bundle message;
-    private int messageScore;
+    private int  messageScore;
     private long messageTime;
     private TextView viewScore, text;
     private ImageView face;
@@ -47,6 +48,16 @@ public class Results extends AppCompatActivity {
             viewScore.setText(viewScoreAux);
             text.setText(R.string.text6);
         }
+    }
+
+    public void goCheckTest (View view){
+        Intent i = new Intent(Results.this, Question.class);
+        i.putExtra("checkTest", true);
+        startActivity(i);
+    }
+
+    public void goReDoTest(View view){
+        finish();
     }
 
 
