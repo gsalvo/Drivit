@@ -43,7 +43,8 @@
     <string name="dialogTitleCloseTest">Finalizar examen</string>
     <string name="dialogCloseTest">Aun te queda tiempo para revisar el ensayo ¿Quieres terminar?</string>
     <string name="dialogLoadTest">Creando el ensayo</string>
-
+    <string name="dialogTitleExitTest">Salir del examen</string>
+    <string name="dialogExitTest">No se calculará el puntaje obtenido ¿Deseas salir del ensayo?</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

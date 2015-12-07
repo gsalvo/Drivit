@@ -1,5 +1,6 @@
 package cl.blackbirdhq.drivit;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -37,18 +38,11 @@ public class NavQuestionContent extends AppCompatActivity implements NavQuestion
         transaction.commit();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_nav_question_content, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.btnClose:
-                goResult();
-                return true;
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
@@ -56,48 +50,6 @@ public class NavQuestionContent extends AppCompatActivity implements NavQuestion
         return super.onOptionsItemSelected(item);
     }
 
-    public void goResult(){
-        new AlertDialog.Builder(this)
-                .setTitle("")
-                .setTitle(R.string.dialogTitleCloseTest)
-                .setMessage(R.string.dialogCloseTest)
-                .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(NavQuestionContent.this , Results.class);
-                        i.putExtra("score", calcRegularResult());
-                        startActivity(i);
-                        finish();
-                    }
-                })
-                .setNegativeButton("NO",null)
-                .show();
-    }
-
-    public int calcRegularResult(){
-        SQLiteDatabase bd;
-        AdminSQLiteAPP admin;
-        admin = new AdminSQLiteAPP(this);
-        bd = admin.getReadableDatabase();
-        Cursor specialScore = null ;
-        Cursor test = bd.rawQuery("Select * from test", null);
-        int score = 0;
-        int specialQuestion = 0;
-        while(test.moveToNext()){
-            specialScore = bd.rawQuery("SELECT special, name FROM categories AS c JOIN questions AS q ON q.categories_id = c._id WHERE q._id =" + test.getInt(1), null);
-            specialScore.moveToFirst();
-            if(specialQuestion < 3 && specialScore.getInt(0)==1){
-                score += test.getInt(3) * 2;
-                specialQuestion ++;
-            }else{
-                score += test.getInt(3);
-            }
-            specialScore.close();
-        }
-        test.close();
-        bd.close();
-        return score;
-    }
 
     @Override
     public void onBackPressed(){

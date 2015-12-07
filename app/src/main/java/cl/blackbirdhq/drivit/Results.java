@@ -10,9 +10,12 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.concurrent.TimeUnit;
+
 public class Results extends AppCompatActivity {
     private Bundle message;
     private int messageScore;
+    private long messageTime;
     private TextView viewScore, text;
     private ImageView face;
     @Override
@@ -25,6 +28,7 @@ public class Results extends AppCompatActivity {
     private void initializeComponents(){
         message = getIntent().getExtras();
         messageScore = message.getInt("score");
+        messageTime = message.getLong("timeTest");
         viewScore = (TextView) findViewById(R.id.viewScore);
         text = (TextView) findViewById(R.id.text);
         face = (ImageView) findViewById(R.id.face);
@@ -32,7 +36,7 @@ public class Results extends AppCompatActivity {
     }
 
     private void printResult(int score){
-        String viewScoreAux = getResources().getString(R.string.text4) + " " +score+ " puntos en un tiempo de xx minutos." ;
+        String viewScoreAux = getResources().getString(R.string.text4) + " " +score+ " puntos en un tiempo de "+ TimeUnit.MILLISECONDS.toMinutes(messageTime) +" minutos." ;
         if(score <7){
             face.setImageResource(R.drawable.face_sad);
             viewScore.setText(viewScoreAux);

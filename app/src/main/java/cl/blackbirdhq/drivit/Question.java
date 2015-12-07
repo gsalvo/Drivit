@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
-public class Question extends AppCompatActivity implements StructureQuestion.OnSelectedAlternativeListener, StructureQuestion.OnChangeQuestionListener{
+public class Question extends AppCompatActivity implements StructureQuestion.OnSelectedAlternativeListener, StructureQuestion.OnChangeQuestionListener {
     //Variables de la base de datos
     private SQLiteDatabase bd;
     private Cursor question;
@@ -34,6 +35,9 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     //Variables de la transición de preguntas
     ImageButton btnPrev, btnNext;
     TextView time;
+    private CountDownTimer timer;
+    private long timeTest;
+    private static long TOTAL_TIME = 2700000;
     private int number = 0;
     private int goToPosition = 1;
     private boolean flagForward = false;
@@ -51,7 +55,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         initializeComponents();
     }
 
-    public void initializeComponents(){
+    public void initializeComponents() {
         btnPrev = (ImageButton) findViewById(R.id.btnPrev);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         time = (TextView) findViewById(R.id.time);
@@ -83,19 +87,24 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             }
         });
 
-        //2700000 = 45 minutes
-        new CountDownTimer(60000, 1000) {
+
+        timer = new CountDownTimer(120000, 1000) {
             public void onTick(long millisUntilFinished) {
-                time.setText(""+String.format(FORMAT,
+                timeTest = millisUntilFinished;
+                System.out.println(timeTest);
+                time.setText("" + String.format(FORMAT,
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
                                 TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                         TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
                                 TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
             }
+
             public void onFinish() {
                 saveQuestion();
-                Intent i = new Intent(Question.this , Results.class);
+                Intent i = new Intent(Question.this, Results.class);
+                System.out.println(timeTest);
                 i.putExtra("score", calcRegularResult());
+                i.putExtra("timeTest", TOTAL_TIME - timeTest);
                 question.close();
                 bd.close();
                 startActivity(i);
@@ -104,41 +113,41 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         }.start();
     }
 
-    private void saveQuestion(){
+    private void saveQuestion() {
         Cursor alternative;
         ContentValues register = new ContentValues();
         register.put("_id", number);
         register.put("questions_id", question.getInt(0));
         register.put("alternatives_id", alternativeSelected);
-        if(alternativeSelected != 0){
+        if (alternativeSelected != 0) {
             alternative = bd.rawQuery("select right from alternatives where _id = " + alternativeSelected, null);
             alternative.moveToFirst();
             register.put("right", alternative.getInt(0));
-            if(bd.rawQuery("Select _id from test where _id = " + number,null).getCount() > 0){
+            if (bd.rawQuery("Select _id from test where _id = " + number, null).getCount() > 0) {
                 bd.update("test", register, "_id = " + number, null);
-            }else{
+            } else {
                 bd.insert("test", null, register);
             }
             alternative.close();
-        }else{
+        } else {
             register.put("right", 0);
-            if(bd.rawQuery("Select _id from test where _id = " + number,null).getCount() > 0){
+            if (bd.rawQuery("Select _id from test where _id = " + number, null).getCount() > 0) {
                 bd.update("test", register, "_id = " + number, null);
-            }else{
+            } else {
                 bd.insert("test", null, register);
             }
         }
 
     }
 
-    private void addQuestion(){
+    private void addQuestion() {
         question.moveToNext();
-        number ++;
+        number++;
         StructureQuestion sq = new StructureQuestion();
         manager = getFragmentManager();
         transaction = manager.beginTransaction();
         message.putInt("numberQuestion", number);
-        message.putString("id_question",question.getString(0));
+        message.putString("id_question", question.getString(0));
         message.putString("question", question.getString(1));
         message.putString("image", question.getString(2));
         message.putInt("position", number);
@@ -150,9 +159,9 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         btnState();
     }
 
-    private void popQuestion(){
+    private void popQuestion() {
         question.moveToPrevious();
-        number --;
+        number--;
         manager = getFragmentManager();
         transaction = manager.beginTransaction();
         manager.popBackStack();
@@ -160,15 +169,18 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         btnState();
     }
 
-    private void btnState(){
-        if(number == FINAL_QUESTION){
+    private void btnState() {
+        if (number == FINAL_QUESTION) {
             btnNext.setEnabled(false);
-        }
-        else if(number == 1){
+            btnNext.setImageResource(R.drawable.ic_navigate_next_white_36dp_dis);
+        } else if (number == 1) {
             btnPrev.setEnabled(false);
-        }else{
+            btnPrev.setImageResource(R.drawable.ic_navigate_before_white_36dp_dis);
+        } else {
             btnNext.setEnabled(true);
+            btnNext.setImageResource(R.drawable.ic_navigate_next_white_36dp);
             btnPrev.setEnabled(true);
+            btnPrev.setImageResource(R.drawable.ic_navigate_before_white_36dp);
         }
     }
 
@@ -177,9 +189,10 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         getMenuInflater().inflate(R.menu.menu_question, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.btnNav:
                 saveQuestion();
                 goNavTest();
@@ -188,49 +201,67 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 saveQuestion();
                 goResult();
                 return true;
+            case android.R.id.home:
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.dialogTitleExitTest)
+                        .setMessage(R.string.dialogExitTest)
+                        .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                question.close();
+                                bd.close();
+                                timer.cancel();
+                                finish();
+
+                            }
+                        })
+                        .setNegativeButton("NO", null)
+                        .show();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void goNavTest(){
+    public void goNavTest() {
         Intent i = new Intent(Question.this, NavQuestionContent.class);
         i.putExtra("currentQuestion", number);
         startActivityForResult(i, 1);
     }
 
-    public void goResult(){
+    public void goResult() {
         new AlertDialog.Builder(this)
-                .setTitle("")
                 .setTitle(R.string.dialogTitleCloseTest)
                 .setMessage(R.string.dialogCloseTest)
                 .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(Question.this , Results.class);
+                        Intent i = new Intent(Question.this, Results.class);
                         i.putExtra("score", calcRegularResult());
+                        i.putExtra("timeTest", TOTAL_TIME - timeTest);
                         question.close();
                         bd.close();
                         startActivity(i);
+                        timer.cancel();
                         finish();
 
                     }
                 })
-                .setNegativeButton("NO",null)
+                .setNegativeButton("NO", null)
                 .show();
     }
 
-    public int calcRegularResult(){
+    public int calcRegularResult() {
         Cursor specialScore;
         Cursor test = bd.rawQuery("Select * from test", null);
         int score = 0;
         int specialQuestion = 0;
-        while(test.moveToNext()){
+        while (test.moveToNext()) {
             specialScore = bd.rawQuery("SELECT special, name FROM categories AS c JOIN questions AS q ON q.categories_id = c._id WHERE q._id =" + test.getInt(1), null);
             specialScore.moveToFirst();
-            if(specialQuestion < 3 && specialScore.getInt(0)==1){
+            if (specialQuestion < 3 && specialScore.getInt(0) == 1) {
                 score += test.getInt(3) * 2;
-                specialQuestion ++;
-            }else{
+                specialQuestion++;
+            } else {
                 score += test.getInt(3);
             }
             specialScore.close();
@@ -239,6 +270,24 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         return score;
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialogTitleExitTest)
+                .setMessage(R.string.dialogExitTest)
+                .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        question.close();
+                        bd.close();
+                        timer.cancel();
+                        finish();
+
+                    }
+                })
+                .setNegativeButton("NO", null)
+                .show();
+    }
 
 
     @Override
@@ -246,12 +295,12 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                goToPosition = data.getIntExtra("selectedQuestion",number);
-                if (goToPosition > number){
+                goToPosition = data.getIntExtra("selectedQuestion", number);
+                if (goToPosition > number) {
                     flagForward = true;
                     goToQuestion(goToPosition - number);
-                }else if(goToPosition < number){
-                    while(goToPosition < number){
+                } else if (goToPosition < number) {
+                    while (goToPosition < number) {
                         popQuestion();
                     }
                 }
@@ -267,10 +316,11 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
 
     @Override
     public void goToQuestion(int position) {
-        if(flagForward == true && position > 0){
+        if (flagForward == true && position > 0) {
             addQuestion();
-        }else{
+        } else {
             flagForward = false;
         }
     }
+
 }
