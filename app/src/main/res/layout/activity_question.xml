@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cl.blackbirdhq.drivit.Question">
+    tools:context="cl.blackbirdhq.drivit.Question"
+    android:id="@+id/contentActivity">
 
     <ScrollView
         android:layout_width="fill_parent"

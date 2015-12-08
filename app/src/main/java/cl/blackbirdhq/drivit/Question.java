@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.usage.UsageEvents;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,9 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,10 @@ import java.util.concurrent.TimeUnit;
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
 public class Question extends AppCompatActivity implements StructureQuestion.OnSelectedAlternativeListener, StructureQuestion.OnChangeQuestionListener {
+    //Variables de punteo
+    private float x1, x2;
+    static final int MIN_DISTANCE = 200;
+
     //Variables de la base de datos
     private SQLiteDatabase bd;
     private Cursor question;
@@ -54,9 +62,32 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         initializeComponents();
+
+    }
+
+    public boolean onTouchEvent(MotionEvent event){
+        System.out.println("se hizo clic");
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                System.out.println(x1);
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                System.out.println(x2);
+                float auxX = x2 - x1;
+                if(Math.abs(auxX) > MIN_DISTANCE ){
+                    Toast.makeText(this, "derecha", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "izquierda", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 
     public void initializeComponents() {
+
         checkTest = getIntent().getBooleanExtra("checkTest", false);
         btnPrev = (ImageButton) findViewById(R.id.btnPrev);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
@@ -152,6 +183,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         StructureQuestion sq = new StructureQuestion();
         manager = getFragmentManager();
         transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
         message.putInt("numberQuestion", number);
         message.putString("id_question", question.getString(0));
         message.putString("question", question.getString(1));
@@ -160,6 +192,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         message.putInt("position", number);
         message.putInt("goToPosition", goToPosition);
         sq.setArguments(message);
+
         transaction.replace(R.id.contentFragment, sq);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -346,5 +379,33 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             flagForward = false;
         }
     }
+
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                float auxX = x2 - x1;
+                if(auxX > MIN_DISTANCE ){
+                    //left
+                    if(number > 1){
+                        saveQuestion();
+                        popQuestion();
+                    }
+                }else if(auxX < -MIN_DISTANCE ){
+                    //Right
+                    if(number < FINAL_QUESTION){
+                        saveQuestion();
+                        addQuestion();
+                    }
+                }
+                break;
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+
 
 }
