@@ -1,17 +1,13 @@
 package cl.blackbirdhq.drivit;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.usage.UsageEvents;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,12 +16,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;

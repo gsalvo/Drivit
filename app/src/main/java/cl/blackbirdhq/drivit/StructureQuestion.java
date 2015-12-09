@@ -66,7 +66,7 @@ public class StructureQuestion extends Fragment {
         alternative2 = (RadioButton) view.findViewById(R.id.alternative2);
         alternative3 = (RadioButton) view.findViewById(R.id.alternative3);
         question.setText(messageNumberQuestion + ".- "+messageQuestion);
-        if(messageImage.isEmpty()){
+        if(!messageImage.isEmpty()){
             //code  for image
         }
         alternative = bd.rawQuery("Select * from alternatives where questions_id = " + messageQuestionId, null);
