@@ -3,8 +3,10 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
+
         <!-- Action Bar-->
         <item name="colorPrimary">@color/actionBarColor</item>
+        <item name="colorPrimaryDark">@color/topBar</item>
         <!-- Backgorund -->
         <item name="android:windowBackground">@color/defaultBackground</item>
         <!--Button-->

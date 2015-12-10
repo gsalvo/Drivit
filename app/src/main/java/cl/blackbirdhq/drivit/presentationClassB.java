@@ -26,7 +26,7 @@ public class PresentationClassB extends AppCompatActivity {
     private SQLiteDatabase db;
     private ProgressDialog mDialog;
     private LoadQuestion loadQuestion;
-    AlertDialog.Builder alertDialog;
+    private AlertDialog.Builder alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

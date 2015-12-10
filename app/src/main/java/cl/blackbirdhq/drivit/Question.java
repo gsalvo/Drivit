@@ -57,27 +57,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
 
     }
 
-    public boolean onTouchEvent(MotionEvent event){
-        System.out.println("se hizo clic");
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
-                System.out.println(x1);
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                System.out.println(x2);
-                float auxX = x2 - x1;
-                if(Math.abs(auxX) > MIN_DISTANCE ){
-                    Toast.makeText(this, "derecha", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, "izquierda", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
-
     public void initializeComponents() {
 
         checkTest = getIntent().getBooleanExtra("checkTest", false);
@@ -128,7 +107,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 public void onFinish() {
                     saveQuestion();
                     Intent i = new Intent(Question.this, Results.class);
-                    System.out.println(timeTest);
                     i.putExtra("score", calcRegularResult());
                     i.putExtra("timeTest", TOTAL_TIME - timeTest);
                     question.close();
@@ -148,6 +126,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         register.put("_id", number);
         register.put("questions_id", question.getInt(0));
         register.put("alternatives_id", alternativeSelected);
+        System.out.println(alternativeSelected);
         if (alternativeSelected != 0) {
             alternative = bd.rawQuery("select right from alternatives where _id = " + alternativeSelected, null);
             alternative.moveToFirst();
@@ -228,7 +207,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.btnNav:
                 saveQuestion();
@@ -385,12 +363,14 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                     if(number > 1){
                         saveQuestion();
                         popQuestion();
+                        return true;
                     }
                 }else if(auxX < -MIN_DISTANCE ){
                     //Right
                     if(number < FINAL_QUESTION){
                         saveQuestion();
                         addQuestion();
+                        return true;
                     }
                 }
                 break;

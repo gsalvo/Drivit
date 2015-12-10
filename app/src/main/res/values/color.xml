@@ -5,6 +5,7 @@
     <color name="PeaGreenText" type="color">#43A047</color>
     <color name="GreenText" type="color">#2E7D32</color>
     <color name="timeColor" type="color">#3D9942</color>
+    <color name="topBar" type="color">#1B5E20</color>
 
     <color name="defaultBackground" type="color">#FFFFFF</color>
     <color name="defaultButton" type="color">#43A047</color>
