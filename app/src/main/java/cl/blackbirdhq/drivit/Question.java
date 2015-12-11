@@ -126,7 +126,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         register.put("_id", number);
         register.put("questions_id", question.getInt(0));
         register.put("alternatives_id", alternativeSelected);
-        System.out.println(alternativeSelected);
         if (alternativeSelected != 0) {
             alternative = bd.rawQuery("select right from alternatives where _id = " + alternativeSelected, null);
             alternative.moveToFirst();

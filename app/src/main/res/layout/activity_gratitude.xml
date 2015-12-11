@@ -1,9 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="cl.blackbirdhq.drivit.Gratitude">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp">
 
-    <TextView android:text="hola" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_municipalidad"/>
 
-</RelativeLayout>
+        <TextView android:text="@string/text7"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:textColor="@color/GreenText"
+            android:textSize="13sp"
+            android:textStyle="bold"/>
+        <TextView android:text="@string/text8"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/PeaGreenText"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_usach"
+            android:layout_marginTop="16dp"/>
+
+        <TextView android:text="@string/text9"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:textColor="@color/GreenText"
+            android:textSize="13sp"
+            android:textStyle="bold"/>
+        <TextView android:text="@string/text10"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/PeaGreenText"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_blackbird"
+            android:layout_marginTop="16dp"/>
+
+        <TextView android:text="@string/text11"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:textColor="@color/GreenText"
+            android:textSize="13sp"
+            android:textStyle="bold"/>
+        <TextView android:text="@string/text12"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/PeaGreenText"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</ScrollView>
