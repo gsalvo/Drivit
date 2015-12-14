@@ -29,6 +29,7 @@ public class PresentationClassC extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presentation_class_c);
         mDialog = new ProgressDialog(this);
+        alertDialog = new AlertDialog.Builder(this);
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -59,11 +60,9 @@ public class PresentationClassC extends AppCompatActivity {
                 JSONParser jsonParser = new JSONParser();
                 JSONArray jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassC.php");
                 for(int i = 0; i < jsonArray.length();i++){
-
                     JSONObject JSONQuestion = jsonArray.getJSONObject(i);
                     db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (" + JSONQuestion.get("id") + ", '" + JSONQuestion.get("question") + "','" + JSONQuestion.get("image") + "'," + JSONQuestion.get("categories_id") + ")");
                     JSONArray JSONal = (JSONArray) JSONQuestion.get("alternatives");
-
                     for(int j = 0; j < JSONal.length(); j++){
                         JSONObject alternative = JSONal.getJSONObject(j);
                         db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (" + alternative.get("id") + ", '" + alternative.get("alternative") + "'," + alternative.get("right") + ", " + JSONQuestion.get("id") + ")");
@@ -90,8 +89,9 @@ public class PresentationClassC extends AppCompatActivity {
                 mDialog.dismiss();
             }else{
                 mDialog.dismiss();
+
                 alertDialog.setTitle("Error con la descarga del examen")
-                        .setMessage("No se ha podido descargar el examen, verifique su conexión a internet.")
+                        .setMessage("No se ha podido descargar el examen, verifique su conexión a internet y vuelva a intentar.")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Cierra el dialogo

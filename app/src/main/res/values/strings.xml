@@ -53,6 +53,7 @@
     <string name="dialogLoadTest">Creando el ensayo</string>
     <string name="dialogTitleExitTest">Salir del examen</string>
     <string name="dialogExitTest">No se calculará el puntaje obtenido ¿Deseas salir del ensayo?</string>
+    <string name="dialogFinishTestText">Ya has respondido todas las preguntas  ¿Quieres revisarlo?</string>
 
     <!-- Label Nav -->
     <string name="nav_answered">Contestada</string>

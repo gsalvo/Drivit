@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.concurrent.TimeUnit;
@@ -33,6 +34,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     private AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
     private boolean checkTest = false;
 
+    private boolean askedFinish = false;
     //Variables de la transición de preguntas
     ImageButton btnPrev, btnNext;
     TextView time;
@@ -58,7 +60,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     }
 
     public void initializeComponents() {
-
         checkTest = getIntent().getBooleanExtra("checkTest", false);
         btnPrev = (ImageButton) findViewById(R.id.btnPrev);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
@@ -92,8 +93,9 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 }
             }
         });
-        if (!checkTest) {
 
+
+        if (!checkTest) {
             timer = new CountDownTimer(TOTAL_TIME, 1000) {
                 public void onTick(long millisUntilFinished) {
                     timeTest = millisUntilFinished;
@@ -144,7 +146,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 bd.insert("test", null, register);
             }
         }
-
     }
 
     private void addQuestion() {
@@ -162,7 +163,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         message.putInt("position", number);
         message.putInt("goToPosition", goToPosition);
         sq.setArguments(message);
-
         transaction.replace(R.id.contentFragment, sq);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -291,6 +291,43 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         return score;
     }
 
+    private void finishTest(){
+        boolean condition = true;
+        Cursor test = bd.rawQuery("Select alternatives_id from test", null);
+        int cant = test.getCount();
+        while(test.moveToNext()){
+            if (test.getInt(0) == 0){
+                condition = false;
+                break;
+            }
+        }
+        if(cant < 35){
+            condition = false;
+        }
+        test.close();
+        if (condition == true){
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.dialogTitleCloseTest)
+                    .setMessage(R.string.dialogFinishTestText)
+                    .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent i = new Intent(Question.this, Results.class);
+                            i.putExtra("score", calcRegularResult());
+                            i.putExtra("timeTest", TOTAL_TIME - timeTest);
+                            question.close();
+                            bd.close();
+                            startActivity(i);
+                            timer.cancel();
+                            finish();
+
+                        }
+                    })
+                    .setNegativeButton("NO", null)
+                    .show();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if (!checkTest){
@@ -338,6 +375,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     @Override
     public void selectedAlternative(int alternative) {
         alternativeSelected = alternative;
+
     }
 
     @Override
