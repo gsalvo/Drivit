@@ -1,5 +1,6 @@
 package cl.blackbirdhq.drivit;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         TextView title = (TextView)findViewById(R.id.textNamePresentation);
         Typeface face= Typeface.createFromAsset(getAssets(), "fonts/Ubuntu-MI.ttf");
         title.setTypeface(face);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
     }
 
@@ -30,16 +34,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        Intent i;
+        switch(item.getItemId()){
+            case R.id.setting:
+                i = new Intent(this, Setting.class);
+                startActivity(i);
+                return true;
+            case R.id.progress:
+                i = new Intent(this, Progress.class);
+                startActivity(i);
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

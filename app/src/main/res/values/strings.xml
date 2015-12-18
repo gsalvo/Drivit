@@ -42,10 +42,15 @@
     <string name="title_activity_gratitude">gratitude</string>
     <string name="title_activity_results">Resultados</string>
     <string name="title_activity_question_check">Revisión</string>
+    <string name="title_activity_progress">Progreso</string>
+    <string name="title_activity_setting">Configuraciones</string>
 
     <!-- Btn ActionBar -->
     <string name="contextualBtnNav">Navegar</string>
     <string name="contextualBtnFinish">Finalizar ensayo</string>
+    <string name="contextualBtnSetting">Configuraciones</string>
+    <string name="contextualBtnProgress">Progreso</string>
+    <string name="contextualBtnHelp">Ayuda</string>
 
     <!-- DialogAlert -->
     <string name="dialogTitleCloseTest">Finalizar examen</string>
@@ -88,4 +93,8 @@ La información no personal se refiere a la información que no identifica a un 
     <string name="deta9">Drivit se compromete a realizar esfuerzos razonables para prevenir que terceros adquieran, alteren, o destruyan información puesta a disposición de Drivit a través de la aplicación. No obstante la intercepción o adquisición ilícita por parte de un tercero sigue siendo posible.</string>
     <string name="deta10">Drivit se reserva el derecho, en cualquier momento y sin aviso previo, de agregar, cambiar, modificar o actualizar esta política de privacidad mediante la publicación de una nueva política enmendada en esta aplicación.</string>
     <string name="deta11">Drivit no se hace responsable de ninguna actividad ilícita en caso de que un tercero obtenga una contraseña o acceda ilegalmente a la información enviada por la aplicación.</string>
+
+
+    <string name="hello_world">Hello world!</string>
+
 </resources>

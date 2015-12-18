@@ -14,10 +14,14 @@
     </style>
 
     <!--MainActivity style-->
-    <style name="CustomThemeMA" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="CustomThemeMA" parent="Theme.AppCompat.Light.DarkActionBar">
         <!--ActionBar-->
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <item name="colorPrimary">@color/actionBarColor</item>
+        <item name="colorPrimaryDark">@color/topBar</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!--<item name="android:windowActionBar">false</item>-->
         <item name="android:windowBackground">@color/defaultBackground</item>
         <!--<item name="android:colorBackground">@color/background_app</item>-->
         <!--Button-->

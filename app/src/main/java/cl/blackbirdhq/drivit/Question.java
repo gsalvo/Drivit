@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.CountDownTimer;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -167,6 +169,15 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         transaction.addToBackStack(null);
         transaction.commit();
         btnState();
+        if(checkTest){
+            ImageView questionReview = (ImageView) findViewById(R.id.questionReview);
+            questionReview.setVisibility(View.VISIBLE);
+            if(checkQuestion()){
+                questionReview.setBackgroundColor(getResources().getColor(R.color.defaultButton));
+            }else{
+                questionReview.setBackgroundColor(getResources().getColor(R.color.errorAnswer));
+            }
+        }
     }
 
     private void popQuestion() {
@@ -177,6 +188,15 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         manager.popBackStack();
         transaction.commit();
         btnState();
+        if(checkTest){
+            ImageView questionReview = (ImageView) findViewById(R.id.questionReview);
+            questionReview.setVisibility(View.VISIBLE);
+            if(checkQuestion()){
+                questionReview.setBackgroundColor(getResources().getColor(R.color.defaultButton));
+            }else{
+                questionReview.setBackgroundColor(getResources().getColor(R.color.errorAnswer));
+            }
+        }
     }
 
     private void btnState() {
@@ -291,40 +311,20 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         return score;
     }
 
-    private void finishTest(){
-        boolean condition = true;
-        Cursor test = bd.rawQuery("Select alternatives_id from test", null);
-        int cant = test.getCount();
-        while(test.moveToNext()){
-            if (test.getInt(0) == 0){
-                condition = false;
-                break;
+    private boolean checkQuestion(){
+        Cursor test = bd.rawQuery("SELECT right FROM test where questions_id ="+ question.getInt(0),null);
+        test.moveToFirst();
+        if(test.getCount()>0){
+            if(test.getInt(0) == 0){
+                test.close();
+                return false;
+            }else{
+                test.close();
+                return true;
             }
-        }
-        if(cant < 35){
-            condition = false;
-        }
-        test.close();
-        if (condition == true){
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.dialogTitleCloseTest)
-                    .setMessage(R.string.dialogFinishTestText)
-                    .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent i = new Intent(Question.this, Results.class);
-                            i.putExtra("score", calcRegularResult());
-                            i.putExtra("timeTest", TOTAL_TIME - timeTest);
-                            question.close();
-                            bd.close();
-                            startActivity(i);
-                            timer.cancel();
-                            finish();
-
-                        }
-                    })
-                    .setNegativeButton("NO", null)
-                    .show();
+        }else{
+            test.close();
+            return false;
         }
     }
 
