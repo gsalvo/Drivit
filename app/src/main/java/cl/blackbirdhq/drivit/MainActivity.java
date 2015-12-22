@@ -49,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goPresentationClassB(View view){
-        Intent i = new Intent(this, PresentationClassB.class);
+        //Intent i = new Intent(this, PresentationClassB.class);
+        Intent i = new Intent(this, Modalities.class);
+        i.putExtra("type", "b");
         startActivity(i);
     }
 

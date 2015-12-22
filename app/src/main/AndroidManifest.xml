@@ -75,6 +75,38 @@
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".Modalities"
+            android:label="@string/title_activity_modalities"
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".RealModality"
+            android:label="@string/title_activity_real_modality"
+            android:parentActivityName=".Modalities"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".SpecialModality"
+            android:label="@string/title_activity_special_modality"
+            android:parentActivityName=".Modalities"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".SurvivalModality"
+            android:label="@string/title_activity_survival_modality"
+            android:parentActivityName=".Modalities"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".TimeAttackModality"
+            android:label="@string/title_activity_time_attack_modality"
+            android:parentActivityName=".Modalities"
+
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

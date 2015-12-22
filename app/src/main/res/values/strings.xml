@@ -44,6 +44,11 @@
     <string name="title_activity_question_check">Revisión</string>
     <string name="title_activity_progress">Progreso</string>
     <string name="title_activity_setting">Configuraciones</string>
+    <string name="title_activity_modalities">Modalidades</string>
+    <string name="title_activity_special_modality">Especializado</string>
+    <string name="title_activity_survival_modality">Muerte súbita</string>
+    <string name="title_activity_time_attack_modality">Contra el tiempo</string>
+    <string name="title_activity_real_modality">Real</string>
 
     <!-- Btn ActionBar -->
     <string name="contextualBtnNav">Navegar</string>
@@ -96,5 +101,9 @@ La información no personal se refiere a la información que no identifica a un 
 
 
     <string name="hello_world">Hello world!</string>
+
+
+
+
 
 </resources>
