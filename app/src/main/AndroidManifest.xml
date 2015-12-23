@@ -22,18 +22,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PresentationClassB"
-            android:label="@string/labelPresentationClassB"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".PresentationClassC"
-            android:label="@string/labelPresentationClassC"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".Conditions"
             android:label="@string/labelConditions"
             android:parentActivityName=".MainActivity"
@@ -48,13 +36,13 @@
         <activity
             android:name=".Question"
             android:label="@string/labelQuestion"
-            android:parentActivityName=".PresentationClassB"
+            android:parentActivityName=".Modalities"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Results"
             android:label="@string/title_activity_results"
-            android:parentActivityName=".PresentationClassB"
+            android:parentActivityName=".Modalities"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -77,7 +65,7 @@
         </activity>
         <activity
             android:name=".Modalities"
-            android:label="@string/title_activity_modalities"
+            android:label="@string/title_activity_modalities_classB"
             android:parentActivityName=".MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" >

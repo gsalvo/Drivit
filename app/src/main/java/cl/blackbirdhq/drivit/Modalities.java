@@ -30,6 +30,9 @@ public class Modalities extends AppCompatActivity {
     private void initializeComponent() {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getString("type");
+        if(type.equals("c")){
+            getSupportActionBar().setTitle(getString(R.string.title_activity_modalities_classC));
+        }
         this.listView = (ListView) findViewById(R.id.list_item);
         List item = new ArrayList();
         item.add(new ItemModality(R.drawable.ic_real_modality,"Real","Realizarás un ensayo simulando las mismas condiciones en cuanto al tiempo, cantidad de preguntas y puntaje que el examen real"));
@@ -44,7 +47,6 @@ public class Modalities extends AppCompatActivity {
                 Intent i;
                 switch (position) {
                     case 0:
-
                         i = new Intent(view.getContext(), RealModality.class);
                         i.putExtra("type", type);
                         i.putExtra("modality", "real");

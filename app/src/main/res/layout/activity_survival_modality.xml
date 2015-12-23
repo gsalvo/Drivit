@@ -25,7 +25,7 @@ tools:context="cl.blackbirdhq.drivit.SurvivalModality">
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text1"
+        android:text="@string/modS1"
         android:textColor="@color/GreenText"
         android:gravity="center"
         android:textStyle="bold"
@@ -34,7 +34,7 @@ tools:context="cl.blackbirdhq.drivit.SurvivalModality">
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text3"
+        android:text="@string/modS2"
         android:textColor="@color/PeaGreenText"
         android:gravity="center"
         android:textSize="14sp"

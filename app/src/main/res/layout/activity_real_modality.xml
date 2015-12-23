@@ -25,16 +25,17 @@ tools:context="cl.blackbirdhq.drivit.RealModality">
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text1"
+        android:text="@string/mod1b"
         android:textColor="@color/GreenText"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:layout_marginBottom="25dp"/>
+        android:layout_marginBottom="25dp"
+        android:id="@+id/questionText"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text3"
+        android:text="@string/mod2bc"
         android:textColor="@color/PeaGreenText"
         android:gravity="center"
         android:textSize="14sp"
