@@ -111,8 +111,11 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 public void onFinish() {
                     saveQuestion();
                     Intent i = new Intent(Question.this, Results.class);
-                    i.putExtra("score", calcRegularResult());
+                    i.putExtra("score", calcRegularResult()[0]);
                     i.putExtra("timeTest", TOTAL_TIME - timeTest);
+                    i.putExtra("totalTime", TOTAL_TIME);
+                    i.putExtra("correct", calcRegularResult()[1]);
+                    i.putExtra("incorrect", calcRegularResult()[2]);
                     question.close();
                     bd.close();
                     startActivity(i);
@@ -277,8 +280,11 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(Question.this, Results.class);
-                        i.putExtra("score", calcRegularResult());
+                        i.putExtra("score", calcRegularResult()[0]);
                         i.putExtra("timeTest", TOTAL_TIME - timeTest);
+                        i.putExtra("totalTime", TOTAL_TIME);
+                        i.putExtra("correct", calcRegularResult()[1]);
+                        i.putExtra("incorrect", calcRegularResult()[2]);
                         question.close();
                         bd.close();
                         startActivity(i);
@@ -291,12 +297,20 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 .show();
     }
 
-    public int calcRegularResult() {
+    public int[] calcRegularResult() {
         Cursor specialScore;
         Cursor test = bd.rawQuery("Select * from test", null);
         int score = 0;
+        int correct = 0;
+        int incorrect = 0;
         int specialQuestion = 0;
         while (test.moveToNext()) {
+            //Se identifican las correctas
+            correct += test.getInt(3);
+            //Se identifican las incorrectas
+            if(test.getInt(2) != 0 && test.getInt(3)== 0){
+                incorrect += 1;
+            }
             specialScore = bd.rawQuery("SELECT special, name FROM categories AS c JOIN questions AS q ON q.categories_id = c._id WHERE q._id =" + test.getInt(1), null);
             specialScore.moveToFirst();
             if (specialQuestion < 3 && specialScore.getInt(0) == 1) {
@@ -308,7 +322,8 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             specialScore.close();
         }
         test.close();
-        return score;
+        int result[] = {score, correct, incorrect};
+        return result;
     }
 
     private boolean checkQuestion(){

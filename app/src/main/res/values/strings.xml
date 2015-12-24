@@ -52,6 +52,17 @@
     <string name="result11">Felicidades con esa puntuación aprobarías el examen teórico de conducción. Sigue así.</string>
     <string name="result12">minutos</string>
     <string name="result13">ptos.</string>
+    <string name="result14">T. total:</string>
+
+    <!--Configuraciones -->
+    <string name="confTitle">Ensayos offline</string>
+    <string name="confText1">Descarga un set de preguntas para poder practicar cuando no tengas acceso a internet</string>
+    <string name="confText2">Ensayos disponibles:</string>
+    <string name="confText3">Descarga: </string>
+    <string name="confText4">Sí</string>
+    <string name="confText5">hace</string>
+    <string name="confText6">días</string>
+
     <!-- Texto Agradecimientos -->
     <string name="text7">Ilustre Municipalidad de Cerrillos</string>
     <string name="text8">Por su participación y colaboración con el desarrollo de este proyecto.</string>

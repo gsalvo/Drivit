@@ -47,51 +47,58 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/GreenText"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:text="@string/result3"
                 android:id="@+id/points"/>
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/GreenText"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:text="@string/result4"
                 android:id="@+id/percent"/>
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/GreenText"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:text="@string/result5"
                 android:id="@+id/correct"/>
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/GreenText"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:text="@string/result6"
                 android:id="@+id/incorrect"/>
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/GreenText"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:text="@string/result7"
                 android:id="@+id/blank"/>
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/GreenText"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:text="@string/result8"
                 android:id="@+id/time"/>
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/GreenText"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:text="@string/result9"
                 android:id="@+id/timeOff"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/GreenText"
+                android:textSize="14sp"
+                android:text="@string/result14"
+                android:id="@+id/totalTime"/>
 
         </LinearLayout>
         <TextView
@@ -100,7 +107,7 @@
             android:layout_marginTop="15dp"
             android:textColor="@color/PeaGreenText"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:text="@string/result10"
             android:id="@+id/text"/>
 
