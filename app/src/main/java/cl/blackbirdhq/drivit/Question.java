@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,11 @@ import java.util.concurrent.TimeUnit;
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
 public class Question extends AppCompatActivity implements StructureQuestion.OnSelectedAlternativeListener, StructureQuestion.OnChangeQuestionListener {
+    private static String MODALITY;
+    private static String TYPE;
+    private static String CATEGORY;
+    private static String TIME;
+
     //Variables de punteo
     private float x1, x2;
     static final int MIN_DISTANCE = 200;
@@ -36,13 +42,13 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     private AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
     private boolean checkTest = false;
 
-    private boolean askedFinish = false;
     //Variables de la transición de preguntas
     ImageButton btnPrev, btnNext;
     TextView time;
     private CountDownTimer timer;
     private long timeTest;
     private static long TOTAL_TIME = 2700000;
+    private long realTime;
     private int number = 0;
     private int goToPosition = 1;
     private boolean flagForward = false;
@@ -62,6 +68,13 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     }
 
     public void initializeComponents() {
+        //INICIALIZACIÓN VARIABLES DE MODALIDAD
+        MODALITY = getIntent().getStringExtra("modality");
+        TYPE = getIntent().getStringExtra("type");
+        CATEGORY = getIntent().getStringExtra("category");
+        TIME = getIntent().getStringExtra("time");
+        realTime = TOTAL_TIME;
+
         checkTest = getIntent().getBooleanExtra("checkTest", false);
         btnPrev = (ImageButton) findViewById(R.id.btnPrev);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
@@ -70,6 +83,14 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         question = bd.rawQuery("Select * from questions order by _id", null);
         FINAL_QUESTION = question.getCount();
         addQuestion();
+
+        if(!checkTest) {
+            if (MODALITY.equals("survival")) {
+                LinearLayout contentButtonNav = (LinearLayout) findViewById(R.id.contentButtonNav);
+                contentButtonNav.setVisibility(View.GONE);
+            }
+        }
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,36 +119,47 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
 
 
         if (!checkTest) {
-            timer = new CountDownTimer(TOTAL_TIME, 1000) {
-                public void onTick(long millisUntilFinished) {
-                    timeTest = millisUntilFinished;
-                    time.setText("" + String.format(FORMAT,
-                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
-                                    TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+            if (!MODALITY.equals("survival")) {
+                if(MODALITY.equals("timeAttack")){
+                    realTime = Long.parseLong(TIME) * 60 * 1000;
+                }else if(MODALITY.equals("special")){
+                    realTime = 15 * 60 * 1000;
                 }
+                timer = new CountDownTimer(realTime, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                        timeTest = millisUntilFinished;
+                        time.setText("" + String.format(FORMAT,
+                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                    }
 
-                public void onFinish() {
-                    saveQuestion();
-                    Intent i = new Intent(Question.this, Results.class);
-                    i.putExtra("score", calcRegularResult()[0]);
-                    i.putExtra("timeTest", TOTAL_TIME - timeTest);
-                    i.putExtra("totalTime", TOTAL_TIME);
-                    i.putExtra("correct", calcRegularResult()[1]);
-                    i.putExtra("incorrect", calcRegularResult()[2]);
-                    question.close();
-                    bd.close();
-                    startActivity(i);
-                    finish();
-                }
-            }.start();
+                    public void onFinish() {
+                        saveQuestion();
+                        Intent i = new Intent(Question.this, Results.class);
+                        i.putExtra("modality", MODALITY);
+                        i.putExtra("score", calcRegularResult()[0]);
+                        i.putExtra("timeTest", realTime - timeTest);
+                        i.putExtra("totalTime", realTime);
+                        i.putExtra("correct", calcRegularResult()[1]);
+                        i.putExtra("incorrect", calcRegularResult()[2]);
+                        question.close();
+                        bd.close();
+                        startActivity(i);
+                        finish();
+                    }
+                }.start();
+            }else{
+                time.setVisibility(View.GONE);
+            }
         }else{
             time.setVisibility(View.GONE);
         }
     }
 
-    private void saveQuestion() {
+    private boolean saveQuestion() {
+        boolean stateQuestion = false;
         Cursor alternative;
         ContentValues register = new ContentValues();
         register.put("_id", number);
@@ -136,6 +168,9 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         if (alternativeSelected != 0) {
             alternative = bd.rawQuery("select right from alternatives where _id = " + alternativeSelected, null);
             alternative.moveToFirst();
+            if(alternative.getInt(0)==1){
+                stateQuestion = true;
+            }
             register.put("right", alternative.getInt(0));
             if (bd.rawQuery("Select _id from test where _id = " + number, null).getCount() > 0) {
                 bd.update("test", register, "_id = " + number, null);
@@ -151,6 +186,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 bd.insert("test", null, register);
             }
         }
+        return stateQuestion;
     }
 
     private void addQuestion() {
@@ -224,6 +260,12 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             MenuItem item = menu.findItem(R.id.btnClose);
             item.setVisible(false);
         }
+        if(!checkTest){
+            if(MODALITY.equals("survival")){
+                MenuItem item = menu.findItem(R.id.btnNav);
+                item.setVisible(false);
+            }
+        }
         return true;
     }
 
@@ -248,7 +290,9 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                                 public void onClick(DialogInterface dialog, int which) {
                                     question.close();
                                     bd.close();
-                                    timer.cancel();
+                                    if(!MODALITY.equals("survival")){
+                                        timer.cancel();
+                                    }
                                     finish();
 
                                 }
@@ -273,22 +317,31 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     }
 
     public void goResult() {
+        String message = getResources().getString(R.string.dialogCloseTest);
+        if(!checkTest){
+            if(MODALITY.equals("survival")){
+                message = getResources().getString(R.string.dialogCloseTestSurvival);
+            }
+        }
         new AlertDialog.Builder(this)
                 .setTitle(R.string.dialogTitleCloseTest)
-                .setMessage(R.string.dialogCloseTest)
+                .setMessage(message)
                 .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(Question.this, Results.class);
+                        i.putExtra("modality", MODALITY);
                         i.putExtra("score", calcRegularResult()[0]);
-                        i.putExtra("timeTest", TOTAL_TIME - timeTest);
-                        i.putExtra("totalTime", TOTAL_TIME);
+                        i.putExtra("timeTest", realTime - timeTest);
+                        i.putExtra("totalTime", realTime);
                         i.putExtra("correct", calcRegularResult()[1]);
                         i.putExtra("incorrect", calcRegularResult()[2]);
                         question.close();
                         bd.close();
                         startActivity(i);
-                        timer.cancel();
+                        if (!MODALITY.equals("survival")) {
+                            timer.cancel();
+                        }
                         finish();
 
                     }
@@ -303,23 +356,34 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         int score = 0;
         int correct = 0;
         int incorrect = 0;
-        int specialQuestion = 0;
-        while (test.moveToNext()) {
-            //Se identifican las correctas
-            correct += test.getInt(3);
-            //Se identifican las incorrectas
-            if(test.getInt(2) != 0 && test.getInt(3)== 0){
-                incorrect += 1;
-            }
-            specialScore = bd.rawQuery("SELECT special, name FROM categories AS c JOIN questions AS q ON q.categories_id = c._id WHERE q._id =" + test.getInt(1), null);
-            specialScore.moveToFirst();
-            if (specialQuestion < 3 && specialScore.getInt(0) == 1) {
-                score += test.getInt(3) * 2;
-                specialQuestion++;
-            } else {
+
+        if(MODALITY.equals("special")){
+            while (test.moveToNext()) {
+                correct += test.getInt(3);
                 score += test.getInt(3);
+                if (test.getInt(2) != 0 && test.getInt(3) == 0) {
+                    incorrect += 1;
+                }
             }
-            specialScore.close();
+        }else {
+            int specialQuestion = 0;
+            while (test.moveToNext()) {
+                //Se identifican las correctas
+                correct += test.getInt(3);
+                //Se identifican las incorrectas
+                if (test.getInt(2) != 0 && test.getInt(3) == 0) {
+                    incorrect += 1;
+                }
+                specialScore = bd.rawQuery("SELECT special, name FROM categories AS c JOIN questions AS q ON q.categories_id = c._id WHERE q._id =" + test.getInt(1), null);
+                specialScore.moveToFirst();
+                if (specialQuestion < 3 && specialScore.getInt(0) == 1) {
+                    score += test.getInt(3) * 2;
+                    specialQuestion++;
+                } else {
+                    score += test.getInt(3);
+                }
+                specialScore.close();
+            }
         }
         test.close();
         int result[] = {score, correct, incorrect};
@@ -354,7 +418,9 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                         public void onClick(DialogInterface dialog, int which) {
                             question.close();
                             bd.close();
-                            timer.cancel();
+                            if(!MODALITY.equals("survival")){
+                                timer.cancel();
+                            }
                             finish();
 
                         }
@@ -390,7 +456,43 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     @Override
     public void selectedAlternative(int alternative) {
         alternativeSelected = alternative;
-
+        if(alternative != 0){
+            if(!checkTest){
+                if(MODALITY.equals("survival")){
+                    if(saveQuestion()){
+                        if (number < FINAL_QUESTION) {
+                            goToPosition = number + 1;
+                            flagForward = true;
+                            goToQuestion(goToPosition - number);
+                        }else{
+                            Intent i = new Intent(Question.this, Results.class);
+                            i.putExtra("modality", MODALITY);
+                            i.putExtra("score", calcRegularResult()[0]);
+                            i.putExtra("timeTest", realTime - timeTest);
+                            i.putExtra("totalTime", realTime);
+                            i.putExtra("correct", calcRegularResult()[1]);
+                            i.putExtra("incorrect", calcRegularResult()[2]);
+                            question.close();
+                            bd.close();
+                            startActivity(i);
+                            finish();
+                        }
+                    }else{
+                        Intent i = new Intent(Question.this, Results.class);
+                        i.putExtra("modality", MODALITY);
+                        i.putExtra("score", calcRegularResult()[0]);
+                        i.putExtra("timeTest", realTime - timeTest);
+                        i.putExtra("totalTime", realTime);
+                        i.putExtra("correct", calcRegularResult()[1]);
+                        i.putExtra("incorrect", calcRegularResult()[2]);
+                        question.close();
+                        bd.close();
+                        startActivity(i);
+                        finish();
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -403,6 +505,11 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     }
 
     public boolean dispatchTouchEvent(MotionEvent event) {
+        if(!checkTest){
+            if(MODALITY.equals("survival")){
+               return super.dispatchTouchEvent(event);
+            }
+        }
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();

@@ -29,16 +29,27 @@
     <string name="cate2">Conducta vial</string>
     <string name="cate3">Mecánica básica</string>
     <string name="cate4">Seguridad vial</string>
+    <string name="specialText1">¿Estás preparado para refozar la materia leyes y reglas del tránsito?</string>
+    <string name="specialText2">¿Estás preparado para refozar la materia conducta vial?</string>
+    <string name="specialText3">¿Estás preparado para refozar la materia Mecánica básica?</string>
+    <string name="specialText4">¿Estás preparado para refozar la materia Seguridad vial?</string>
+    <string name="specialText5">Tienes 15 minutos para responder las 10 preguntas del examen</string>
 
-    <!-- Texto modalidad special -->
+
+    <!-- Texto modalidad TimeAttack -->
     <string name="modTA1">¿Cuántos minutos tienes para practicar?</string>
     <string name="modTA2">Ingresa el tiempo que quieres practicar, se cargarán 35 preguntas al examen</string>
 
-    <!-- Texto modalidad special -->
+    <!-- Texto modalidad Survival -->
     <string name="modS1">¿Quieres practicar en modalidad muerte súbita?</string>
     <string name="modS2">Debes responder las preguntas sin fallar hasta terminar el ensayo</string>
 
     <!-- Resultados -->
+    <string name="resultCat1">Muy Bien, sigue así</string>
+    <string name="resultCat2">Vuelve a intentarlo</string>
+    <string name="resultCat3">Ups, no obtuvistes un buen puntaje, repasa los contenidos del manual del conductor y vuelve a intentarlo</string>
+    <string name="resultCat4">Felicidades Obtuvistes un buen puntaje, sigue practicando</string>
+
     <string name="result1">Superado</string>
     <string name="result2">No superado</string>
     <string name="result3">Puntaje:</string>
@@ -53,7 +64,7 @@
     <string name="result12">minutos</string>
     <string name="result13">ptos.</string>
     <string name="result14">T. total:</string>
-
+    <string name="result15">Faltaron:</string>
     <!--Configuraciones -->
     <string name="confTitle">Ensayos offline</string>
     <string name="confText1">Descarga un set de preguntas para poder practicar cuando no tengas acceso a internet</string>
@@ -86,6 +97,7 @@
     <string name="title_activity_survival_modality">Muerte súbita</string>
     <string name="title_activity_time_attack_modality">Contra el tiempo</string>
     <string name="title_activity_real_modality">Real</string>
+    <string name="title_activity_special_modality_category">Especializado</string>
 
     <!-- Btn ActionBar -->
     <string name="contextualBtnNav">Navegar</string>
@@ -97,6 +109,7 @@
     <!-- DialogAlert -->
     <string name="dialogTitleCloseTest">Finalizar examen</string>
     <string name="dialogCloseTest">Aun te queda tiempo para revisar el ensayo ¿Quieres terminar?</string>
+    <string name="dialogCloseTestSurvival">Aun no fallas ¿Estás seguro que quieres terminar?</string>
     <string name="dialogLoadTest">Creando el ensayo</string>
     <string name="dialogTitleExitTest">Salir del examen</string>
     <string name="dialogExitTest">No se calculará el puntaje obtenido ¿Deseas salir del ensayo?</string>
@@ -138,6 +151,7 @@ La información no personal se refiere a la información que no identifica a un 
 
 
     <string name="hello_world">Hello world!</string>
+
 
 
 

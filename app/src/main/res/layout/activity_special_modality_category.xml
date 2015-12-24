@@ -1,17 +1,20 @@
 <ScrollView
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
+android:layout_gravity="center_vertical"
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
-tools:context="cl.blackbirdhq.drivit.TimeAttackModality">
+tools:context="cl.blackbirdhq.drivit.SpecialModalityCategory">
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="30dp"
-    android:paddingBottom="30dp" >
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp" >
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,28 +25,22 @@ tools:context="cl.blackbirdhq.drivit.TimeAttackModality">
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/modTA1"
+        android:text="@string/specialText1"
         android:textColor="@color/GreenText"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:layout_marginBottom="15dp"/>
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/GreenText"
-        android:numeric="integer"
-        android:maxLength="2"
-        android:id="@+id/time"/>
+        android:layout_marginBottom="25dp"
+        android:id="@+id/questionText"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/modTA2"
+        android:text="@string/specialText5"
         android:textColor="@color/PeaGreenText"
         android:gravity="center"
         android:textSize="14sp"
-        android:layout_marginBottom="25dp"/>
+        android:layout_marginBottom="25dp"
+        />
     <Button
         style="@style/buttonStyle"
         android:id="@+id/btnReady"

@@ -42,6 +42,7 @@
         <activity
             android:name=".Results"
             android:label="@string/title_activity_results"
+            android:launchMode="singleTop"
             android:parentActivityName=".Modalities"
             android:screenOrientation="portrait" >
         </activity>
@@ -66,34 +67,42 @@
         <activity
             android:name=".Modalities"
             android:label="@string/title_activity_modalities_classB"
-            android:parentActivityName=".MainActivity"
             android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".RealModality"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_real_modality"
             android:parentActivityName=".Modalities"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SpecialModality"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_special_modality"
             android:parentActivityName=".Modalities"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SurvivalModality"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_survival_modality"
             android:parentActivityName=".Modalities"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".TimeAttackModality"
             android:label="@string/title_activity_time_attack_modality"
             android:parentActivityName=".Modalities"
-
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".SpecialModalityCategory"
+            android:label="@string/title_activity_special_modality_category"
+            android:parentActivityName=".SpecialModality"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

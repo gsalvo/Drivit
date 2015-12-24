@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class Results extends AppCompatActivity {
     private int messageIncorrect;
     private long messageTime;
     private long messageTotalTime;
+    private static String MODALITY;
     private TextView title, text, points, percent, correct, incorrect, blank, time, timeOff, totalTime;
     private ImageView face;
     @Override
@@ -37,6 +39,7 @@ public class Results extends AppCompatActivity {
         messageTotalTime =message.getLong("totalTime");
         messageCorrect = message.getInt("correct");
         messageIncorrect = message.getInt("incorrect");
+        MODALITY = message.getString("modality");
 
         title = (TextView) findViewById(R.id.title);
         text = (TextView) findViewById(R.id.text);
@@ -55,28 +58,47 @@ public class Results extends AppCompatActivity {
 
     private void printResult(int score){
         points.setText(getString(R.string.result3) + " "+ score);
-        percent.setText(getString(R.string.result4) + " " + (score * 100 / 38)+"%");
+        if(MODALITY.equals("special")){
+            percent.setText(getString(R.string.result4) + " " + (score * 100 / 10)+"%");
+            blank.setText(getString(R.string.result7) + " " + (35 - messageIncorrect - messageCorrect));
+            if((score * 100 / 10) >= 87) {
+                face.setImageResource(R.drawable.face_happy);
+                title.setText(getString(R.string.resultCat1));
+                title.setTextColor(getResources().getColor(R.color.GreenText));
+                text.setText(getResources().getString(R.string.resultCat4));
+            }else{
+                title.setText(getString(R.string.resultCat2));
+                text.setText(getResources().getString(R.string.resultCat3));
+            }
+        }else{
+            percent.setText(getString(R.string.result4) + " " + (score * 100 / 38)+"%");
+            blank.setText(getString(R.string.result7) + " " + (35 - messageIncorrect - messageCorrect));
+            if(score >33) {
+                face.setImageResource(R.drawable.face_happy);
+                title.setText(getString(R.string.result1));
+                title.setTextColor(getResources().getColor(R.color.GreenText));
+                text.setText(getResources().getString(R.string.result11));
+            }
+        }
         correct.setText(getString(R.string.result5) + " " + messageCorrect);
         incorrect.setText(getString(R.string.result6) + " " + messageIncorrect);
-        blank.setText(getString(R.string.result7) + " " + (35 - messageIncorrect - messageCorrect));
-        long totalMinutes = (TimeUnit.MILLISECONDS.toMinutes(messageTotalTime) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(messageTotalTime)));
-        long minutes = (TimeUnit.MILLISECONDS.toMinutes(messageTime) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(messageTime)));
-        long seconds = (TimeUnit.MILLISECONDS.toSeconds(messageTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(messageTime)));
-        System.out.println("segundos:" + seconds);
-        double secondsToMinutes = seconds /60.0 ;
-        System.out.println("segundos minutes:" + secondsToMinutes);
-        DecimalFormat df = new DecimalFormat("#0.#");
 
-        time.setText(getString(R.string.result8) +" "+ df.format(secondsToMinutes + minutes)+ " minutos");
-        timeOff.setText(getString(R.string.result9) + " " + df.format((totalMinutes) - (secondsToMinutes + minutes))+ " minutos");
-        totalTime.setText(getString(R.string.result14) + " " + ((int) totalMinutes) + " minutos");
-
-
-        if(score >33) {
-            face.setImageResource(R.drawable.face_happy);
-            title.setText(getString(R.string.result1));
-            title.setTextColor(getResources().getColor(R.color.GreenText));
-            text.setText(getResources().getString(R.string.result11));
+        if(MODALITY.equals("survival")){
+            time.setVisibility(View.GONE);
+            timeOff.setVisibility(View.GONE);
+            totalTime.setVisibility(View.GONE);
+            blank.setText(getString(R.string.result15) + " " + (35 - messageIncorrect - messageCorrect));
+            Button btnReview = (Button) findViewById(R.id.btnReview);
+            btnReview.setVisibility(View.GONE);
+        }else{
+            long totalMinutes = (TimeUnit.MILLISECONDS.toMinutes(messageTotalTime) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(messageTotalTime)));
+            long minutes = (TimeUnit.MILLISECONDS.toMinutes(messageTime) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(messageTime)));
+            long seconds = (TimeUnit.MILLISECONDS.toSeconds(messageTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(messageTime)));
+            double secondsToMinutes = seconds /60.0 ;
+            DecimalFormat df = new DecimalFormat("#0.#");
+            time.setText(getString(R.string.result8) +" "+ df.format(secondsToMinutes + minutes)+ " minutos");
+            timeOff.setText(getString(R.string.result9) + " " + df.format((totalMinutes) - (secondsToMinutes + minutes))+ " minutos");
+            totalTime.setText(getString(R.string.result14) + " " + ((int) totalMinutes) + " minutos");
         }
     }
 

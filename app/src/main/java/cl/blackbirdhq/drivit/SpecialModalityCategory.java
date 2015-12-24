@@ -2,7 +2,6 @@ package cl.blackbirdhq.drivit;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,10 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -24,27 +20,29 @@ import org.json.JSONObject;
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 import cl.blackbirdhq.drivit.helpers.JSONParser;
 
-public class TimeAttackModality extends AppCompatActivity {
+public class SpecialModalityCategory extends AppCompatActivity {
     private String type;
-    private static String MODALITY = "timeAttack";
+    private static String MODALITY;
+    private static String CATEGORY;
     private AdminSQLiteAPP data = new AdminSQLiteAPP(this);
     private SQLiteDatabase db;
     private ProgressDialog mDialog;
     private LoadQuestion loadQuestion;
     private AlertDialog.Builder alertDialog;
-    private EditText time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time_attack_modality);
+        setContentView(R.layout.activity_special_modality_category);
         initializeComponent();
     }
 
-    public void initializeComponent(){
+    private void initializeComponent() {
+
         Bundle bundle = getIntent().getExtras();
         type = bundle.getString("type");
-        time = (EditText) findViewById(R.id.time);
+        CATEGORY = bundle.getString("category");
+        MODALITY = bundle.getString("modality");
         mDialog = new ProgressDialog(this);
         alertDialog = new AlertDialog.Builder(this);
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -53,12 +51,33 @@ public class TimeAttackModality extends AppCompatActivity {
                 loadQuestion.cancel(true);
             }
         });
+        TextView questionText = (TextView) findViewById(R.id.questionText);
+        switch (CATEGORY){
+            case "0":
+                getSupportActionBar().setTitle(getString(R.string.cate1));
+                questionText.setText(getString(R.string.specialText1));
+                break;
+            case "1":
+                getSupportActionBar().setTitle(getString(R.string.cate2));
+                questionText.setText(getString(R.string.specialText2));
+                break;
+            case "2":
+                getSupportActionBar().setTitle(getString(R.string.cate3));
+                questionText.setText(getString(R.string.specialText3));
+                break;
+            case "3":
+                getSupportActionBar().setTitle(getString(R.string.cate4));
+                questionText.setText(getString(R.string.specialText4));
+                break;
+        }
         if(type.equals("c")){
             //imagen
             ImageView imageView = (ImageView) findViewById(R.id.imageView);
             imageView.setImageResource(R.drawable.img_motorbike);
         }
+
     }
+
     public void goTest(View view){
         loadQuestion = new LoadQuestion();
         loadQuestion.execute();
@@ -81,9 +100,35 @@ public class TimeAttackModality extends AppCompatActivity {
                 JSONParser jsonParser = new JSONParser();
                 JSONArray jsonArray = null;
                 if(type.equals("b")){
-                    jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassB.php");
+                    switch (CATEGORY){
+                        case "0":
+                            jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassBSpecial0.php");
+                            break;
+                        case "1":
+                            jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassBSpecial1.php");
+                            break;
+                        case "2":
+                            jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassBSpecial2.php");
+                            break;
+                        case "3":
+                            jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassBSpecial3.php");
+                            break;
+                    }
                 }else if (type.equals("c")){
-                    jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassC.php");
+                    switch (CATEGORY){
+                        case "0":
+                            jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassCSpecial0.php");
+                            break;
+                        case "1":
+                            jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassCSpecial1.php");
+                            break;
+                        case "2":
+                            jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassCSpecial2.php");
+                            break;
+                        case "3":
+                            jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassCSpecial3.php");
+                            break;
+                    }
                 }
                 for(int i = 0; i < jsonArray.length();i++){
 
@@ -112,11 +157,9 @@ public class TimeAttackModality extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result){
             if(result.equals("go")){
-                Intent i = new Intent(TimeAttackModality.this, Question.class);
+                Intent i = new Intent(SpecialModalityCategory.this, Question.class);
                 i.putExtra("type", type);
                 i.putExtra("modality", MODALITY);
-
-                i.putExtra("time", time.getText().toString());
                 startActivity(i);
                 mDialog.dismiss();
             }else{
@@ -132,6 +175,4 @@ public class TimeAttackModality extends AppCompatActivity {
             }
         }
     }
-
-
 }
