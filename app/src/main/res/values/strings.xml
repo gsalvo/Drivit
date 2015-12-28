@@ -152,6 +152,9 @@ La información no personal se refiere a la información que no identifica a un 
 
     <string name="hello_world">Hello world!</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 
 

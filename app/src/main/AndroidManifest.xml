@@ -56,7 +56,8 @@
             android:name=".Progress"
             android:label="@string/title_activity_progress"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomThemeMA">
         </activity>
         <activity
             android:name=".Setting"

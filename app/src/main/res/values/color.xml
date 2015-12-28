@@ -11,7 +11,7 @@
     <color name="defaultButton" type="color">#43A047</color>
     <color name="defaultPressButton" type="color">#388E3C</color>
     <color name="actionBarColor" type="color">#2E7D32</color>
-
+    <color name="highlightcolor" type="color">#43A047</color>
     <color name="btnColorAnswered" type="color">#78909C</color>
     <color name="btnColorAnsweredPressed" type="color">#607D8B</color>
     <color name="btnColorNoAnswered" type="color">#ECEFF1</color>
