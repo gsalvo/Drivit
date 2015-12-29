@@ -18,6 +18,7 @@
     <color name="btnColorNoAnsweredPressed" type="color">#CFD8DC</color>
 
     <color name="listViewPressed" type="color">#CFD8DC</color>
+    <color name="lineSeparator" type="color">#CFD8DC</color>
 
     <color name="errorAnswer" type="color">#F44336</color>
     <color name="errorAnswerPressed" type="color">#EF5350</color>

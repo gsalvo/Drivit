@@ -74,6 +74,28 @@
     <string name="confText5">hace</string>
     <string name="confText6">días</string>
 
+    <!--Progress -->
+    <string name="progress1">Aprobación</string>
+    <string name="progress2">Realizados:</string>
+    <string name="progress3">Superados:</string>
+    <string name="progress4">No superados:</string>
+    <string name="progress5">Porcentaje</string>
+    <string name="progress6">Registro de tiempo ensayos superados</string>
+    <string name="progress7">Mejor tiempo:</string>
+    <string name="progress8">Peor tiempo:</string>
+    <string name="progress9">minutos</string>
+    <string name="progress10">Conocimientos legales y reglamentarios</string>
+    <string name="progress11">Conducta vial</string>
+    <string name="progress12">Conocimientos mecánica básica</string>
+    <string name="progress13">Seguridad vial</string>
+    <string name="progress14">Incorrectas</string>
+    <string name="progress15">Correctas</string>
+    <string name="progress16">N° preguntas</string>
+    <string name="progress17">Modalidad muerte súbita</string>
+    <string name="progress18">Mejor puntaje:</string>
+    <string name="progress19">Peor puntaje:</string>
+    <string name="progress20">ptos.</string>
+
     <!-- Texto Agradecimientos -->
     <string name="text7">Ilustre Municipalidad de Cerrillos</string>
     <string name="text8">Por su participación y colaboración con el desarrollo de este proyecto.</string>
