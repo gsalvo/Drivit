@@ -20,6 +20,7 @@ public class AdminSQLiteAPP extends SQLiteOpenHelper {
             "questions_id integer, alternatives_id integer, right integer)";
 
 
+
     public AdminSQLiteAPP(Context context){
         super(context,  DB_NAME, null,DB_VERSION);
     }

@@ -68,18 +68,21 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:text="@string/progress2"
+                                        android:textSize="12sp"
                                         android:id="@+id/text1_1"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:text="@string/progress3"
+                                        android:textSize="12sp"
                                         android:id="@+id/text1_2"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:text="@string/progress4"
+                                        android:textSize="12sp"
                                         android:id="@+id/text1_3"/>
                                 </LinearLayout>
                                 <LinearLayout
@@ -91,7 +94,7 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:text="50%"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:textStyle="bold"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
@@ -101,7 +104,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress5"/>
+                                        android:text="@string/progress5"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -125,12 +129,14 @@
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/GreenText"
                                     android:text="@string/progress7"
+                                    android:textSize="12sp"
                                     android:id="@+id/text2_1"/>
                                 <TextView
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/GreenText"
                                     android:text="@string/progress8"
+                                    android:textSize="12sp"
                                     android:id="@+id/text2_2"/>
                             </LinearLayout>
                             <View
@@ -164,7 +170,7 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="100%"
                                         android:gravity="center"
                                         android:id="@+id/text3_1"/>
@@ -173,7 +179,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:gravity="center"
-                                        android:text="@string/progress14"/>
+                                        android:text="@string/progress14"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -186,7 +193,7 @@
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
                                         android:text="0%"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:gravity="center"
                                         android:id="@+id/text3_2"/>
                                     <TextView
@@ -194,7 +201,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress15"/>
+                                        android:text="@string/progress15"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -207,7 +215,7 @@
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
                                         android:text="18"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:gravity="center"
                                         android:id="@+id/text3_3"/>
                                     <TextView
@@ -215,7 +223,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress16"/>
+                                        android:text="@string/progress16"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -249,7 +258,7 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="100%"
                                         android:gravity="center"
                                         android:id="@+id/text4_1"/>
@@ -258,7 +267,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:gravity="center"
-                                        android:text="@string/progress14"/>
+                                        android:text="@string/progress14"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -269,7 +279,7 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="0%"
                                         android:textStyle="bold"
                                         android:gravity="center"
@@ -279,7 +289,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress15"/>
+                                        android:text="@string/progress15"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -290,7 +301,7 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:textStyle="bold"
                                         android:text="18"
                                         android:gravity="center"
@@ -300,7 +311,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress16"/>
+                                        android:text="@string/progress16"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -334,7 +346,7 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="100%"
                                         android:gravity="center"
                                         android:id="@+id/text5_1"/>
@@ -343,7 +355,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:gravity="center"
-                                        android:text="@string/progress14"/>
+                                        android:text="@string/progress14"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -355,7 +368,7 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="0%"
                                         android:gravity="center"
                                         android:id="@+id/text5_2"/>
@@ -364,7 +377,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress15"/>
+                                        android:text="@string/progress15"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -376,7 +390,7 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="18"
                                         android:gravity="center"
                                         android:id="@+id/text5_3"/>
@@ -385,7 +399,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress16"/>
+                                        android:text="@string/progress16"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -420,7 +435,7 @@
                                         android:textColor="@color/errorAnswer"
                                         android:textStyle="bold"
                                         android:text="100%"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:gravity="center"
                                         android:id="@+id/text6_1"/>
                                     <TextView
@@ -428,7 +443,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:gravity="center"
-                                        android:text="@string/progress14"/>
+                                        android:text="@string/progress14"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -440,7 +456,7 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="0%"
                                         android:gravity="center"
                                         android:id="@+id/text6_2"/>
@@ -449,7 +465,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress15"/>
+                                        android:text="@string/progress15"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -461,7 +478,7 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:gravity="center"
                                         android:text="18"
                                         android:id="@+id/text6_3"/>
@@ -470,7 +487,8 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress16"/>
+                                        android:text="@string/progress16"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -494,13 +512,15 @@
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/GreenText"
                                     android:text="@string/progress18"
-                                    android:id="@+id/text7_1"/>
+                                    android:id="@+id/text7_1"
+                                    android:textSize="12sp"/>
                                 <TextView
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/GreenText"
                                     android:text="@string/progress19"
-                                    android:id="@+id/text7_2"/>
+                                    android:id="@+id/text7_2"
+                                    android:textSize="12sp"/>
                             </LinearLayout>
                         </LinearLayout>
                     </ScrollView>
@@ -510,7 +530,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
                     <ScrollView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content">
@@ -544,19 +563,22 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:text="@string/progress2"
-                                        android:id="@+id/text21_1"/>
+                                        android:textSize="12sp"
+                                        android:id="@+id/text2_1_1"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:text="@string/progress3"
-                                        android:id="@+id/text21_2"/>
+                                        android:textSize="12sp"
+                                        android:id="@+id/text2_1_2"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:text="@string/progress4"
-                                        android:id="@+id/text21_3"/>
+                                        android:textSize="12sp"
+                                        android:id="@+id/text2_1_3"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="fill_parent"
@@ -567,17 +589,18 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:text="50%"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:textStyle="bold"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:id="@+id/text21_4"/>
+                                        android:id="@+id/text2_1_4"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress5"/>
+                                        android:text="@string/progress5"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -601,13 +624,15 @@
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/GreenText"
                                     android:text="@string/progress7"
-                                    android:id="@+id/text22_1"/>
+                                    android:textSize="12sp"
+                                    android:id="@+id/text2_2_1"/>
                                 <TextView
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/GreenText"
                                     android:text="@string/progress8"
-                                    android:id="@+id/text22_2"/>
+                                    android:textSize="12sp"
+                                    android:id="@+id/text2_2_2"/>
                             </LinearLayout>
                             <View
                                 android:layout_width="match_parent"
@@ -640,16 +665,17 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="100%"
                                         android:gravity="center"
-                                        android:id="@+id/text23_1"/>
+                                        android:id="@+id/text2_3_1"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:gravity="center"
-                                        android:text="@string/progress14"/>
+                                        android:text="@string/progress14"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -662,15 +688,16 @@
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
                                         android:text="0%"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:gravity="center"
-                                        android:id="@+id/text23_2"/>
+                                        android:id="@+id/text2_3_2"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress15"/>
+                                        android:text="@string/progress15"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -683,15 +710,16 @@
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
                                         android:text="18"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:gravity="center"
-                                        android:id="@+id/text23_3"/>
+                                        android:id="@+id/text2_3_3"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress16"/>
+                                        android:text="@string/progress16"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -725,16 +753,17 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="100%"
                                         android:gravity="center"
-                                        android:id="@+id/text24_1"/>
+                                        android:id="@+id/text2_4_1"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:gravity="center"
-                                        android:text="@string/progress14"/>
+                                        android:text="@string/progress14"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -745,17 +774,18 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="0%"
                                         android:textStyle="bold"
                                         android:gravity="center"
-                                        android:id="@+id/text24_2"/>
+                                        android:id="@+id/text2_4_2"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress15"/>
+                                        android:text="@string/progress15"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -766,17 +796,18 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:textStyle="bold"
                                         android:text="18"
                                         android:gravity="center"
-                                        android:id="@+id/text24_3"/>
+                                        android:id="@+id/text2_4_3"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress16"/>
+                                        android:text="@string/progress16"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -810,16 +841,17 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="100%"
                                         android:gravity="center"
-                                        android:id="@+id/text225_1"/>
+                                        android:id="@+id/text2_5_1"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:gravity="center"
-                                        android:text="@string/progress14"/>
+                                        android:text="@string/progress14"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -831,16 +863,17 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="0%"
                                         android:gravity="center"
-                                        android:id="@+id/text25_2"/>
+                                        android:id="@+id/text2_5_2"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress15"/>
+                                        android:text="@string/progress15"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -852,16 +885,17 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="18"
                                         android:gravity="center"
-                                        android:id="@+id/text25_3"/>
+                                        android:id="@+id/text2_5_3"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress16"/>
+                                        android:text="@string/progress16"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -896,15 +930,16 @@
                                         android:textColor="@color/errorAnswer"
                                         android:textStyle="bold"
                                         android:text="100%"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:gravity="center"
-                                        android:id="@+id/text26_1"/>
+                                        android:id="@+id/text2_6_1"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/errorAnswer"
                                         android:gravity="center"
-                                        android:text="@string/progress14"/>
+                                        android:text="@string/progress14"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -916,16 +951,17 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:text="0%"
                                         android:gravity="center"
-                                        android:id="@+id/text26_2"/>
+                                        android:id="@+id/text2_6_2"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress15"/>
+                                        android:text="@string/progress15"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -937,16 +973,17 @@
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:textStyle="bold"
-                                        android:textSize="28sp"
+                                        android:textSize="24sp"
                                         android:gravity="center"
                                         android:text="18"
-                                        android:id="@+id/text26_3"/>
+                                        android:id="@+id/text2_6_3"/>
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/GreenText"
                                         android:gravity="center"
-                                        android:text="@string/progress16"/>
+                                        android:text="@string/progress16"
+                                        android:textSize="12sp"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <View
@@ -970,17 +1007,18 @@
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/GreenText"
                                     android:text="@string/progress18"
-                                    android:id="@+id/text27_1"/>
+                                    android:id="@+id/text2_7_1"
+                                    android:textSize="12sp"/>
                                 <TextView
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/GreenText"
                                     android:text="@string/progress19"
-                                    android:id="@+id/text27_2"/>
+                                    android:id="@+id/text2_7_2"
+                                    android:textSize="12sp"/>
                             </LinearLayout>
                         </LinearLayout>
                     </ScrollView>
-
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
