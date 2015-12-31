@@ -32,6 +32,7 @@ public class AdminSQLiteAPP extends SQLiteOpenHelper {
             "questions_id integer not null, " +
             "tests_id integer not null, " +
             "selection integer not null, " +
+            "categories_id integer not null,"+
             "right integer not null)";
 
     private static final String TESTS = "create table tests (" +
@@ -42,11 +43,31 @@ public class AdminSQLiteAPP extends SQLiteOpenHelper {
             " modality text not null," +
             " type text not null)";
 
-    private static final String DB_CREATE_TEST = "create table test (" +
+    private static final String TEST = "create table test (" +
             "_id integer primary key autoincrement," +
             "questions_id integer, " +
             "alternatives_id integer," +
-            " right integer)";
+            " right integer," +
+            "categories_id integer not null)";
+
+    private static final String OFFLINE_QUESTIONS = "create table offline_questions(" +
+            "_id integer primary key autoincrement, " +
+            "question text not null, " +
+            "image text, " +
+            "type text not null,"+
+            "categories_id integer not null)";
+
+    private static final String OFFLINE_ALTERNATIVES = "create table offline_alternatives (" +
+            "_id integer primary key autoincrement," +
+            " alternative text not null," +
+            " right integer not null," +
+            " questions_id integer not null)";
+
+    private static final String OFFLINE_CATEGORIES = "create table offline_categories (" +
+            "_id integer primary key autoincrement," +
+            " name text not null," +
+            "special integer not null)";
+
 
 
 
@@ -60,8 +81,35 @@ public class AdminSQLiteAPP extends SQLiteOpenHelper {
         db.execSQL(CATEGORIES);
         db.execSQL(QUESTIONS_TESTS);
         db.execSQL(TESTS);
-        db.execSQL(DB_CREATE_TEST);
+        db.execSQL(TEST);
+        //OFFLINE
+        db.execSQL(OFFLINE_QUESTIONS);
+        db.execSQL(OFFLINE_ALTERNATIVES);
+        db.execSQL(OFFLINE_CATEGORIES);
 
+    }
+
+    public void RemoveAll(SQLiteDatabase db){
+        db.execSQL("DELETE FROM questions_tests");
+        db.execSQL("DELETE FROM test");
+
+        db.execSQL("DELETE FROM offline_questions");
+        db.execSQL("DELETE FROM offline_categories");
+        db.execSQL("DELETE FROM offLine_alternatives");
+    }
+
+    public void resetData(SQLiteDatabase db){
+        db.execSQL("DELETE FROM questions_tests");
+        db.execSQL("DELETE FROM test");
+        db.execSQL("DELETE FROM offline_questions");
+        db.execSQL("DELETE FROM offline_categories");
+        db.execSQL("DELETE FROM offLine_alternatives");
+    }
+
+    public void removeOfflineTest(SQLiteDatabase db){
+        db.execSQL("DELETE FROM offline_questions");
+        db.execSQL("DELETE FROM offline_categories");
+        db.execSQL("DELETE FROM offLine_alternatives");
     }
 
     public void reloadDBTest(SQLiteDatabase db){

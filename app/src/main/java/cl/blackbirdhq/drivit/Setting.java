@@ -29,25 +29,7 @@ public class Setting extends AppCompatActivity {
     }
 
     private void initializeComponents() {
-        String url = "http://blackbirdhq.cl/selectQuestionClassBSpecial1.php";
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                Request.Method.GET,
-                url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("mensaje", "Respuesta Volley:" + response.toString());
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("mensaje", "Error Respuesta en JSON: " + error.getMessage());
-                    }
-                }
-        );
-        DrivitSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
 
 }

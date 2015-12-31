@@ -164,6 +164,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         Cursor alternative;
         ContentValues register = new ContentValues();
         register.put("_id", number);
+        register.put("categories_id", question.getInt(3));
         register.put("questions_id", question.getInt(0));
         register.put("alternatives_id", alternativeSelected);
         if (alternativeSelected != 0) {
