@@ -8,8 +8,8 @@
     <color name="topBar" type="color">#1B5E20</color>
 
     <color name="defaultBackground" type="color">#FFFFFF</color>
-    <color name="defaultButton" type="color">#43A047</color>
-    <color name="defaultPressButton" type="color">#388E3C</color>
+    <color name="defaultButton" type="color">#388E3C</color>
+    <color name="defaultPressButton" type="color">#43A047</color>
     <color name="actionBarColor" type="color">#2E7D32</color>
     <color name="highlightcolor" type="color">#43A047</color>
     <color name="btnColorAnswered" type="color">#78909C</color>

@@ -18,10 +18,16 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
+import cl.blackbirdhq.drivit.helpers.DrivitSingleton;
 import cl.blackbirdhq.drivit.helpers.JSONParser;
 
 public class TimeAttackModality extends AppCompatActivity {
@@ -33,6 +39,7 @@ public class TimeAttackModality extends AppCompatActivity {
     private LoadQuestion loadQuestion;
     private AlertDialog.Builder alertDialog;
     private EditText time;
+    private JSONArray jsonArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,54 +67,75 @@ public class TimeAttackModality extends AppCompatActivity {
         }
     }
     public void goTest(View view){
-        loadQuestion = new LoadQuestion();
-        loadQuestion.execute();
+        mDialog.setMessage("Cargando las preguntas.");
+        mDialog.setIndeterminate(false);
+        mDialog.setCancelable(false);
+        mDialog.show();
+        String url = "";
+        if(type.equals("b")){
+            url = "http://blackbirdhq.cl/selectQuestionClassB.php";
+        }else if (type.equals("c")){
+            url = "http://blackbirdhq.cl/selectQuestionClassC.php";
+        }
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        jsonArray = response;
+                        loadQuestion = new LoadQuestion();
+                        loadQuestion.execute();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        mDialog.dismiss();
+                        alertDialog.setTitle("Error con la descarga del examen")
+                                .setMessage("No se ha podido descargar el examen, verifique su conexión a internet.")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //Cierra el dialogo
+                                    }
+                                })
+                                .show();
+                    }
+                }
+        );
+        DrivitSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+    }
+
+    private String parsingTest() {
+        mDialog.setCancelable(true);
+        db = data.getWritableDatabase();
+        data.reloadDBTest(db);
+        db.execSQL("INSERT INTO categories(_id, name, special) values (1,'conocimientos legales y reglamentarias', 0)");
+        db.execSQL("INSERT INTO categories(_id, name, special) values (2,'conducta vial', 0)");
+        db.execSQL("INSERT INTO categories(_id, name, special) values (3,'conocimientos mecánica básica', 0)");
+        db.execSQL("INSERT INTO categories(_id, name, special) values (4,'seguridad vial', 1)");
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject JSONQuestion = jsonArray.getJSONObject(i);
+                db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (" + JSONQuestion.get("id") + ", '" + JSONQuestion.get("question") + "','" + JSONQuestion.get("image") + "'," + JSONQuestion.get("categories_id") + ")");
+                JSONArray JSONal = (JSONArray) JSONQuestion.get("alternatives");
+
+                for (int j = 0; j < JSONal.length(); j++) {
+                    JSONObject alternative = JSONal.getJSONObject(j);
+                    db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (" + alternative.get("id") + ", '" + alternative.get("alternative") + "'," + alternative.get("right") + ", " + JSONQuestion.get("id") + ")");
+                }
+            }
+            return "go";
+        }catch (Exception e){
+            return "stop";
+        }
     }
 
     class LoadQuestion extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute(){
-            mDialog.setMessage("Cargando las preguntas.");
-            mDialog.setIndeterminate(false);
-            mDialog.setCancelable(true);
-            mDialog.show();
-        }
+
         @Override
         protected String doInBackground(String... params){
-            String state = "go";
-            db = data.getWritableDatabase();
-            data.reloadDBTest(db);
-            try{
-                JSONParser jsonParser = new JSONParser();
-                JSONArray jsonArray = null;
-                if(type.equals("b")){
-                    jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassB.php");
-                }else if (type.equals("c")){
-                    jsonArray = jsonParser.makeHttpRequest("http://blackbirdhq.cl/selectQuestionClassC.php");
-                }
-                for(int i = 0; i < jsonArray.length();i++){
-
-                    JSONObject JSONQuestion = jsonArray.getJSONObject(i);
-                    db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (" + JSONQuestion.get("id") + ", '" + JSONQuestion.get("question") + "','" + JSONQuestion.get("image") + "'," + JSONQuestion.get("categories_id") + ")");
-                    JSONArray JSONal = (JSONArray) JSONQuestion.get("alternatives");
-
-                    for(int j = 0; j < JSONal.length(); j++){
-                        JSONObject alternative = JSONal.getJSONObject(j);
-                        db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (" + alternative.get("id") + ", '" + alternative.get("alternative") + "'," + alternative.get("right") + ", " + JSONQuestion.get("id") + ")");
-                    }
-                }
-            }catch (Exception e){
-                System.out.print(e);
-                state = "stop";
-            }
-
-            db.execSQL("INSERT INTO categories(_id, name, special) values (1,'conocimientos legales y reglamentarias',0)");
-            db.execSQL("INSERT INTO categories(_id, name, special) values (2,'conducta vial',0)");
-            db.execSQL("INSERT INTO categories(_id, name, special) values (3,'conocimientos mecánica básica',0)");
-            db.execSQL("INSERT INTO categories(_id, name, special) values (4,'seguridad vial',1)");
-
-
-            return state;
+            return parsingTest();
         }
         @Override
         protected void onPostExecute(String result){
@@ -115,7 +143,6 @@ public class TimeAttackModality extends AppCompatActivity {
                 Intent i = new Intent(TimeAttackModality.this, Question.class);
                 i.putExtra("type", type);
                 i.putExtra("modality", MODALITY);
-
                 i.putExtra("time", time.getText().toString());
                 startActivity(i);
                 mDialog.dismiss();

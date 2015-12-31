@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.CountDownTimer;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,9 +18,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
@@ -32,7 +33,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     private static String CATEGORY;
     private static String TIME;
 
-    //Variables de punteo
+    //Variables de touch
     private float x1, x2;
     static final int MIN_DISTANCE = 200;
 
@@ -80,7 +81,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         time = (TextView) findViewById(R.id.time);
         bd = admin.getWritableDatabase();
-        question = bd.rawQuery("Select * from questions order by _id", null);
+        question = bd.rawQuery("Select * from questions", null);//question = bd.rawQuery("Select * from questions order by _id", null);
         FINAL_QUESTION = question.getCount();
         addQuestion();
 
