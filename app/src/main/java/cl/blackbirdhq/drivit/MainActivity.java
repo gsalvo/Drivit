@@ -1,6 +1,5 @@
 package cl.blackbirdhq.drivit;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,12 +15,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeComponents();
+    }
+
+    private void initializeComponents() {
         TextView title = (TextView)findViewById(R.id.textNamePresentation);
         Typeface face= Typeface.createFromAsset(getAssets(), "fonts/Ubuntu-MI.ttf");
         title.setTypeface(face);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-
     }
 
     @Override
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goPresentationClassB(View view){
-        //Intent i = new Intent(this, PresentationClassB.class);
         Intent i = new Intent(this, Modalities.class);
         i.putExtra("type", "b");
         startActivity(i);
@@ -70,4 +69,5 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, Gratitude.class);
         startActivity(i);
     }
+
 }

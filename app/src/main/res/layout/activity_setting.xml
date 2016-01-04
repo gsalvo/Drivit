@@ -17,49 +17,48 @@
         android:id="@+id/title"
         android:layout_marginBottom="15dp"/>
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/PeaGreenText"
+        android:textSize="16dp"
+        android:text="@string/confText1"
+        android:layout_marginBottom="10dp"/>
+
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="15dp"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:textColor="@color/PeaGreenText"
-            android:textSize="16dp"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:text="@string/confText1" />
+        android:gravity="center">
 
         <Button
-            android:id="@+id/btnClassB"
+            android:id="@+id/btnDownload"
             style="@style/circularButton"
-            android:gravity="right"
+            android:onClick="downloadData"
             android:drawableLeft="@drawable/ic_cloud_download_white_48dp"
-            />
+            android:layout_marginRight="15dp"/>
 
-
+        <Button
+            android:id="@+id/btnDelete"
+            style="@style/circularButton"
+            android:onClick="deleteData"
+            android:drawableLeft="@drawable/ic_delete_white_48dp"
+            android:layout_marginLeft="15dp"/>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/GreenText"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:text="@string/confText2"
-        android:id="@+id/available"
-        android:layout_marginBottom="15dp"/>
+    <!--<Button
+        android:id="@+id/btnConditions"
+        style="@style/buttonStyle"
+        android:onClick="Download"
+        android:text="DESCARGAR"
+        android:drawableLeft="@drawable/ic_cloud_download_white_24dp"
+        android:drawablePadding="5dp"/>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/GreenText"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:text="@string/confText3"
-        android:id="@+id/date"
-        android:layout_marginBottom="15dp"/>
+    <Button
+        android:id="@+id/btnGratitude"
+        style="@style/buttonStyle"
+        android:onClick="DeleteData"
+        android:text="BORRAR DATOS"
+        android:drawableLeft="@drawable/ic_delete_white_24dp"
+        android:drawablePadding="5dp"/>-->
 </LinearLayout>

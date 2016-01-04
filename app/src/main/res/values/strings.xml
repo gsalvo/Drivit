@@ -2,7 +2,6 @@
     <string name="app_name">Drivit</string>
     <string name="textPresentation">Bienvenidos a Drivit, Ahora puedes practicar el ensayo teórico de conducción. Ten en cuenta que al utilizar la aplicación estás aceptando los términos y condiciones.</string>
 
-    <string name="action_settings">Settings</string>
 
     <!--Label -->
     <string name="labelPresentationClassB">Clase B</string>
@@ -11,6 +10,12 @@
     <string name="labelGratitude">Agradecimientos</string>
     <string name="labelQuestion">Examen</string>
     <string name="labelNavQuestion">Navegación</string>
+
+    <!-- Main -->
+    <string name="mainText1">Se utilizará el set de preguntas del dispositivo</string>
+    <string name="mainText2">Acceso a internet requerido</string>
+    <string name="mainText3">No es posible practicar sin acceso a internet. Puede descargar un set de preguntas para su funcionamiento offline desde la sección configuraciones</string>
+
 
     <!--Texto botones-->
     <string name="btnCondition">TÉRMINOS Y CONDICIONES</string>
@@ -66,13 +71,11 @@
     <string name="result14">T. total:</string>
     <string name="result15">Faltaron:</string>
     <!--Configuraciones -->
-    <string name="confTitle">Ensayos offline</string>
+    <string name="confTitle">Ensayos offline:</string>
     <string name="confText1">Descarga un set de preguntas para poder practicar cuando no tengas acceso a internet</string>
-    <string name="confText2">Ensayos disponibles:</string>
-    <string name="confText3">Descarga: </string>
-    <string name="confText4">Sí</string>
-    <string name="confText5">hace</string>
-    <string name="confText6">días</string>
+    <string name="confText2">SÍ</string>
+    <string name="confText3">NO</string>
+
 
     <!--Progress -->
     <string name="progress1">Aprobación</string>

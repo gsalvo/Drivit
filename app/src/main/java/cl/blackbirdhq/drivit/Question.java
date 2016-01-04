@@ -33,6 +33,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     private static String CATEGORY;
     private static String TIME;
 
+
     //Variables de touch
     private float x1, x2;
     static final int MIN_DISTANCE = 200;
@@ -81,7 +82,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         time = (TextView) findViewById(R.id.time);
         bd = admin.getWritableDatabase();
-        question = bd.rawQuery("Select * from questions", null);//question = bd.rawQuery("Select * from questions order by _id", null);
+        question = bd.rawQuery("Select * from questions order by _id", null);
         FINAL_QUESTION = question.getCount();
         addQuestion();
 
