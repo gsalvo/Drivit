@@ -101,6 +101,7 @@ public class Setting extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        System.out.println(error);
                         download.setEnabled(true);
                         mDialog.dismiss();
                         alertDialog.setTitle(getString(R.string.msjeTitle1))

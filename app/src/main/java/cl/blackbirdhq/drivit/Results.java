@@ -1,19 +1,24 @@
 package cl.blackbirdhq.drivit;
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
 public class Results extends AppCompatActivity {
     private Bundle message;
@@ -22,9 +27,14 @@ public class Results extends AppCompatActivity {
     private int messageIncorrect;
     private long messageTime;
     private long messageTotalTime;
+    private static String TYPE;
     private static String MODALITY;
     private TextView title, text, points, percent, correct, incorrect, blank, time, timeOff, totalTime;
     private ImageView face;
+    private AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
+    private SQLiteDatabase bd;
+    private static long ID_TESTS;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +43,7 @@ public class Results extends AppCompatActivity {
     }
 
     private void initializeComponents(){
+        bd = admin.getWritableDatabase();
         message = getIntent().getExtras();
         messageScore = message.getInt("score");
         messageTime = message.getLong("timeTest");
@@ -40,7 +51,7 @@ public class Results extends AppCompatActivity {
         messageCorrect = message.getInt("correct");
         messageIncorrect = message.getInt("incorrect");
         MODALITY = message.getString("modality");
-
+        TYPE = message.getString("type");
         title = (TextView) findViewById(R.id.title);
         text = (TextView) findViewById(R.id.text);
         points= (TextView) findViewById(R.id.points);
@@ -57,11 +68,14 @@ public class Results extends AppCompatActivity {
     }
 
     private void printResult(int score){
-        points.setText(getString(R.string.result3) + " "+ score);
+
+        int achieved = 0;
+        points.setText(getString(R.string.result3) + " " + score);
         if(MODALITY.equals("special")){
             percent.setText(getString(R.string.result4) + " " + (score * 100 / 10)+"%");
             blank.setText(getString(R.string.result7) + " " + (35 - messageIncorrect - messageCorrect));
             if((score * 100 / 10) >= 87) {
+                achieved = 1;
                 face.setImageResource(R.drawable.face_happy);
                 title.setText(getString(R.string.resultCat1));
                 title.setTextColor(getResources().getColor(R.color.GreenText));
@@ -74,15 +88,46 @@ public class Results extends AppCompatActivity {
             percent.setText(getString(R.string.result4) + " " + (score * 100 / 38)+"%");
             blank.setText(getString(R.string.result7) + " " + (35 - messageIncorrect - messageCorrect));
             if(score >33) {
+                achieved = 1;
                 face.setImageResource(R.drawable.face_happy);
                 title.setText(getString(R.string.result1));
                 title.setTextColor(getResources().getColor(R.color.GreenText));
                 text.setText(getResources().getString(R.string.result11));
             }
         }
+        ContentValues register = new ContentValues();
+        register.put("time", messageTime);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        register.put("date", format.format(new Date()));
+        register.put("modality",MODALITY);
+        register.put("class", TYPE.toUpperCase());
+        register.put("achieved", 1);
+        try {
+            ID_TESTS = bd.insert("tests", null, register);
+            Cursor auxTest = bd.rawQuery("SELECT * FROM test", null);
+            while (auxTest.moveToNext()) {
+                bd.rawQuery("INSERT INTO alternatives_tests " +
+                        "(right, tests_id, alternatives_id, questions_id, categories_id) VALUES " +
+                        "(" + auxTest.getInt(3) + "," + ID_TESTS + "," + auxTest.getInt(2) + "," + auxTest.getInt(1) + "," + auxTest.getInt(4) + ")", null);
+            }
+        }catch (Exception e){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle(getString(R.string.msjeTitle11))
+                    .setMessage(getString(R.string.msjeText11))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Cierra el dialogo
+                        }
+                    })
+                    .show();
+        }finally {
+            bd.close();
+        }
+
+
+
         correct.setText(getString(R.string.result5) + " " + messageCorrect);
         incorrect.setText(getString(R.string.result6) + " " + messageIncorrect);
-
         if(MODALITY.equals("survival")){
             time.setVisibility(View.GONE);
             timeOff.setVisibility(View.GONE);

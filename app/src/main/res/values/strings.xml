@@ -33,6 +33,8 @@
     <string name="msjeText9">Tranquilo, nadie es tan rápido para terminarlo en ese tiempo, ingresa un tiempo mayor a 0</string>
     <string name="msjeTitle10">Acceso a internet requerido</string>
     <string name="msjeText10">No es posible practicar sin acceso a internet. Puede descargar un set de preguntas para su funcionamiento offline desde la sección configuraciones</string>
+    <string name="msjeTitle11">Ha ocurrido un error</string>
+    <string name="msjeText11">No se ha podido registrar la puntuación del ensayo</string>
 
     <!-- Texto modalidad real -->
     <string name="mod1b">¿Estás preparado para comenzar un examen en modalidad real de clase B?</string>

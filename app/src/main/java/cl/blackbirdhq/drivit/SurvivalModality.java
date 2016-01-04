@@ -135,14 +135,14 @@ public class SurvivalModality extends AppCompatActivity {
 
     private String parsingTest(boolean localData) {
         data.reloadDBTest(db);
+        mDialog.setCancelable(true);
         if (!localData){
-            mDialog.setCancelable(true);
             try {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject JSONQuestion = jsonArray.getJSONObject(i);
                     db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (" + JSONQuestion.get("id") + ", '" + JSONQuestion.get("question") + "','" + JSONQuestion.get("image") + "'," + JSONQuestion.get("categories_id") + ")");
+                    db.execSQL("INSERT INTO test(right, alternatives_id, questions_id, categories_id) values (0,0,"+JSONQuestion.get("id")+","+JSONQuestion.get("categories_id")+")");
                     JSONArray JSONal = (JSONArray) JSONQuestion.get("alternatives");
-
                     for (int j = 0; j < JSONal.length(); j++) {
                         JSONObject alternative = JSONal.getJSONObject(j);
                         db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (" + alternative.get("id") + ", '" + alternative.get("alternative") + "'," + alternative.get("right") + ", " + JSONQuestion.get("id") + ")");
@@ -169,6 +169,7 @@ public class SurvivalModality extends AppCompatActivity {
             for (int i = 0; i < 4; i++) {
                 while (questions[i].moveToNext()) {
                     db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (" + questions[i].getInt(0) + ", '" + questions[i].getString(1) + "','" + questions[i].getString(2) + "'," + questions[i].getInt(3) + ")");
+                    db.execSQL("INSERT INTO test(right, alternatives_id, questions_id, categories_id) values (0,0,"+questions[i].getInt(0)+","+questions[i].getInt(3)+")");
                     Cursor alternatives = db.rawQuery("SELECT * from offline_alternatives where questions_id = "+ questions[i].getInt(0) , null);
                     while (alternatives.moveToNext()){
                         db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (" + alternatives.getInt(0) + ",'" + alternatives.getString(1) + "' ," + alternatives.getInt(2) + "," + alternatives.getInt(3) + ")");

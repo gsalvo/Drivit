@@ -146,6 +146,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                         i.putExtra("totalTime", realTime);
                         i.putExtra("correct", calcRegularResult()[1]);
                         i.putExtra("incorrect", calcRegularResult()[2]);
+                        i.putExtra("type", TYPE);
                         question.close();
                         bd.close();
                         startActivity(i);
@@ -164,9 +165,6 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         boolean stateQuestion = false;
         Cursor alternative;
         ContentValues register = new ContentValues();
-        register.put("_id", number);
-        register.put("categories_id", question.getInt(3));
-        register.put("questions_id", question.getInt(0));
         register.put("alternatives_id", alternativeSelected);
         if (alternativeSelected != 0) {
             alternative = bd.rawQuery("select right from alternatives where _id = " + alternativeSelected, null);
@@ -175,19 +173,8 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                 stateQuestion = true;
             }
             register.put("right", alternative.getInt(0));
-            if (bd.rawQuery("Select _id from test where _id = " + number, null).getCount() > 0) {
-                bd.update("test", register, "_id = " + number, null);
-            } else {
-                bd.insert("test", null, register);
-            }
-            alternative.close();
-        } else {
-            register.put("right", 0);
-            if (bd.rawQuery("Select _id from test where _id = " + number, null).getCount() > 0) {
-                bd.update("test", register, "_id = " + number, null);
-            } else {
-                bd.insert("test", null, register);
-            }
+            bd.update("test", register, "questions_id = " + question.getInt(0), null);
+        alternative.close();
         }
         return stateQuestion;
     }
@@ -339,6 +326,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                         i.putExtra("totalTime", realTime);
                         i.putExtra("correct", calcRegularResult()[1]);
                         i.putExtra("incorrect", calcRegularResult()[2]);
+                        i.putExtra("type", TYPE);
                         question.close();
                         bd.close();
                         startActivity(i);
@@ -475,6 +463,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                             i.putExtra("totalTime", realTime);
                             i.putExtra("correct", calcRegularResult()[1]);
                             i.putExtra("incorrect", calcRegularResult()[2]);
+                            i.putExtra("type", TYPE);
                             question.close();
                             bd.close();
                             startActivity(i);
@@ -488,6 +477,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                         i.putExtra("totalTime", realTime);
                         i.putExtra("correct", calcRegularResult()[1]);
                         i.putExtra("incorrect", calcRegularResult()[2]);
+                        i.putExtra("type", TYPE);
                         question.close();
                         bd.close();
                         startActivity(i);
@@ -510,7 +500,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     public boolean dispatchTouchEvent(MotionEvent event) {
         if(!checkTest){
             if(MODALITY.equals("survival")){
-               return super.dispatchTouchEvent(event);
+                return super.dispatchTouchEvent(event);
             }
         }
         switch (event.getAction()){

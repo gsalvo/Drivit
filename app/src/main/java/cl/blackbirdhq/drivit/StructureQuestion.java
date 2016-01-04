@@ -23,10 +23,7 @@ public class StructureQuestion extends Fragment {
     private int messageGoToPosition, messagePosition, messageNumberQuestion;
     private boolean messageCheckTest = false;
     private int answered = 0;
-    //private SQLiteDatabase bd;
     private Cursor alternative;
-    //private Cursor test;
-    //private AdminSQLiteAPP admin;
     private  ImageView imageQuestion;
     private  TextView question;
     private  RadioGroup groupAlternatives;

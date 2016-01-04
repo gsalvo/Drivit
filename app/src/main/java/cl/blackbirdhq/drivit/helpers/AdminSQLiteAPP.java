@@ -30,7 +30,7 @@ public class AdminSQLiteAPP extends SQLiteOpenHelper {
     private static final String ALTERNATIVES_TESTS = "create table alternatives_tests (" +
             "_id integer primary key autoincrement, " +
             "questions_id integer not null, " +
-            "tests_id integer not null, " +
+            "tests_id integer, " +
             "alternatives_id integer not null, " +
             "categories_id integer not null,"+
             "right integer not null)";
@@ -58,14 +58,14 @@ public class AdminSQLiteAPP extends SQLiteOpenHelper {
             "right integer not null," +
             "questions_id integer not null)";
 
-    /*Eliminar*/
+
     private static final String TEST = "create table test (" +
             "_id integer primary key autoincrement," +
-            "questions_id integer, " +
-            "alternatives_id integer," +
-            " right integer," +
+            "questions_id integer not null, " +
+            "alternatives_id integer not null," +
+            "right integer not null," +
             "categories_id integer not null)";
-    /*ELIMINAR*/
+
 
 
 
