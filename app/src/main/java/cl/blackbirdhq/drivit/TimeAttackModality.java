@@ -82,7 +82,7 @@ public class TimeAttackModality extends AppCompatActivity {
                     setMessage(getString(R.string.msjeText9))
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            //Cierra el dialogo
+                            time.setText("");
                         }
                     })
                     .show();
