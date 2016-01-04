@@ -55,19 +55,6 @@ public class Setting extends AppCompatActivity {
         mDialog = new ProgressDialog(this);
         alertDialog = new AlertDialog.Builder(this);
         checkData();
-
-        /*mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                loadQuestion.cancel(true);
-                CharSequence text = "Almacenamiento de datos cancelados";
-                int duration = Toast.LENGTH_SHORT;
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
-                checkData();
-                download.setEnabled(true);
-            }
-        });*/
     }
 
     public void checkData(){
@@ -92,7 +79,7 @@ public class Setting extends AppCompatActivity {
     }
 
     public void downloadData(View view){
-        mDialog.setMessage("Descargando las preguntas de la Web.");
+        mDialog.setMessage(getString(R.string.msjeText2));
         mDialog.setIndeterminate(true);
         mDialog.setCancelable(false);
         mDialog.show();
@@ -103,12 +90,12 @@ public class Setting extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        mDialog.setMessage("Eliminando set de preguntas anteriores.");
+                        mDialog.setMessage(getString(R.string.msjeText3));
                         data.resetData(db);
                         jsonArray = response;
                         loadQuestion = new LoadQuestion();
                         loadQuestion.execute();
-                        mDialog.setMessage("Guardando set de preguntas en dispositivo.");
+                        mDialog.setMessage(getString(R.string.msjeText4));
                     }
                 },
                 new Response.ErrorListener() {
@@ -116,8 +103,8 @@ public class Setting extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         download.setEnabled(true);
                         mDialog.dismiss();
-                        alertDialog.setTitle("Error con la descarga del examen")
-                                .setMessage("No se ha podido descargar el examen, verifique su conexión a internet.")
+                        alertDialog.setTitle(getString(R.string.msjeTitle1))
+                                .setMessage(getString(R.string.msjeText1))
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         //Cierra el dialogo
@@ -132,9 +119,8 @@ public class Setting extends AppCompatActivity {
 
     public void deleteData(View view){
         data.resetData(db);
-        CharSequence text = "Se ha eliminado el set de preguntas";
         int duration = Toast.LENGTH_SHORT;
-        toast = Toast.makeText(context, text, duration);
+        toast = Toast.makeText(context, getString(R.string.msjeText5), duration);
         toast.show();
         checkData();
     }
@@ -172,16 +158,15 @@ public class Setting extends AppCompatActivity {
             if(result.equals("go")){
                 checkData();
                 mDialog.dismiss();
-                CharSequence text = "Ensayos offline disponibles";
                 int duration = Toast.LENGTH_SHORT;
-                toast = Toast.makeText(context, text, duration);
+                toast = Toast.makeText(context, getString(R.string.msjeText6), duration);
                 toast.show();
 
             }else{
                 checkData();
                 mDialog.dismiss();
-                alertDialog.setTitle("Error de almacenamiento")
-                        .setMessage("No se ha podido guardar las preguntas, verifique el espacio.")
+                alertDialog.setTitle(getString(R.string.msjeTitle7))
+                        .setMessage(getString(R.string.msjeText7))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Cierra el dialogo

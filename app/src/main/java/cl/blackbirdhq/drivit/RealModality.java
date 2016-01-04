@@ -80,7 +80,7 @@ public class RealModality extends AppCompatActivity {
     }
 
     public void goTest(View view){
-        mDialog.setMessage("Cargando las preguntas.");
+        mDialog.setMessage(getString(R.string.msjeText2));
         mDialog.setIndeterminate(false);
         mDialog.setCancelable(false);
         mDialog.show();
@@ -100,14 +100,15 @@ public class RealModality extends AppCompatActivity {
                             jsonArray = response;
                             loadQuestion = new LoadQuestion();
                             loadQuestion.execute();
+                            mDialog.setMessage(getString(R.string.msjeText8));
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             mDialog.dismiss();
-                            alertDialog.setTitle("Error con la descarga del examen")
-                                    .setMessage("No se ha podido descargar el examen, verifique su conexión a internet.")
+                            alertDialog.setTitle(getString(R.string.msjeTitle1))
+                                    .setMessage(getString(R.string.msjeText1))
                                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             //Cierra el dialogo
@@ -122,9 +123,11 @@ public class RealModality extends AppCompatActivity {
             Cursor countData = db.rawQuery("SELECT count(*) FROM questions_types", null);
             countData.moveToFirst();
             if(countData.getInt(0)> 0) {
+                mDialog.setMessage(getString(R.string.msjeText8));
                 loadQuestion = new LoadQuestion(true);
                 loadQuestion.execute();
             }else{
+                mDialog.dismiss();
                 alertDialog.setTitle(getString(R.string.mainText2))
                         .setMessage(getString(R.string.mainText3))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -208,8 +211,8 @@ public class RealModality extends AppCompatActivity {
                 mDialog.dismiss();
             }else{
                 mDialog.dismiss();
-                alertDialog.setTitle("Error con la descarga del examen")
-                        .setMessage("No se ha podido descargar el examen, verifique su conexión a internet.")
+                alertDialog.setTitle(getString(R.string.mainText2))
+                        .setMessage(getString(R.string.mainText3))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Cierra el dialogo
