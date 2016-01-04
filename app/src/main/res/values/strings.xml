@@ -11,12 +11,6 @@
     <string name="labelQuestion">Examen</string>
     <string name="labelNavQuestion">Navegación</string>
 
-    <!-- Main -->
-    <string name="mainText1">Se utilizará el set de preguntas del dispositivo</string>
-    <string name="mainText2">Acceso a internet requerido</string>
-    <string name="mainText3">No es posible practicar sin acceso a internet. Puede descargar un set de preguntas para su funcionamiento offline desde la sección configuraciones</string>
-
-
     <!--Texto botones-->
     <string name="btnCondition">TÉRMINOS Y CONDICIONES</string>
     <string name="btnGratitude">AGRADECIMIENTOS</string>
@@ -27,17 +21,18 @@
     <!-- Texto mensajes de alerta -->
     <string name="msjeTitle1">Error con la descarga del examen</string>
     <string name="msjeText1">No se ha podido descargar el examen, verifique su conexión a internet</string>
-
     <string name="msjeText2">Descargando las preguntas de la Web</string>
     <string name="msjeText3">Eliminando set de preguntas anteriores</string>
     <string name="msjeText4">Guardando set de preguntas en dispositivo</string>
     <string name="msjeText5">Se ha eliminado el set de preguntas del dispositivo</string>
     <string name="msjeText6">Ensayos offline disponibles</string>
-
     <string name="msjeTitle7">Error de almacenamiento</string>
     <string name="msjeText7">No se ha podido guardar el set de preguntas en el dispositivo</string>
-
     <string name="msjeText8">Generando ensayo</string>
+    <string name="msjeTitle9">Atención</string>
+    <string name="msjeText9">Tranquilo, nadie es tan rápido para terminarlo en ese tiempo, ingresa un tiempo mayor a 0</string>
+    <string name="msjeTitle10">Acceso a internet requerido</string>
+    <string name="msjeText10">No es posible practicar sin acceso a internet. Puede descargar un set de preguntas para su funcionamiento offline desde la sección configuraciones</string>
 
     <!-- Texto modalidad real -->
     <string name="mod1b">¿Estás preparado para comenzar un examen en modalidad real de clase B?</string>

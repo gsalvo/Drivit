@@ -128,8 +128,8 @@ public class RealModality extends AppCompatActivity {
                 loadQuestion.execute();
             }else{
                 mDialog.dismiss();
-                alertDialog.setTitle(getString(R.string.mainText2))
-                        .setMessage(getString(R.string.mainText3))
+                alertDialog.setTitle(getString(R.string.msjeTitle10))
+                        .setMessage(getString(R.string.msjeText10))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Cierra el dialogo
@@ -211,8 +211,8 @@ public class RealModality extends AppCompatActivity {
                 mDialog.dismiss();
             }else{
                 mDialog.dismiss();
-                alertDialog.setTitle(getString(R.string.mainText2))
-                        .setMessage(getString(R.string.mainText3))
+                alertDialog.setTitle(getString(R.string.msjeTitle10))
+                        .setMessage(getString(R.string.msjeText10))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Cierra el dialogo

@@ -77,65 +77,75 @@ public class TimeAttackModality extends AppCompatActivity {
         return state;
     }
     public void goTest(View view){
-        mDialog.setMessage(getString(R.string.msjeText2));
-        mDialog.setIndeterminate(false);
-        mDialog.setCancelable(false);
-        mDialog.show();
-        if(connectivity(getApplicationContext())){
-            String url = "";
-            if(type.equals("b")){
-                url = "http://blackbirdhq.cl/selectQuestionClassB.php";
-            }else if (type.equals("c")){
-                url = "http://blackbirdhq.cl/selectQuestionClassC.php";
-            }
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                    Request.Method.GET,
-                    url,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            jsonArray = response;
-                            loadQuestion = new LoadQuestion();
-                            loadQuestion.execute();
-                            mDialog.setMessage(getString(R.string.msjeText8));
+        if(Integer.parseInt(time.getText().toString()) == 0){
+            alertDialog.setTitle(getString(R.string.msjeTitle9)).
+                    setMessage(getString(R.string.msjeText9))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Cierra el dialogo
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            mDialog.dismiss();
-                            alertDialog.setTitle(getString(R.string.msjeTitle1))
-                                    .setMessage(getString(R.string.msjeText1))
-                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            //Cierra el dialogo
-                                        }
-                                    })
-                                    .show();
-                        }
-                    }
-            );
-            DrivitSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+                    })
+                    .show();
         }else{
-            Cursor countData = db.rawQuery("SELECT count(*) FROM questions_types", null);
-            countData.moveToFirst();
-            if(countData.getInt(0)> 0) {
-                mDialog.setMessage(getString(R.string.msjeText8));
-                loadQuestion = new LoadQuestion(true);
-                loadQuestion.execute();
-            }else{
-                mDialog.dismiss();
-                alertDialog.setTitle(getString(R.string.mainText2))
-                        .setMessage(getString(R.string.mainText3))
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                //Cierra el dialogo
+            mDialog.setMessage(getString(R.string.msjeText2));
+            mDialog.setIndeterminate(false);
+            mDialog.setCancelable(false);
+            mDialog.show();
+            if(connectivity(getApplicationContext())){
+                String url = "";
+                if(type.equals("b")){
+                    url = "http://blackbirdhq.cl/selectQuestionClassB.php";
+                }else if (type.equals("c")){
+                    url = "http://blackbirdhq.cl/selectQuestionClassC.php";
+                }
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                        Request.Method.GET,
+                        url,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                jsonArray = response;
+                                loadQuestion = new LoadQuestion();
+                                loadQuestion.execute();
+                                mDialog.setMessage(getString(R.string.msjeText8));
                             }
-                        })
-                        .show();
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                mDialog.dismiss();
+                                alertDialog.setTitle(getString(R.string.msjeTitle1))
+                                        .setMessage(getString(R.string.msjeText1))
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                //Cierra el dialogo
+                                            }
+                                        })
+                                        .show();
+                            }
+                        }
+                );
+                DrivitSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+            }else{
+                Cursor countData = db.rawQuery("SELECT count(*) FROM questions_types", null);
+                countData.moveToFirst();
+                if(countData.getInt(0)> 0) {
+                    mDialog.setMessage(getString(R.string.msjeText8));
+                    loadQuestion = new LoadQuestion(true);
+                    loadQuestion.execute();
+                }else{
+                    mDialog.dismiss();
+                    alertDialog.setTitle(getString(R.string.msjeTitle10))
+                            .setMessage(getString(R.string.msjeText10))
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //Cierra el dialogo
+                                }
+                            })
+                            .show();
+                }
             }
         }
-
     }
 
     private String parsingTest(boolean localData) {
@@ -207,8 +217,8 @@ public class TimeAttackModality extends AppCompatActivity {
                 mDialog.dismiss();
             }else{
                 mDialog.dismiss();
-                alertDialog.setTitle(getString(R.string.mainText2))
-                        .setMessage(getString(R.string.mainText3))
+                alertDialog.setTitle(getString(R.string.msjeTitle10))
+                        .setMessage(getString(R.string.msjeText10))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Cierra el dialogo
