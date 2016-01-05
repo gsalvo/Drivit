@@ -29,7 +29,8 @@ public class NavQuestion extends Fragment {
     private int messageCurrentQuestion;
     private boolean messageCheckTest = false;
     OnSelectedQuestionListener onSelectedQuestion;
-
+    private AdminSQLiteAPP admin;
+    SQLiteDatabase bd;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,84 +61,89 @@ public class NavQuestion extends Fragment {
             text2.setTextColor(getResources().getColor(R.color.errorAnswer));
         }
         contentButtonNav = (LinearLayout) view.findViewById(R.id.contentButtonNav);
-        AdminSQLiteAPP admin = new AdminSQLiteAPP(this.getActivity());
-        SQLiteDatabase bd = admin.getReadableDatabase();
-        Cursor questions = bd.rawQuery("select _id from questions order by _id", null);
-        questions.moveToFirst();
-        int cantQuestion = questions.getCount();
-        int cantButtonLY = 5;
-        double cantRow =Math.ceil((float)cantQuestion/(float)cantButtonLY);
-        int numberQuestion = 1;
-        for(int i = 0; i <cantRow; i++){
-            LinearLayout linearLayout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.content_button_nav,contentButtonNav,false);
-            contentButtonNav.addView(linearLayout);
-            for(int y = 0; y < cantButtonLY; y++) {
-                if(numberQuestion <= cantQuestion){
-                    Cursor test = bd.rawQuery("select alternatives_id, right from test where questions_id="+questions.getInt(0),null);
-                    test.moveToFirst();
-                    final Button btnQuestion;
-                    if(messageCheckTest){
-                        if (test.getCount() == 0){
-                            if(messageCurrentQuestion == numberQuestion){
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_wrong_actual, linearLayout, false);
-                            }else {
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_wrong, linearLayout, false);
+        try{
+            admin = new AdminSQLiteAPP(this.getActivity());
+            bd = admin.getReadableDatabase();
+            Cursor questions = bd.rawQuery("select _id from questions order by _id", null);
+            questions.moveToFirst();
+            int cantQuestion = questions.getCount();
+            int cantButtonLY = 5;
+            double cantRow =Math.ceil((float)cantQuestion/(float)cantButtonLY);
+            int numberQuestion = 1;
+            for(int i = 0; i <cantRow; i++){
+                LinearLayout linearLayout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.content_button_nav,contentButtonNav,false);
+                contentButtonNav.addView(linearLayout);
+                for(int y = 0; y < cantButtonLY; y++) {
+                    if(numberQuestion <= cantQuestion){
+                        Cursor test = bd.rawQuery("select alternatives_id, right from test where questions_id="+questions.getInt(0),null);
+                        test.moveToFirst();
+                        final Button btnQuestion;
+                        if(messageCheckTest){
+                            if (test.getCount() == 0){
+                                if(messageCurrentQuestion == numberQuestion){
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_wrong_actual, linearLayout, false);
+                                }else {
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_wrong, linearLayout, false);
+                                }
                             }
-                        }
-                        else if(test.getInt(1) == 0){
-                            if(messageCurrentQuestion == numberQuestion){
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_wrong_actual, linearLayout, false);
-                            }else {
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_wrong, linearLayout, false);
-                            }
-                        }else{
-                            if(messageCurrentQuestion == numberQuestion){
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_right_actual, linearLayout, false);
-                            }else {
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_right, linearLayout, false);
-                            }
-                        }
-                    }else{
-                        if (test.getCount() == 0){
-                            if(messageCurrentQuestion == numberQuestion){
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered_actual, linearLayout, false);
-                            }else {
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered, linearLayout, false);
-                            }
-                        }else if (test.getInt(0) == 0) {
-                            if(messageCurrentQuestion == numberQuestion){
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered_actual, linearLayout, false);
-                            }else {
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered, linearLayout, false);
-                            }
-                        }else{
-                            if(messageCurrentQuestion == numberQuestion){
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_answered_actual,linearLayout,false);
+                            else if(test.getInt(1) == 0){
+                                if(messageCurrentQuestion == numberQuestion){
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_wrong_actual, linearLayout, false);
+                                }else {
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_wrong, linearLayout, false);
+                                }
                             }else{
-                                btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_answered,linearLayout,false);
+                                if(messageCurrentQuestion == numberQuestion){
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_right_actual, linearLayout, false);
+                                }else {
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_right, linearLayout, false);
+                                }
+                            }
+                        }else{
+                            if (test.getCount() == 0){
+                                if(messageCurrentQuestion == numberQuestion){
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered_actual, linearLayout, false);
+                                }else {
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered, linearLayout, false);
+                                }
+                            }else if (test.getInt(0) == 0) {
+                                if(messageCurrentQuestion == numberQuestion){
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered_actual, linearLayout, false);
+                                }else {
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_no_answered, linearLayout, false);
+                                }
+                            }else{
+                                if(messageCurrentQuestion == numberQuestion){
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_answered_actual,linearLayout,false);
+                                }else{
+                                    btnQuestion = (Button) getActivity().getLayoutInflater().inflate(R.layout.btn_nav_test_answered,linearLayout,false);
+                                }
                             }
                         }
+                        btnQuestion.setText(numberQuestion + "");
+                        linearLayout.addView(btnQuestion);
+                        final int finalNumberQuestion = numberQuestion;
+                        btnQuestion.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onSelectedQuestion.selectedQuestionListener(finalNumberQuestion);
+                                getActivity().finish();
+                            }
+                        });
+                        questions.moveToNext();
+                        numberQuestion++;
+                        test.close();
+                    }else{
+                        break;
                     }
-                    btnQuestion.setText(numberQuestion + "");
-                    linearLayout.addView(btnQuestion);
-                    final int finalNumberQuestion = numberQuestion;
-                    btnQuestion.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            onSelectedQuestion.selectedQuestionListener(finalNumberQuestion);
-                            getActivity().finish();
-                        }
-                    });
-                    questions.moveToNext();
-                    numberQuestion++;
-                    test.close();
-                }else{
-                    break;
                 }
             }
+            questions.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            bd.close();
         }
-        questions.close();
-        bd.close();
     }
 
     @Override

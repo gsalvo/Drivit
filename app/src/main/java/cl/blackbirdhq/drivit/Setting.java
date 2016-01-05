@@ -46,8 +46,6 @@ public class Setting extends AppCompatActivity {
     }
 
     private void initializeComponents() {
-
-        db = data.getWritableDatabase();
         context = getApplicationContext();
         download = (Button) findViewById(R.id.btnDownload);
         deleteTest = (Button) findViewById(R.id.btnDelete);
@@ -58,24 +56,31 @@ public class Setting extends AppCompatActivity {
     }
 
     public void checkData(){
-        Cursor countData = db.rawQuery("SELECT count(*) FROM questions_types", null);
-        countData.moveToFirst();
-        if(countData.getInt(0)> 0){
-            offlineTitle.setText(getString(R.string.confTitle)+" "+getString(R.string.confText2));
-            download.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_refresh_white_48dp, 0, 0, 0);
-            download.setBackgroundResource(R.drawable.round_button);
-            deleteTest.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_white_48dp, 0, 0, 0);
-            deleteTest.setBackgroundResource(R.drawable.round_button);
-            deleteTest.setEnabled(true);
-        }else{
-            offlineTitle.setText(getString(R.string.confTitle)+" "+getString(R.string.confText3));
-            download.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cloud_download_white_48dp, 0, 0, 0);
-            download.setBackgroundResource(R.drawable.round_button);
-            deleteTest.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_white_dis_48dp, 0, 0, 0);
-            deleteTest.setBackgroundResource(R.drawable.round_button);
-            deleteTest.setEnabled(false);
+        try {
+            db = data.getReadableDatabase();
+            Cursor countData = db.rawQuery("SELECT count(*) FROM questions_types", null);
+            countData.moveToFirst();
+            if(countData.getInt(0)> 0){
+                offlineTitle.setText(getString(R.string.confTitle)+" "+getString(R.string.confText2));
+                download.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_refresh_white_48dp, 0, 0, 0);
+                download.setBackgroundResource(R.drawable.round_button);
+                deleteTest.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_white_48dp, 0, 0, 0);
+                deleteTest.setBackgroundResource(R.drawable.round_button);
+                deleteTest.setEnabled(true);
+            }else{
+                offlineTitle.setText(getString(R.string.confTitle)+" "+getString(R.string.confText3));
+                download.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cloud_download_white_48dp, 0, 0, 0);
+                download.setBackgroundResource(R.drawable.round_button);
+                deleteTest.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_white_dis_48dp, 0, 0, 0);
+                deleteTest.setBackgroundResource(R.drawable.round_button);
+                deleteTest.setEnabled(false);
+            }
+            countData.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            db.close();
         }
-        countData.close();
     }
 
     public void downloadData(View view){
@@ -91,7 +96,6 @@ public class Setting extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         mDialog.setMessage(getString(R.string.msjeText3));
-                        data.resetData(db);
                         jsonArray = response;
                         loadQuestion = new LoadQuestion();
                         loadQuestion.execute();
@@ -102,7 +106,6 @@ public class Setting extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error);
-                        download.setEnabled(true);
                         mDialog.dismiss();
                         alertDialog.setTitle(getString(R.string.msjeTitle1))
                                 .setMessage(getString(R.string.msjeText1))
@@ -119,17 +122,26 @@ public class Setting extends AppCompatActivity {
     }
 
     public void deleteData(View view){
-        data.resetData(db);
-        int duration = Toast.LENGTH_SHORT;
-        toast = Toast.makeText(context, getString(R.string.msjeText5), duration);
-        toast.show();
-        checkData();
+        try {
+            db = data.getWritableDatabase();
+            data.resetData(db);
+            int duration = Toast.LENGTH_SHORT;
+            toast = Toast.makeText(context, getString(R.string.msjeText5), duration);
+            toast.show();
+            checkData();
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            db.close();
+        }
+
     }
 
     private String parsingTest() {
-        data.resetData(db);
         String result = "go";
         try {
+            db = data.getWritableDatabase();
+            data.resetData(db);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject JSONQuestion = jsonArray.getJSONObject(i);
                 db.execSQL("INSERT INTO questions_types (questions_id, class) values ("+ JSONQuestion.get("id") +", '"+JSONQuestion.get("class")+"')");
@@ -144,6 +156,7 @@ public class Setting extends AppCompatActivity {
             System.out.println(e);
             result = "stop";
         }finally {
+            db.close();
             return result;
         }
 
@@ -162,7 +175,6 @@ public class Setting extends AppCompatActivity {
                 int duration = Toast.LENGTH_SHORT;
                 toast = Toast.makeText(context, getString(R.string.msjeText6), duration);
                 toast.show();
-
             }else{
                 checkData();
                 mDialog.dismiss();

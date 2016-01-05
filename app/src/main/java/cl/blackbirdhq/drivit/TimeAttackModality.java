@@ -51,7 +51,6 @@ public class TimeAttackModality extends AppCompatActivity {
         time = (EditText) findViewById(R.id.time);
         mDialog = new ProgressDialog(this);
         alertDialog = new AlertDialog.Builder(this);
-        db = data.getWritableDatabase();
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -64,6 +63,7 @@ public class TimeAttackModality extends AppCompatActivity {
             imageView.setImageResource(R.drawable.img_motorbike);
         }
     }
+
     public static boolean connectivity(Context ctx) {
         boolean state = false;
         ConnectivityManager connectivityManager = (ConnectivityManager) ctx
@@ -76,6 +76,7 @@ public class TimeAttackModality extends AppCompatActivity {
         }
         return state;
     }
+
     public void goTest(View view){
         if(Integer.parseInt(time.getText().toString()) == 0){
             alertDialog.setTitle(getString(R.string.msjeTitle9)).
@@ -127,9 +128,18 @@ public class TimeAttackModality extends AppCompatActivity {
                 );
                 DrivitSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
             }else{
-                Cursor countData = db.rawQuery("SELECT count(*) FROM questions_types", null);
-                countData.moveToFirst();
-                if(countData.getInt(0)> 0) {
+                int cant = 0;
+                try{
+                    db = data.getReadableDatabase();
+                    Cursor countData = db.rawQuery("SELECT count(*) FROM questions_types", null);
+                    countData.moveToFirst();
+                    cant = countData.getInt(0);
+                }catch (Exception e){
+                    System.out.println(e);
+                }finally {
+                    db.close();
+                }
+                if(cant> 0) {
                     mDialog.setMessage(getString(R.string.msjeText8));
                     loadQuestion = new LoadQuestion(true);
                     loadQuestion.execute();
@@ -149,10 +159,14 @@ public class TimeAttackModality extends AppCompatActivity {
     }
 
     private String parsingTest(boolean localData) {
-        data.reloadDBTest(db);
-        mDialog.setCancelable(true);
-        if (!localData){
-            try {
+        String result = "stop";
+        try{
+            db = data.getWritableDatabase();
+            data.reloadDBTest(db);
+            mDialog.setCancelable(true);
+            data.reloadDBTest(db);
+            mDialog.setCancelable(true);
+            if (!localData){
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject JSONQuestion = jsonArray.getJSONObject(i);
                     db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (" + JSONQuestion.get("id") + ", '" + JSONQuestion.get("question") + "','" + JSONQuestion.get("image") + "'," + JSONQuestion.get("categories_id") + ")");
@@ -163,35 +177,37 @@ public class TimeAttackModality extends AppCompatActivity {
                         db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (" + alternative.get("id") + ", '" + alternative.get("alternative") + "'," + alternative.get("right") + ", " + JSONQuestion.get("id") + ")");
                     }
                 }
-                return "go";
-            }catch (Exception e){
-                return "stop";
-            }
-        }else{
-            Cursor questionsCat1 = db.rawQuery("SELECT offline_questions._id, offline_questions.question, offline_questions.image, offline_questions.categories_id " +
-                    "FROM offline_questions INNER JOIN questions_types ON offline_questions._id = questions_types.questions_id WHERE questions_types.class = '"+type.toUpperCase()+"' AND " +
-                    "offline_questions.categories_id = 1 ORDER BY RANDOM() LIMIT  9", null);
-            Cursor questionsCat2 = db.rawQuery("SELECT offline_questions._id, offline_questions.question, offline_questions.image, offline_questions.categories_id " +
-                    "FROM offline_questions INNER JOIN questions_types ON offline_questions._id = questions_types.questions_id WHERE questions_types.class = '"+type.toUpperCase()+"' AND " +
-                    "offline_questions.categories_id = 2 ORDER BY RANDOM() LIMIT  9", null);
-            Cursor questionsCat3 = db.rawQuery("SELECT offline_questions._id, offline_questions.question, offline_questions.image, offline_questions.categories_id " +
-                    "FROM offline_questions INNER JOIN questions_types ON offline_questions._id = questions_types.questions_id WHERE questions_types.class = '"+type.toUpperCase()+"' AND " +
-                    "offline_questions.categories_id = 3 ORDER BY RANDOM() LIMIT  8", null);
-            Cursor questionsCat4 = db.rawQuery("SELECT offline_questions._id, offline_questions.question, offline_questions.image, offline_questions.categories_id " +
-                    "FROM offline_questions INNER JOIN questions_types ON offline_questions._id = questions_types.questions_id WHERE questions_types.class = '"+type.toUpperCase()+"' AND " +
-                    "offline_questions.categories_id = 4 ORDER BY RANDOM() LIMIT  9", null);
-            Cursor questions [] = {questionsCat1, questionsCat2, questionsCat3, questionsCat4};
-            for (int i = 0; i < 4; i++) {
-                while (questions[i].moveToNext()) {
-                    db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (" + questions[i].getInt(0) + ", '" + questions[i].getString(1) + "','" + questions[i].getString(2) + "'," + questions[i].getInt(3) + ")");
-                    db.execSQL("INSERT INTO test(right, alternatives_id, questions_id, categories_id) values (0,0,"+questions[i].getInt(0)+","+questions[i].getInt(3)+")");
-                    Cursor alternatives = db.rawQuery("SELECT * from offline_alternatives where questions_id = "+ questions[i].getInt(0) , null);
-                    while (alternatives.moveToNext()){
-                        db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (" + alternatives.getInt(0) + ",'" + alternatives.getString(1) + "' ," + alternatives.getInt(2) + "," + alternatives.getInt(3) + ")");
+            }else{
+                Cursor questionsCat1 = db.rawQuery("SELECT offline_questions._id, offline_questions.question, offline_questions.image, offline_questions.categories_id " +
+                        "FROM offline_questions INNER JOIN questions_types ON offline_questions._id = questions_types.questions_id WHERE questions_types.class = '"+type.toUpperCase()+"' AND " +
+                        "offline_questions.categories_id = 1 ORDER BY RANDOM() LIMIT  9", null);
+                Cursor questionsCat2 = db.rawQuery("SELECT offline_questions._id, offline_questions.question, offline_questions.image, offline_questions.categories_id " +
+                        "FROM offline_questions INNER JOIN questions_types ON offline_questions._id = questions_types.questions_id WHERE questions_types.class = '"+type.toUpperCase()+"' AND " +
+                        "offline_questions.categories_id = 2 ORDER BY RANDOM() LIMIT  9", null);
+                Cursor questionsCat3 = db.rawQuery("SELECT offline_questions._id, offline_questions.question, offline_questions.image, offline_questions.categories_id " +
+                        "FROM offline_questions INNER JOIN questions_types ON offline_questions._id = questions_types.questions_id WHERE questions_types.class = '"+type.toUpperCase()+"' AND " +
+                        "offline_questions.categories_id = 3 ORDER BY RANDOM() LIMIT  8", null);
+                Cursor questionsCat4 = db.rawQuery("SELECT offline_questions._id, offline_questions.question, offline_questions.image, offline_questions.categories_id " +
+                        "FROM offline_questions INNER JOIN questions_types ON offline_questions._id = questions_types.questions_id WHERE questions_types.class = '"+type.toUpperCase()+"' AND " +
+                        "offline_questions.categories_id = 4 ORDER BY RANDOM() LIMIT  9", null);
+                Cursor questions [] = {questionsCat1, questionsCat2, questionsCat3, questionsCat4};
+                for (int i = 0; i < 4; i++) {
+                    while (questions[i].moveToNext()) {
+                        db.execSQL("INSERT INTO questions (_id, question, image, categories_id) values (" + questions[i].getInt(0) + ", '" + questions[i].getString(1) + "','" + questions[i].getString(2) + "'," + questions[i].getInt(3) + ")");
+                        db.execSQL("INSERT INTO test(right, alternatives_id, questions_id, categories_id) values (0,0,"+questions[i].getInt(0)+","+questions[i].getInt(3)+")");
+                        Cursor alternatives = db.rawQuery("SELECT * from offline_alternatives where questions_id = "+ questions[i].getInt(0) , null);
+                        while (alternatives.moveToNext()){
+                            db.execSQL("INSERT INTO alternatives (_id, alternative, right, questions_id) values (" + alternatives.getInt(0) + ",'" + alternatives.getString(1) + "' ," + alternatives.getInt(2) + "," + alternatives.getInt(3) + ")");
+                        }
                     }
                 }
             }
-            return "go";
+            result = "go";
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            db.close();
+            return result;
         }
     }
 

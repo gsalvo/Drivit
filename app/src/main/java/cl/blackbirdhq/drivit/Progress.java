@@ -43,9 +43,6 @@ public class Progress extends AppCompatActivity {
     }
 
     private void initializeComponent(){
-        File f = getApplicationContext().getDatabasePath("aplications.db");
-        long dbSize = f.length();
-        System.out.println("accccccca" + (dbSize/1024) + "KB");
         mDialog = new ProgressDialog(this);
         alertDialog = new AlertDialog.Builder(this);
         Bundle bundle = getIntent().getExtras();
