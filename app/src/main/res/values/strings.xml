@@ -119,7 +119,7 @@
     <string name="text7">Ilustre Municipalidad de Cerrillos</string>
     <string name="text8">Por su participación y colaboración con el desarrollo de este proyecto.</string>
     <string name="text9">Universidad de Santiago de Chile</string>
-    <string name="text10">Por la posibilidad de desarrollar este proyecto como memoria de titulación.</string>
+    <string name="text10">Por la posibilidad de desarrollar este proyecto título.</string>
     <string name="text11">Blackbird SpA</string>
     <string name="text12">Por la infraestructura entregada que hace posible que el proyecto se encuentre activo para el público.</string>
 
@@ -164,7 +164,7 @@
     <string name="nav_answered_wrong">Respuesta incorrecta</string>
 
     <!-- Términos y condiciones -->
-    <string name="termT1">Uso</string>
+    <string name="termT1">Uso:</string>
     <string name="termT2">Actualizaciones de la aplicación:</string>
     <string name="termT3">Responsabilidades:</string>
     <string name="termT4">Exoneración:</string>

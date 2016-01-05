@@ -11,7 +11,8 @@ tools:context="cl.blackbirdhq.drivit.TimeAttackModality">
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="30dp"
-    android:paddingBottom="30dp" >
+    android:paddingBottom="30dp"
+    android:layout_gravity="center_vertical">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

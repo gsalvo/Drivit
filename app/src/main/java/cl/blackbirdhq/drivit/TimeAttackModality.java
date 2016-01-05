@@ -12,9 +12,12 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -49,6 +52,7 @@ public class TimeAttackModality extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getString("type");
         time = (EditText) findViewById(R.id.time);
+
         mDialog = new ProgressDialog(this);
         alertDialog = new AlertDialog.Builder(this);
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {

@@ -92,13 +92,13 @@ public class Progress extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent i;
+        /*Intent i;
         switch(item.getItemId()){
             case R.id.btnHelp:
                 //i = new Intent(this, Setting.class);
                 //startActivity(i);
                 return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
