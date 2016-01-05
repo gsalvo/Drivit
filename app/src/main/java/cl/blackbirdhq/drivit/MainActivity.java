@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(this, Setting.class);
                 startActivity(i);
                 return true;
-            case R.id.progress:
-                i = new Intent(this, Progress.class);
-                startActivity(i);
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }

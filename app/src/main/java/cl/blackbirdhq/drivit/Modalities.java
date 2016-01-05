@@ -31,6 +31,7 @@ public class Modalities extends AppCompatActivity {
         }
         this.listView = (ListView) findViewById(R.id.list_item);
         List item = new ArrayList();
+        item.add(new ItemModality(R.drawable.ic_progress_modality, "Progreso y registro", "Podrás revisar el progreso de los examenes y preguntas realizados"));
         item.add(new ItemModality(R.drawable.ic_real_modality,"Real","Realizarás un ensayo simulando las mismas condiciones en cuanto al tiempo, cantidad de preguntas y puntaje que el examen real"));
         item.add(new ItemModality(R.drawable.ic_special_modality,"Especializado","Realizarás un ensayo sólo con preguntas de una temática en particular para que puedas reforzarla"));
         item.add(new ItemModality(R.drawable.ic_timer_modality, "Contra el tiempo", "Realizarás un ensayo con una duración en tiempo definida por ti"));
@@ -43,24 +44,29 @@ public class Modalities extends AppCompatActivity {
                 Intent i;
                 switch (position) {
                     case 0:
+                        i = new Intent(view.getContext(), Progress.class);
+                        i.putExtra("type", type);
+                        startActivity(i);
+                        break;
+                    case 1:
                         i = new Intent(view.getContext(), RealModality.class);
                         i.putExtra("type", type);
                         i.putExtra("modality", "real");
                         startActivity(i);
                         break;
-                    case 1:
+                    case 2:
                         i = new Intent(view.getContext(), SpecialModality.class);
                         i.putExtra("type", type);
                         i.putExtra("modality", "special");
                         startActivity(i);
                         break;
-                    case 2:
+                    case 3:
                         i = new Intent(view.getContext(), TimeAttackModality.class);
                         i.putExtra("type", type);
                         i.putExtra("modality", "timeAttack");
                         startActivity(i);
                         break;
-                    case 3:
+                    case 4:
                         i = new Intent(view.getContext(), SurvivalModality.class);
                         i.putExtra("type", type);
                         i.putExtra("modality", "survival");

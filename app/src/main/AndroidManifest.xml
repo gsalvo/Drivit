@@ -55,8 +55,8 @@
         </activity>
         <activity
             android:name=".Progress"
-            android:label="@string/title_activity_progress"
-            android:parentActivityName=".MainActivity"
+            android:label="@string/title_activity_progress_clase_b"
+            android:parentActivityName=".Modalities"
             android:screenOrientation="portrait"
             android:theme="@style/CustomThemeMA">
         </activity>

@@ -101,14 +101,24 @@ public class Results extends AppCompatActivity {
         register.put("date", format.format(new Date()));
         register.put("modality",MODALITY);
         register.put("class", TYPE.toUpperCase());
-        register.put("achieved", 1);
+        register.put("achieved", achieved);
         try {
             ID_TESTS = bd.insert("tests", null, register);
             Cursor auxTest = bd.rawQuery("SELECT * FROM test", null);
-            while (auxTest.moveToNext()) {
-                bd.rawQuery("INSERT INTO alternatives_tests " +
-                        "(right, tests_id, alternatives_id, questions_id, categories_id) VALUES " +
-                        "(" + auxTest.getInt(3) + "," + ID_TESTS + "," + auxTest.getInt(2) + "," + auxTest.getInt(1) + "," + auxTest.getInt(4) + ")", null);
+            if (MODALITY.equals("survival")){
+                while (auxTest.moveToNext()) {
+                    if(auxTest.getInt(3) == 1){
+                        bd.execSQL("INSERT INTO alternatives_tests " +
+                                "(right, tests_id, alternatives_id, questions_id, categories_id) VALUES " +
+                                "(" + auxTest.getInt(3) + "," + ID_TESTS + "," + auxTest.getInt(2) + "," + auxTest.getInt(1) + "," + auxTest.getInt(4) + ")");
+                    }
+                }
+            }else{
+                while (auxTest.moveToNext()) {
+                    bd.execSQL("INSERT INTO alternatives_tests " +
+                            "(right, tests_id, alternatives_id, questions_id, categories_id) VALUES " +
+                            "(" + auxTest.getInt(3) + "," + ID_TESTS + "," + auxTest.getInt(2) + "," + auxTest.getInt(1) + "," + auxTest.getInt(4) + ")");
+                }
             }
         }catch (Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);

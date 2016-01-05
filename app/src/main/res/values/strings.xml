@@ -107,10 +107,7 @@
     <string name="progress14">Incorrectas</string>
     <string name="progress15">Correctas</string>
     <string name="progress16">N° preguntas</string>
-    <string name="progress17">Modalidad muerte súbita</string>
-    <string name="progress18">Mejor puntaje:</string>
-    <string name="progress19">Peor puntaje:</string>
-    <string name="progress20">ptos.</string>
+
 
     <!-- Texto Agradecimientos -->
     <string name="text7">Ilustre Municipalidad de Cerrillos</string>
@@ -127,10 +124,11 @@
     <string name="title_activity_gratitude">gratitude</string>
     <string name="title_activity_results">Resultados</string>
     <string name="title_activity_question_check">Revisión</string>
-    <string name="title_activity_progress">Progreso</string>
+    <string name="title_activity_progress_clase_b">Progreso clase B</string>
+    <string name="title_activity_progress_clase_c">Progreso clase C</string>
     <string name="title_activity_setting">Configuraciones</string>
-    <string name="title_activity_modalities_classB">Modalidades clase B</string>
-    <string name="title_activity_modalities_classC">Modalidades clase C</string>
+    <string name="title_activity_modalities_classB">Menú clase B</string>
+    <string name="title_activity_modalities_classC">Menú clase C</string>
     <string name="title_activity_special_modality">Especializado</string>
     <string name="title_activity_survival_modality">Muerte súbita</string>
     <string name="title_activity_time_attack_modality">Contra el tiempo</string>
