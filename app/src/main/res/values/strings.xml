@@ -35,6 +35,9 @@
     <string name="msjeText10">No es posible practicar sin acceso a internet. Puede descargar un set de preguntas para su funcionamiento offline desde la sección configuraciones</string>
     <string name="msjeTitle11">Ha ocurrido un error</string>
     <string name="msjeText11">No se ha podido registrar la puntuación del ensayo</string>
+    <string name="msjeTitle12">Ha ocurrido un error</string>
+    <string name="msjeText12">No se han podido cargar el registro de dato</string>
+    <string name="msjeText13">Cargando registros de ensayos realizados</string>
 
     <!-- Texto modalidad real -->
     <string name="mod1b">¿Estás preparado para comenzar un examen en modalidad real de clase B?</string>
