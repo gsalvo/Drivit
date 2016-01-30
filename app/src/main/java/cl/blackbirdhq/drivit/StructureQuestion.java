@@ -4,6 +4,7 @@ package cl.blackbirdhq.drivit;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,11 +16,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
+import cl.blackbirdhq.drivit.helpers.DrivitSingleton;
 
 
 public class StructureQuestion extends Fragment {
     private String messageQuestion, messageImage, messageQuestionId;
+    private String density;
     private int messageGoToPosition, messagePosition, messageNumberQuestion;
     private boolean messageCheckTest = false;
     private int answered = 0;
@@ -35,6 +42,7 @@ public class StructureQuestion extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        density = getResources().getDisplayMetrics().density + "";
         messageNumberQuestion = getArguments().getInt("numberQuestion");
         messageQuestion = getArguments().getString("question");
         messageImage = getArguments().getString("image");
@@ -62,9 +70,46 @@ public class StructureQuestion extends Fragment {
         alternative1 = (RadioButton) view.findViewById(R.id.alternative1);
         alternative2 = (RadioButton) view.findViewById(R.id.alternative2);
         alternative3 = (RadioButton) view.findViewById(R.id.alternative3);
-        question.setText(messageNumberQuestion + ".- "+messageQuestion);
-        if(!messageImage.isEmpty()){
+        question.setText(messageNumberQuestion + ".- " + messageQuestion);
+        if(messageImage.equals("null")){
             imageQuestion.setVisibility(View.GONE);
+        }else{
+            System.out.println(messageImage);
+            String url = "";
+            switch(density){
+                case "0.75":
+                    url = "http://drivit.blackbirdhq.cl/img/mdpi/"+messageImage;
+                    break;
+                case "1.0":
+                    url = "http://drivit.blackbirdhq.cl/img/mdpi/"+messageImage;
+                    break;
+                case "1.5":
+                    url = "http://drivit.blackbirdhq.cl/img/hdpi/"+messageImage;
+                    break;
+                case "2.0":
+                    url = "http://drivit.blackbirdhq.cl/img/xhdpi/"+messageImage;
+                    break;
+                case "3.0":
+                    url = "http://drivit.blackbirdhq.cl/img/xxhdpi/"+messageImage;
+                    break;
+                case "4.0":
+                    url = "http://drivit.blackbirdhq.cl/img/xxxhdpi/"+messageImage;
+                    break;
+            }
+            ImageRequest request = new ImageRequest(url,
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap bitmap) {
+                            imageQuestion.setImageBitmap(bitmap);
+                        }
+                    }, 0, 0, null,
+                    new Response.ErrorListener() {
+                        public void onErrorResponse(VolleyError error) {
+                            //imageQuestion.setImageResource(R.drawable.image_load_error);
+                        }
+                    });
+            // Access the RequestQueue through your singleton class.
+            DrivitSingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request);
         }
         alternative = bd.rawQuery("Select * from alternatives where questions_id = " + messageQuestionId, null);
         Cursor test = bd.rawQuery("Select alternatives_id from test where questions_id = "+ messageQuestionId, null);
