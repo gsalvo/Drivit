@@ -3,12 +3,15 @@ package cl.blackbirdhq.drivit;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cl.blackbirdhq.drivit.helpers.AdminSQLiteAPP;
 
@@ -41,6 +44,24 @@ public class MainActivity extends AppCompatActivity {
             case R.id.setting:
                 i = new Intent(this, Setting.class);
                 startActivity(i);
+                return true;
+            case R.id.sendMessage:
+                String[] TO = {"contacto@blackbirdhq.cl"};
+                String[] CC = {""};
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Comentarios aplicación Drivit");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Gracias por tus comentarios :)"));
+                }
+                catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(this, "Debe utilizar un cliente de correo electrónico :/", Toast.LENGTH_SHORT).show();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

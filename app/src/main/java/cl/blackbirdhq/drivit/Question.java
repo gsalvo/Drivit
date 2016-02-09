@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -61,9 +64,13 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
     private Bundle message = new Bundle();
     private static final String FORMAT = "%02d:%02d";
 
+    private Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_question);
         initializeComponents();
 
@@ -76,6 +83,11 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
         CATEGORY = getIntent().getStringExtra("category");
         TIME = getIntent().getStringExtra("time");
         realTime = TOTAL_TIME;
+
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+
 
         checkTest = getIntent().getBooleanExtra("checkTest", false);
         btnPrev = (ImageButton) findViewById(R.id.btnPrev);
@@ -121,6 +133,12 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
 
 
         if (!checkTest) {
+            if(CATEGORY != null){
+                mTracker.setScreenName("test "+ MODALITY + " " + CATEGORY + " class " + TYPE);
+            }else{
+                mTracker.setScreenName("test "+ MODALITY + " class " + TYPE);
+            }
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
             if (!MODALITY.equals("survival")) {
                 if(MODALITY.equals("timeAttack")){
                     realTime = Long.parseLong(TIME) * 60 * 1000;
@@ -141,6 +159,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                         saveQuestion();
                         Intent i = new Intent(Question.this, Results.class);
                         i.putExtra("modality", MODALITY);
+                        i.putExtra("category", CATEGORY);
                         i.putExtra("score", calcRegularResult()[0]);
                         i.putExtra("timeTest", realTime - timeTest);
                         i.putExtra("totalTime", realTime);
@@ -158,6 +177,8 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
             }
         }else{
             time.setVisibility(View.GONE);
+            mTracker.setScreenName("Review test");
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         }
     }
 
@@ -321,6 +342,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(Question.this, Results.class);
                         i.putExtra("modality", MODALITY);
+                        i.putExtra("category", CATEGORY);
                         i.putExtra("score", calcRegularResult()[0]);
                         i.putExtra("timeTest", realTime - timeTest);
                         i.putExtra("totalTime", realTime);
@@ -458,6 +480,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                         }else{
                             Intent i = new Intent(Question.this, Results.class);
                             i.putExtra("modality", MODALITY);
+                            i.putExtra("category", CATEGORY);
                             i.putExtra("score", calcRegularResult()[0]);
                             i.putExtra("timeTest", realTime - timeTest);
                             i.putExtra("totalTime", realTime);
@@ -472,6 +495,7 @@ public class Question extends AppCompatActivity implements StructureQuestion.OnS
                     }else{
                         Intent i = new Intent(Question.this, Results.class);
                         i.putExtra("modality", MODALITY);
+                        i.putExtra("category", CATEGORY);
                         i.putExtra("score", calcRegularResult()[0]);
                         i.putExtra("timeTest", realTime - timeTest);
                         i.putExtra("totalTime", realTime);

@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +34,7 @@ public class Results extends AppCompatActivity {
     private long messageTotalTime;
     private static String TYPE;
     private static String MODALITY;
+    private static String CATEGORY;
     private TextView title, text, points, percent, correct, incorrect, blank, time, timeOff, totalTime;
     private ImageView face;
     private AdminSQLiteAPP admin = new AdminSQLiteAPP(this);
@@ -39,6 +43,7 @@ public class Results extends AppCompatActivity {
     private ProgressDialog mDialog;
     private LoadQuestion loadQuestion;
     private AlertDialog.Builder alertDialog;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,8 @@ public class Results extends AppCompatActivity {
     }
 
     private void initializeComponents(){
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
         mDialog = new ProgressDialog(this);
         alertDialog = new AlertDialog.Builder(this);
         message = getIntent().getExtras();
@@ -57,6 +64,8 @@ public class Results extends AppCompatActivity {
         messageCorrect = message.getInt("correct");
         messageIncorrect = message.getInt("incorrect");
         MODALITY = message.getString("modality");
+        CATEGORY = message.getString("category");
+        TYPE = message.getString("type");
         loadQuestion = new LoadQuestion();
         loadQuestion.execute();
     }
@@ -75,7 +84,6 @@ public class Results extends AppCompatActivity {
         int achieved = 0;
         @Override
         protected void onPreExecute (){
-            TYPE = message.getString("type");
             title = (TextView) findViewById(R.id.title);
             text = (TextView) findViewById(R.id.text);
             points= (TextView) findViewById(R.id.points);
@@ -159,7 +167,7 @@ public class Results extends AppCompatActivity {
                                     "(" + auxTest.getInt(3) + "," + ID_TESTS + "," + auxTest.getInt(2) + "," + auxTest.getInt(1) + "," + auxTest.getInt(4) + ")");
                         }else{
                             if (auxTest.getInt(2)!= 0){
-                                System.out.println(auxTest.getInt(1));
+
                                 bd.execSQL("INSERT INTO alternatives_tests " +
                                         "(right, tests_id, alternatives_id, questions_id, categories_id) VALUES " +
                                         "(" + auxTest.getInt(3) + "," + ID_TESTS + "," + auxTest.getInt(2) + "," + auxTest.getInt(1) + "," + auxTest.getInt(4) + ")");
@@ -195,6 +203,21 @@ public class Results extends AppCompatActivity {
                             }
                         })
                         .show();
+            }else{
+                String state = "reprobate";
+                String auxCategory = "test " + MODALITY + " class " + TYPE;
+                if(achieved ==1){
+                    state = "approved";
+                }
+                if(CATEGORY != null){
+                    auxCategory = "test " + MODALITY+ " " + CATEGORY + " class " + TYPE;
+                }
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory(auxCategory)
+                        .setAction("finished")
+                        .setLabel(state)
+                        .setValue(messageTime)
+                        .build());
             }
         }
     }

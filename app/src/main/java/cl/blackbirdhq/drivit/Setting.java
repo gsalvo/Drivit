@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Trace;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +40,7 @@ public class Setting extends AppCompatActivity {
     private TextView offlineTitle;
     Context context;
     Toast toast;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class Setting extends AppCompatActivity {
     }
 
     private void initializeComponents() {
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
         context = getApplicationContext();
         download = (Button) findViewById(R.id.btnDownload);
         deleteTest = (Button) findViewById(R.id.btnDelete);
@@ -170,6 +176,10 @@ public class Setting extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result){
             if(result.equals("go")){
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("offlineQuestion")
+                        .setAction("download")
+                        .build());
                 checkData();
                 mDialog.dismiss();
                 int duration = Toast.LENGTH_SHORT;

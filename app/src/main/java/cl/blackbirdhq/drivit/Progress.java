@@ -47,9 +47,6 @@ public class Progress extends AppCompatActivity {
         // Obtain the shared Tracker instance.
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
-        mTracker.setScreenName("Progress");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
         initializeComponent();
@@ -60,6 +57,8 @@ public class Progress extends AppCompatActivity {
         alertDialog = new AlertDialog.Builder(this);
         Bundle bundle = getIntent().getExtras();
         TYPE = bundle.getString("type").toUpperCase();
+        mTracker.setScreenName("Progress "+ TYPE);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         if(TYPE.equals("C")){
             getSupportActionBar().setTitle(getString(R.string.title_activity_progress_clase_c));
         }

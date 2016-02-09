@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".AnalyticsApplication"
         android:allowBackup="true"
@@ -20,6 +21,7 @@
             android:theme="@style/CustomThemeMA" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -59,7 +61,7 @@
             android:label="@string/title_activity_progress_clase_b"
             android:parentActivityName=".Modalities"
             android:screenOrientation="portrait"
-            android:theme="@style/CustomThemeMA">
+            android:theme="@style/CustomThemeMA" >
         </activity>
         <activity
             android:name=".Setting"
@@ -76,22 +78,22 @@
         </activity>
         <activity
             android:name=".RealModality"
-            android:launchMode="singleTop"
             android:label="@string/title_activity_real_modality"
+            android:launchMode="singleTop"
             android:parentActivityName=".Modalities"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SpecialModality"
-            android:launchMode="singleTop"
             android:label="@string/title_activity_special_modality"
+            android:launchMode="singleTop"
             android:parentActivityName=".Modalities"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SurvivalModality"
-            android:launchMode="singleTop"
             android:label="@string/title_activity_survival_modality"
+            android:launchMode="singleTop"
             android:parentActivityName=".Modalities"
             android:screenOrientation="portrait" >
         </activity>

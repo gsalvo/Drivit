@@ -74,7 +74,7 @@ public class StructureQuestion extends Fragment {
         if(messageImage.equals("null")){
             imageQuestion.setVisibility(View.GONE);
         }else{
-            System.out.println(messageImage);
+
             String url = "";
             switch(density){
                 case "0.75":

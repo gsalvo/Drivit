@@ -31,6 +31,7 @@ public class SpecialModalityCategory extends AppCompatActivity {
     private String type;
     private static String MODALITY;
     private static String CATEGORY;
+    private String categoryName;
     private AdminSQLiteAPP data = new AdminSQLiteAPP(this);
     private SQLiteDatabase db;
     private ProgressDialog mDialog;
@@ -61,18 +62,22 @@ public class SpecialModalityCategory extends AppCompatActivity {
         TextView questionText = (TextView) findViewById(R.id.questionText);
         switch (CATEGORY){
             case "0":
+                categoryName = getString(R.string.cate1);
                 getSupportActionBar().setTitle(getString(R.string.cate1));
                 questionText.setText(getString(R.string.specialText1));
                 break;
             case "1":
+                categoryName = getString(R.string.cate2);
                 getSupportActionBar().setTitle(getString(R.string.cate2));
                 questionText.setText(getString(R.string.specialText2));
                 break;
             case "2":
+                categoryName = getString(R.string.cate3);
                 getSupportActionBar().setTitle(getString(R.string.cate3));
                 questionText.setText(getString(R.string.specialText3));
                 break;
             case "3":
+                categoryName = getString(R.string.cate3);
                 getSupportActionBar().setTitle(getString(R.string.cate4));
                 questionText.setText(getString(R.string.specialText4));
                 break;
@@ -274,6 +279,7 @@ public class SpecialModalityCategory extends AppCompatActivity {
                 Intent i = new Intent(SpecialModalityCategory.this, Question.class);
                 i.putExtra("type", type);
                 i.putExtra("modality", MODALITY);
+                i.putExtra("category",categoryName);
                 startActivity(i);
                 mDialog.dismiss();
             }else{
