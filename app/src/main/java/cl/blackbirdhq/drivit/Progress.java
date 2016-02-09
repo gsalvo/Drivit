@@ -18,6 +18,9 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import org.w3c.dom.Text;
 
 import java.io.File;
@@ -35,8 +38,18 @@ public class Progress extends AppCompatActivity {
     private ProgressDialog mDialog;
     private LoadQuestion loadQuestion;
     private AlertDialog.Builder alertDialog;
+
+    private Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        mTracker.setScreenName("Progress");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
         initializeComponent();
