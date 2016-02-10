@@ -97,12 +97,12 @@
 
 
     <!--Progress -->
-    <string name="progress1">Aprobación</string>
+    <string name="progress1">Aprobación modalidad real</string>
     <string name="progress2">Realizados:</string>
     <string name="progress3">Superados:</string>
     <string name="progress4">No superados:</string>
     <string name="progress5">Porcentaje</string>
-    <string name="progress6">Registro de tiempo ensayos superados</string>
+    <string name="progress6">Registro de tiempo en ensayos superados modalidad real</string>
     <string name="progress7">Mejor tiempo:</string>
     <string name="progress8">Peor tiempo:</string>
     <string name="progress9">minutos</string>
@@ -185,8 +185,8 @@ Drivit no se hace responsable por los resultados de evaluaciones o eventos ajeno
     <string name="deta4">Los usuarios liberarán de toda responsabilidad y exonera a Drivit de todo reclamo, demanda, responsabilidad civil, causa legal, querella o daños y perjuicios la información, contenido o entrega incorrecta de la aplicación.</string>
     <string name="deta5">Si cualquier cláusula de estos Términos y Condiciones resultara inválida, nula o inaplicable, las cláusulas restantes conservarán de todos modos su total validez y la cláusula inválida, nula o inaplicable será considerada como modificada de modo tal que sea válida y aplicable hasta el máximo alcance permitido por la ley.</string>
     <string name="deta6">Drivit se compromete a mantener informada a las personas sobre la forma en que se utiliza la información enviada desde la aplicación. Al utilizar la aplicación el usuario autoriza a que recopilemos y utilicemos la información según lo establecido en la presente política. Si no está de acuerdo con esta política, no se deberá utilizar esta aplicación.</string>
-    <string name="deta7">La “la información personal” se refiere a aquella información que nos permite conocer los detalles específicos de quién es usted y puede utilizarse para identificarlo o ponerse en contacto. Entre los ejemplos de la información personal que usted puede enviar se incluyen su nombre, su correo electrónico y su comuna de residencia. Drivit utiliza esta información personal para fines estadísticos y mejorar su experiencia con la aplicación.
-La información no personal se refiere a la información que no identifica a un individuo en particular por sí solo o en combinación con otra información no personal. Nuestro propósito principal al recopilar esta información es para fines estadísticos y mejorar su experiencia con la aplicación.</string>
+    <string name="deta7">La “información personal” se refiere a aquella información que nos permite conocer los detalles específicos de quién es usted y puede utilizarse para identificarlo o ponerse en contacto. Entre los ejemplos de la información personal que usted puede enviar se incluyen su nombre, su correo electrónico y su comuna de residencia. Drivit actualmente no utiliza este tipo de información.
+La "información no personal" se refiere a la información que no identifica a un individuo en particular por sí solo o en combinación con otra información no personal. Nuestro propósito principal al recopilar esta información es para fines estadísticos y mejorar su experiencia con la aplicación.</string>
     <string name="deta8">Drivit no divulgará, sin su consentimiento, ninguna información personal a terceros. En relación al cumplimiento de leyes y seguridad pública, Drivit puede divulgar información personal si considera, de buena fe, que tal divulgación es necesaria para cumplir con las leyes pertinentes, o para responder a citaciones u órdenes judiciales de las que haya sido notificado, o para proteger o defender los derechos, la propiedad y la seguridad de los usuarios, de terceros o de nosotros mismos. Las autoridades judiciales o las agencias del orden público pueden exigir que Drivit proporcione información personal a las autoridades gubernamentales que correspondan. En caso de una fusión, consolidación, reorganización o venta o transferencia de todos o sustancialmente todos los activos o actividades comerciales de Drivit, uno de los activos que normalmente se transferirá es la información que recopilamos de nuestros usuarios. Sin embargo, el uso de esta información por parte de cualquier entidad sucesora seguirá estando sujeto a los términos de esta política, con sus eventuales enmiendas.</string>
     <string name="deta9">Drivit se compromete a realizar esfuerzos razonables para prevenir que terceros adquieran, alteren, o destruyan información puesta a disposición de Drivit a través de la aplicación. No obstante la intercepción o adquisición ilícita por parte de un tercero sigue siendo posible.</string>
     <string name="deta10">Drivit se reserva el derecho, en cualquier momento y sin aviso previo, de agregar, cambiar, modificar o actualizar esta política de privacidad mediante la publicación de una nueva política enmendada en esta aplicación.</string>

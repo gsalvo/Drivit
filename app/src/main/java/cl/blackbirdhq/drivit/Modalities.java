@@ -31,10 +31,10 @@ public class Modalities extends AppCompatActivity {
         }
         this.listView = (ListView) findViewById(R.id.list_item);
         List item = new ArrayList();
-        item.add(new ItemModality(R.drawable.ic_progress_modality, "Progreso y registro", "Podrás revisar el progreso de los examenes y preguntas realizados"));
+        item.add(new ItemModality(R.drawable.ic_progress_modality, "Progreso y registro", "Podrás revisar el progreso de los exámenes y preguntas realizadas"));
         item.add(new ItemModality(R.drawable.ic_real_modality,"Real","Realizarás un ensayo simulando las mismas condiciones en cuanto al tiempo, cantidad de preguntas y puntaje que el examen real"));
         item.add(new ItemModality(R.drawable.ic_special_modality,"Especializado","Realizarás un ensayo sólo con preguntas de una temática en particular para que puedas reforzarla"));
-        item.add(new ItemModality(R.drawable.ic_timer_modality, "Contra el tiempo", "Realizarás un ensayo con una duración en tiempo definida por ti"));
+        item.add(new ItemModality(R.drawable.ic_timer_modality, "Contra el tiempo", "Realizarás un ensayo con una duración de tiempo definido por ti"));
         item.add(new ItemModality(R.drawable.ic_dead_modality, "Muerte Súbita", "El ensayo terminará cuando te equivoques en alguna pregunta o las hayas respondido todas de forma correcta"));
         this.listView.setAdapter(new ItemModalityAdapter(this, item));
 

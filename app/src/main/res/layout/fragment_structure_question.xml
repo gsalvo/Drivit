@@ -12,7 +12,8 @@
         android:layout_height="150dp"
         android:layout_marginBottom="15dp"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/imageQuestion"/>
+        android:id="@+id/imageQuestion"
+        android:src="@drawable/loading"/>
 
     <TextView
         android:layout_width="fill_parent"

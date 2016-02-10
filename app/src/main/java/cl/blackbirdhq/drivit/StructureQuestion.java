@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -105,7 +106,8 @@ public class StructureQuestion extends Fragment {
                     }, 0, 0, null,
                     new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
-                            //imageQuestion.setImageResource(R.drawable.image_load_error);
+                            imageQuestion.setImageResource(R.drawable.error_image);
+                            Toast.makeText(getActivity(), "Para cargar la imagen se requiere conección a Internet", Toast.LENGTH_SHORT).show();
                         }
                     });
             // Access the RequestQueue through your singleton class.
